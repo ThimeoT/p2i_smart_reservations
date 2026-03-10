@@ -7,9 +7,10 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface EmpruntMapper {
-    EmpruntMapper INSTANCE = Mappers.getMapper(EmpruntMapper.class);
 
-    EmpruntDto ToDto(Emprunt emprunt);
-    Emprunt ToEntity(EmpruntDto empruntDto);
-    Iterable<EmpruntDto> ToDtoIterable(Iterable<Emprunt> emprunts);
+    EmpruntDto toDto(Emprunt emprunt);
+
+    Emprunt toEntity(EmpruntDto empruntDto);
+
+    Iterable<EmpruntDto> toDtoIterable(Iterable<Emprunt> emprunts);
 }

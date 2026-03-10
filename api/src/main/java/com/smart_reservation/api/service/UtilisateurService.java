@@ -29,13 +29,13 @@ public class UtilisateurService {
         Utilisateur utilisateur =  utilisateurRepository.findById(id).orElseThrow(
                 ()-> new RessourceIntrouvableException("Utilisateur", id)
         );
-        return utilisateurMapper.ToDto(utilisateur);
+        return utilisateurMapper.toDto(utilisateur);
     }
 
     public Iterable<UtilisateurDto> getUtilisateurs()
     {
         Iterable<Utilisateur> utilisateurs = utilisateurRepository.findAll();
-        return utilisateurMapper.ToDtoIterable(utilisateurs);
+        return utilisateurMapper.toDtoIterable(utilisateurs);
     }
 
 
@@ -50,7 +50,7 @@ public class UtilisateurService {
     public UtilisateurDto saveUtilisateur(Utilisateur utilisateur) {
 
         utilisateurRepository.save(utilisateur);
-        return utilisateurMapper.ToDto(utilisateur);
+        return utilisateurMapper.toDto(utilisateur);
     }
     
     public UtilisateurDto updateUtilisateur(Utilisateur utilisateur) {

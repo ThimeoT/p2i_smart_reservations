@@ -50,7 +50,7 @@ public class UtilisateurControllerTests {
 
         List<Utilisateur> utilisateurs = Arrays.asList(utilisateur1, utilisateur2, utilisateur3);
 
-        when(utilisateurService.getUtilisateurs()).thenReturn(utilisateurMapper.ToDtoIterable(utilisateurs));
+        when(utilisateurService.getUtilisateurs()).thenReturn(utilisateurMapper.toDtoIterable(utilisateurs));
 
         mockMvc.perform(get("/utilisateurs"))
                 .andExpect(status().isOk())
@@ -66,7 +66,7 @@ public class UtilisateurControllerTests {
         utilisateur.setId(1L);
         
 
-        when(utilisateurService.getUtilisateur(1L)).thenReturn(utilisateurMapper.ToDto(utilisateur));
+        when(utilisateurService.getUtilisateur(1L)).thenReturn(utilisateurMapper.toDto(utilisateur));
 
         mockMvc.perform(get("/utilisateurs/1")).andExpect(status().isOk());
 
@@ -89,7 +89,7 @@ public class UtilisateurControllerTests {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(1L);
 
-        when(utilisateurService.getUtilisateur(1L)).thenReturn(utilisateurMapper.ToDto(utilisateur));
+        when(utilisateurService.getUtilisateur(1L)).thenReturn(utilisateurMapper.toDto(utilisateur));
 
         mockMvc.perform(delete("/utilisateurs/1").with(csrf())).andExpect(status().isNoContent());
 
