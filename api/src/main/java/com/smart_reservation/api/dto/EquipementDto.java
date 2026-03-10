@@ -2,7 +2,7 @@ package com.smart_reservation.api.dto;
 
 import java.util.List;
 
-public class EquipementDtoComplet {
+public class EquipementDto {
     public String nom;
     public String description;
     public String urlImage;

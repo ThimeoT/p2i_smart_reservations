@@ -3,6 +3,8 @@ package com.smart_reservation.api.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "regles_relation_equipement")
@@ -24,9 +26,9 @@ public class RelationEquipement {
     @JoinColumn(name = "equipement_id")
     private Equipement equipementSource;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "groupe_equipement_id")
-    private GroupeEquipement groupeEquipement;
+    private List<Equipement> EquipementsCible;
 
     @Column
     private String commentaire;
