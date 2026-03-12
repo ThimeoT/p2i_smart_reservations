@@ -38,7 +38,6 @@ public class UtilisateurService {
         return utilisateurMapper.toDtoIterable(utilisateurs);
     }
 
-
     public void deleteUtilisateur(final Long id) {
         if(!existsById(id))
         {
@@ -47,13 +46,13 @@ public class UtilisateurService {
         utilisateurRepository.deleteById(id);
     }
 
-    public UtilisateurDto saveUtilisateur(Utilisateur utilisateur) {
-
-        utilisateurRepository.save(utilisateur);
-        return utilisateurMapper.toDto(utilisateur);
+    public UtilisateurDto saveUtilisateur(UtilisateurDto utilisateurDto) {
+        Utilisateur utilisateur = utilisateurMapper.toEntity(utilisateurDto);
+        Utilisateur utilisateurSauvegarde = utilisateurRepository.save(utilisateur);
+        return utilisateurMapper.toDto(utilisateurSauvegarde);
     }
     
-    public UtilisateurDto updateUtilisateur(Utilisateur utilisateur) {
+    public UtilisateurDto updateUtilisateur(UtilisateurDto utilisateurDto) {
         if(!existsById(utilisateur.getId()))
         {
             throw new IllegalArgumentException("ERREUR : id non trouvé");

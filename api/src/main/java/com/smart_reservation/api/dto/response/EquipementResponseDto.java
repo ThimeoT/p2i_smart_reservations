@@ -2,13 +2,22 @@ package com.smart_reservation.api.dto;
 
 import java.util.List;
 
-public class EquipementDto {
+public class EquipementResponseDto {
+
+    public Long id;
+
     public String nom;
+
     public String description;
+
     public String urlImage;
+
     public List<LabelDto> labels;
-    public List<ExemplaireDto> exemplaires;
+
+    public List<ExemplaireResponseDto> exemplaires;
+
     public List<String> lienRessources;
-    public List<RelationEquipementDto> relationsEquipement;
+
+    public List<RelationEquipementResponseDto> relationsEquipement;
 
 }
