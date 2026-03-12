@@ -23,9 +23,6 @@ public class HistoriqueReservation {
     @JoinColumn(name="reservation_id")
     private Reservation reservation;
 
-    @Column
-    private StatutActionReservation action;
-
     @ManyToOne(
             cascade = {CascadeType.PERSIST,
                     CascadeType.MERGE

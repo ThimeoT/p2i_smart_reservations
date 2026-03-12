@@ -11,4 +11,5 @@ public class ReservationDto {
     public String titre;
     public StatutReservation statutReservation;
     public List<SessionDto> sessions;
+    public List<HistoriqueReservationDto> historiqueReservation;
 }
