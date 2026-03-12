@@ -1,4 +1,4 @@
-package com.smart_reservation.api.dto.response;
+package com.smart_reservation.api.dto.request;
 
 import com.smart_reservation.api.dto.resume.EquipementDtoReduit;
 import com.smart_reservation.api.model.StatutRelationEquipement;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public class RelationEquipementResponseDto {
+public class RelationEquipementRequestDto {
 
     @NotNull
     public Long id;

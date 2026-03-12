@@ -1,4 +1,4 @@
-package com.smart_reservation.api.dto;
+package com.smart_reservation.api.dto.response;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class EquipementResponseDto {
 
     public String urlImage;
 
-    public List<LabelDto> labels;
+    public List<LabelResponseDto> labels;
 
     public List<ExemplaireResponseDto> exemplaires;
 

@@ -1,11 +1,11 @@
-package com.smart_reservation.api.dto.response;
+package com.smart_reservation.api.dto.request;
 
 import com.smart_reservation.api.dto.resume.UtilisateurDtoReduit;
 import com.smart_reservation.api.model.StatutActionReservation;
 
 import java.time.LocalDateTime;
 
-public class HistoriqueReservationDto {
+public class HistoriqueRequestDto {
 
     public Long id;
 

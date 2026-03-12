@@ -1,4 +1,4 @@
-package com.smart_reservation.api.dto;
+package com.smart_reservation.api.dto.response;
 
 import jakarta.validation.constraints.NotNull;
 

@@ -1,19 +1,15 @@
-package com.smart_reservation.api.dto.response;
+package com.smart_reservation.api.dto.request;
 
 import com.smart_reservation.api.dto.resume.SessionDtoReduit;
 import com.smart_reservation.api.dto.resume.UtilisateurDtoReduit;
 
 import java.time.LocalDateTime;
 
-public class EmpruntResponseDto {
+public class EmpruntRequestDto {
 
     public Long id;
 
-    public UtilisateurDtoReduit utilisateur;
-
-    public SessionDtoReduit session;
-
-    public ExemplaireResponseDto exemplaire;
+    public Long exemplaireId;
 
     public LocalDateTime dateRetourPrevue;
 

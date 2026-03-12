@@ -1,9 +1,11 @@
-package com.smart_reservation.api.dto;
+package com.smart_reservation.api.dto.response;
 
+
+import com.smart_reservation.api.dto.resume.EquipementDtoReduit;
 
 import java.util.List;
 
-public class LabelDto {
+public class LabelResponseDto {
 
     public String nom;
 

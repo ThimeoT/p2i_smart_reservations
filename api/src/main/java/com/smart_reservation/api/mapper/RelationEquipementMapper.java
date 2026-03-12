@@ -1,16 +1,16 @@
 package com.smart_reservation.api.mapper;
 
-import com.smart_reservation.api.dto.RelationEquipementDto;
+import com.smart_reservation.api.dto.response.RelationEquipementResponseDto;
 import com.smart_reservation.api.model.RelationEquipement;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface RelationEquipementMapper {
 
-    RelationEquipement toEntity(RelationEquipementDto relationEquipementDto);
+    RelationEquipement toEntity(RelationEquipementResponseDto relationEquipementResponseDto);
 
-    RelationEquipementDto toDto(RelationEquipement relationEquipement);
+    RelationEquipementResponseDto toDto(RelationEquipement relationEquipement);
 
-    Iterable<RelationEquipementDto> toDtoIterable(Iterable<RelationEquipement> relationEquipements);
+    Iterable<RelationEquipementResponseDto> toDtoIterable(Iterable<RelationEquipement> relationEquipements);
 
 }

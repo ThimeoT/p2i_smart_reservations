@@ -1,8 +1,8 @@
-package com.smart_reservation.api.dto.response;
+package com.smart_reservation.api.dto.request;
 
 import java.util.List;
 
-public class EquipementResponseDto {
+public class EquipementRequestDto {
 
     public Long id;
 
@@ -12,12 +12,12 @@ public class EquipementResponseDto {
 
     public String urlImage;
 
-    public List<LabelResponseDto> labels;
+    public List<LabelRequestDto> labels;
 
-    public List<ExemplaireResponseDto> exemplaires;
+    public List<ExemplaireRequestDto> exemplaires;
 
     public List<String> lienRessources;
 
-    public List<RelationEquipementResponseDto> relationsEquipement;
+    public List<RelationEquipementRequestDto> relationsEquipement;
 
 }

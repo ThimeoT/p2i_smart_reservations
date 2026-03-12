@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.smart_reservation.api.controller.UtilisateurController;
-import com.smart_reservation.api.dto.UtilisateurDto;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import com.smart_reservation.api.mapper.UtilisateurMapper;
 import com.smart_reservation.api.model.Utilisateur;

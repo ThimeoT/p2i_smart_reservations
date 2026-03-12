@@ -1,4 +1,4 @@
-package com.smart_reservation.api.dto.response;
+package com.smart_reservation.api.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class UtilisateurResponseDto {
+public class UtilisateurRequestDto {
 
     @NotNull
     public Long id;
@@ -26,11 +26,11 @@ public class UtilisateurResponseDto {
 
     public LocalDateTime dateExpiration;
 
-    public ListeEquipementResponseDto panier;
+    public ListeEquipementRequestDto panier;
 
-    public List<ListeEquipementResponseDto> listesEnregistrees;
+    public List<ListeEquipementRequestDto> listesEnregistrees;
 
-    public List<ReservationResponseDto> reservations;
+    public List<ReservationRequestDto> reservations;
 
-    public List<EmpruntResponseDto> emprunts;
+    public List<EmpruntRequestDto> emprunts;
 }

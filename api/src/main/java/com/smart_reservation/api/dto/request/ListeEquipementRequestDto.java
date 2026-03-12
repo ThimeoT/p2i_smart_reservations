@@ -1,11 +1,11 @@
-package com.smart_reservation.api.dto.response;
+package com.smart_reservation.api.dto.request;
 
 import com.smart_reservation.api.dto.resume.EquipementDtoReduit;
 import com.smart_reservation.api.dto.resume.UtilisateurDtoReduit;
 
 import java.util.List;
 
-public class ListeEquipementResponseDto {
+public class ListeEquipementRequestDto {
 
     public Long id;
 

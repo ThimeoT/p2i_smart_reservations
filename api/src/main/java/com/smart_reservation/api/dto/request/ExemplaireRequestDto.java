@@ -1,9 +1,9 @@
-package com.smart_reservation.api.dto.response;
+package com.smart_reservation.api.dto.request;
 
 
 import com.smart_reservation.api.dto.resume.EquipementDtoReduit;
 
-public class ExemplaireResponseDto {
+public class ExemplaireRequestDto {
 
     public Long id;
 

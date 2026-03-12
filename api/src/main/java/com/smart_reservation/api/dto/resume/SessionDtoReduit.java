@@ -1,9 +1,8 @@
-package com.smart_reservation.api.dto;
+package com.smart_reservation.api.dto.resume;
 
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class SessionDtoReduit {
 

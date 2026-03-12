@@ -1,16 +1,16 @@
 package com.smart_reservation.api.mapper;
 
-import com.smart_reservation.api.dto.LabelDto;
+import com.smart_reservation.api.dto.response.LabelResponseDto;
 import com.smart_reservation.api.model.Label;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface LabelMapper {
 
-    Label toEntity(LabelDto labelDto);
+    Label toEntity(LabelResponseDto labelResponseDto);
 
-    LabelDto toDto(Label label);
+    LabelResponseDto toDto(Label label);
 
-    Iterable<LabelDto> toDtoIterable(Iterable<Label> labels);
+    Iterable<LabelResponseDto> toDtoIterable(Iterable<Label> labels);
 
 }

@@ -1,8 +1,5 @@
-package com.smart_reservation.api.dto;
+package com.smart_reservation.api.dto.response;
 
-import com.smart_reservation.api.dto.response.EmpruntResponseDto;
-import com.smart_reservation.api.dto.response.ListeEquipementResponseDto;
-import com.smart_reservation.api.dto.response.ReservationResponseDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -10,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class UtilisateurDto {
+public class UtilisateurResponseDto {
 
     @NotNull
     public Long id;

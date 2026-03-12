@@ -1,4 +1,4 @@
-package com.smart_reservation.api.dto.response;
+package com.smart_reservation.api.dto.request;
 import com.smart_reservation.api.dto.resume.UtilisateurDtoReduit;
 import com.smart_reservation.api.model.StatutReservation;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ReservationResponseDto {
+public class ReservationRequestDto {
 
     @NotNull
     public Long id;
@@ -22,8 +22,8 @@ public class ReservationResponseDto {
     public StatutReservation statutReservation;
 
     @NotNull
-    public List<SessionResponseDto> sessions;
+    public List<SessionRequestDto> sessions;
 
 
-    public List<HistoriqueReservationDto> historiqueReservation;
+    public List<HistoriqueRequestDto> historiqueReservation;
 }
