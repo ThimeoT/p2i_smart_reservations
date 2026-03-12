@@ -15,15 +15,7 @@ public class Emprunt {
     @Column(name = "emprunt_id")
     private Long id;
 
-    @ManyToOne(
-            cascade = {CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinColumn(name="utilisateur_id")
-    private Utilisateur utilisateur;
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "session_id")
     private Session session;
 
