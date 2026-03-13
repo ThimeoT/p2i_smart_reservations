@@ -22,7 +22,7 @@ public class Utilisateur {
     @Column
     private String nom;
 
-    @Column
+    @Column(unique = true, nullable = false)
     private String prenom;
 
     @Column
@@ -37,45 +37,24 @@ public class Utilisateur {
     @Column(name = "date_expiration")
     private LocalDate dateExpiration;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "liste_equipement_id")
-    private ListeEquipement panier;
+    @ManyToMany
+    @JoinTable(
+            name = "utilisateur_equipements_favoris",
+            joinColumns = @JoinColumn(name = "utilisateur_id"),
+            inverseJoinColumns = @JoinColumn(name = "equipement_id")
+    )
+    private List<Equipement> equipementsFavoris = new ArrayList<>();
 
     @OneToMany(mappedBy = "utilisateur",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<ListeEquipement> listesEnregistrees = new ArrayList<>();
 
-    @OneToMany(mappedBy = "utilisateur",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<Reservation> reservations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "utilisateur",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<Emprunt> emprunts = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return "User{" + "id=" + this.id + ", nom='" + this.nom + '\'' + ", prénom='" + this.prenom + '\'' + '}';
+    public void addEquipementFavori(Equipement equipement) {
+        equipementsFavoris.add(equipement);
     }
-
-    public void addEmprunt(Emprunt emprunt) {
-        emprunts.add(emprunt);
+    public void removeEquipementFavori(Equipement equipement){
+        equipementsFavoris.remove(equipement);
     }
-    public void removeEmprunt(Emprunt emprunt){
-        emprunts.remove(emprunt);
-    }
-
-    public void addReservation(Reservation reservation)
-    {
-        reservations.add(reservation);
-    }
-    public void removeReservation(Reservation reservation)
-    {
-        reservations.remove(reservation);
-    }
-
 
 }

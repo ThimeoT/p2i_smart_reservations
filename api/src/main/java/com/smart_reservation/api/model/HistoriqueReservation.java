@@ -12,32 +12,24 @@ public class HistoriqueReservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "historique_reservation_id")
-    private long id;
+    @Column(name = "historique_reservation_id", nullable = false)
+    private Long id;
 
-    @ManyToOne(
-            cascade = {CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinColumn(name="reservation_id")
+    @ManyToOne
+    @JoinColumn(name = "reservation_id", nullable = false)
     private Reservation reservation;
 
-    @ManyToOne(
-            cascade = {CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinColumn(name="utilisateur_id")
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_id", nullable = false)
     private Utilisateur utilisateur;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime date;
 
     @Column
     private String commentaire;
 
-    @Column(name="statut_action_reservation")
+    @Column(name = "statut_action_reservation", nullable = false)
     private StatutActionReservation statutActionReservation;
 
 

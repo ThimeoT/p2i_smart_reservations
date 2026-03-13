@@ -16,7 +16,7 @@ public class Reservation {
     @Column(name = "reservation_id")
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name="utilisateur_id")
     private Utilisateur utilisateur;
 
@@ -39,7 +39,7 @@ public class Reservation {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<HistoriqueReservation> historiques;
+    private List<HistoriqueReservation> historiques = new ArrayList<>();
 
     public void addSession(Session session){
         this.sessions.add(session);

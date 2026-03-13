@@ -14,9 +14,9 @@ public class Equipement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "equipement_id")
-    private long id;
+    private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String nom;
 
     @Column
@@ -25,7 +25,7 @@ public class Equipement {
     @Column(name = "url_image")
     private String urlImage;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(
             name = "equipement_label",
             joinColumns = @JoinColumn(name = "equipement_id"),
@@ -41,18 +41,8 @@ public class Equipement {
     @Column(name = "lien_ressources")
     private List<String> liensRessources = new ArrayList<>();
 
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinTable(
-            name = "equipement_relation",
-            joinColumns = @JoinColumn(name = "equipement_id"),
-            inverseJoinColumns = @JoinColumn(name = "relation_equipement_id")
-    )
+
+    @OneToMany(mappedBy="equipementSource")
     private List<RelationEquipement> relationsEquipement = new ArrayList<>();
 
     public void addLabel(Label label) {

@@ -17,14 +17,11 @@ public class Session {
     @Column(name = "session_id")
     private Long id;
 
-    @ManyToOne(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
+    @ManyToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
         @OneToMany(mappedBy = "session",
-                fetch = FetchType.LAZY,
                 cascade = CascadeType.ALL,
                 orphanRemoval = true)
         private List<Emprunt> emprunts = new ArrayList<>();

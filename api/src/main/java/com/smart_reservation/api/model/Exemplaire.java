@@ -13,9 +13,9 @@ public class Exemplaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exemplaire_id")
-    private long id;
+    private Long id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name= "equipement_id")
     private Equipement equipement;
 

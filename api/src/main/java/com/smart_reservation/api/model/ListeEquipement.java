@@ -16,11 +16,7 @@ public class ListeEquipement {
     @Column(name = "liste_equipement_id")
     private Long id;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    }
-    )
+    @ManyToOne
     @JoinColumn(name="utilisateur_id")
     private Utilisateur utilisateur;
 
@@ -30,13 +26,7 @@ public class ListeEquipement {
     @Column
     private String description;
 
-    @ManyToMany( // je l'ai fait en unidirectionnel, mais pas sûr de ça
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
+    @ManyToMany
     @JoinTable(
             name = "liste_equipement_equipements",
             joinColumns = @JoinColumn(name = "liste_equipement_id"),

@@ -1,8 +1,9 @@
 package com.smart_reservation.api.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,22 +16,29 @@ public class RelationEquipement {
     @Column(name = "regle_relation_equipement_id")
     private Long id;
 
-    @Column(name="statut_relation_equipement")
+    @Column(name="statut_relation_equipement", nullable = false)
     private StatutRelationEquipement statutRelationEquipement;
 
-    @ManyToOne(
-            cascade = {CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinColumn(name = "equipement_id")
+    @ManyToOne
+    @JoinColumn(name = "equipement_id", nullable = false)
     private Equipement equipementSource;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "groupe_equipement_id")
-    private List<Equipement> EquipementsCible;
+    @ManyToMany
+    @JoinTable(
+            name = "relation_equipement_cible",
+            joinColumns = @JoinColumn(name = "relation_id"),
+            inverseJoinColumns = @JoinColumn(name = "equipement_cible_id")
+    )
+    private List<Equipement> equipementsCible = new ArrayList<>();
 
     @Column
     private String commentaire;
+
+    public void addEquipementCible(Equipement equipement) {
+        this.equipementsCible.add(equipement);
+    }
+    public void removeEquipementCible(Equipement equipement) {
+        this.equipementsCible.remove(equipement);
+    }
 
 }

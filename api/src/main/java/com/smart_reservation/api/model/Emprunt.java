@@ -16,11 +16,11 @@ public class Emprunt {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "session_id")
+    @JoinColumn(name = "session_id", nullable = false)
     private Session session;
 
     @ManyToOne
-    @JoinColumn(name = "exemplaire_id")
+    @JoinColumn(name = "exemplaire_id", nullable = false)
     private Exemplaire exemplaire;
 
     @Column
