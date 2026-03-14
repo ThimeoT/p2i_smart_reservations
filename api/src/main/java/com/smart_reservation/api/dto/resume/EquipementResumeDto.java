@@ -10,8 +10,6 @@ public class EquipementDtoReduit {
 
     public String nom;
 
-    public String description;
-
     public String urlImage;
 
     public List<LabelResponseDto> labels;

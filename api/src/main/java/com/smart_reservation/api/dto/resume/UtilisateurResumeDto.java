@@ -7,12 +7,8 @@ public class UtilisateurDtoReduit {
     @NotNull
     public Long id;
 
-    @NotNull
     public String nom;
 
-    @NotNull
     public String prenom;
 
-    @NotNull
-    public String mail;
 }

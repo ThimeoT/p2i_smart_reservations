@@ -1,6 +1,6 @@
 package com.smart_reservation.api.dto.response;
 
-import com.smart_reservation.api.dto.resume.UtilisateurDtoReduit;
+import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import com.smart_reservation.api.model.StatutActionReservation;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ public class HistoriqueReservationDto {
 
     public StatutActionReservation action;
 
-    public UtilisateurDtoReduit utilisateur;
+    public UtilisateurResumeDto utilisateur;
 
     public LocalDateTime date;
 
