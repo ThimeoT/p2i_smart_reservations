@@ -4,7 +4,7 @@ import com.smart_reservation.api.dto.response.LabelResponseDto;
 
 import java.util.List;
 
-public class EquipementDtoReduit {
+public class EquipementResumeDto {
 
     public Long id;
 

@@ -1,19 +1,19 @@
 package com.smart_reservation.api.dto.request;
 
-import com.smart_reservation.api.dto.resume.EquipementDtoReduit;
-import com.smart_reservation.api.dto.resume.UtilisateurDtoReduit;
+import com.smart_reservation.api.dto.resume.EquipementResumeDto;
+import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
 public class ListeEquipementRequestDto {
 
-    public Long id;
-
+    @NotNull
     public String nom;
 
+    @NotNull
     public String description;
 
-    public UtilisateurDtoReduit utilisateur;
-
-    public List<EquipementDtoReduit> equipements;
+    @NotNull
+    public List<Long> equipementsId;
 }

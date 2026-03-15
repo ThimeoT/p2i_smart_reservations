@@ -2,7 +2,7 @@ package com.smart_reservation.api.dto.resume;
 
 import jakarta.validation.constraints.NotNull;
 
-public class UtilisateurDtoReduit {
+public class UtilisateurResumeDto {
 
     @NotNull
     public Long id;

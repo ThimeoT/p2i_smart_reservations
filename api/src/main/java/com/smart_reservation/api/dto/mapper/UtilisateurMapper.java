@@ -1,23 +1,25 @@
-package com.smart_reservation.api.mapper;
+package com.smart_reservation.api.dto.mapper;
 
+import com.smart_reservation.api.dto.request.UtilisateurRequestDto;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
+import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
+import com.smart_reservation.api.model.Reservation;
 import com.smart_reservation.api.model.Utilisateur;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper
 public interface UtilisateurMapper {
 
     UtilisateurResponseDto toDto(Utilisateur utilisateur);
 
-    @Mapping(target = "panier", ignore = true)
-    @Mapping(target = "listesEnregistrees", ignore = true)
-    @Mapping(target = "reservations", ignore = true)
-    @Mapping(target = "emprunts", ignore = true)
     @Mapping(target = "dateExpiration", dateFormat = "yyyy-MM-dd")
-    Utilisateur toEntity(UtilisateurResponseDto utilisateurResponseDto);
+    Utilisateur toEntity(UtilisateurRequestDto utilisateurRequestDto);
 
-    Iterable<UtilisateurResponseDto> toDtoIterable(Iterable<Utilisateur> utilisateurs);
+    Iterable<UtilisateurResumeDto> toResumeDtoIterable(Iterable<Reservation> reservations);
+
+    Utilisateur updateEntity(UtilisateurRequestDto utilisateurDto, @MappingTarget Utilisateur utilisateur);
 
 
 }

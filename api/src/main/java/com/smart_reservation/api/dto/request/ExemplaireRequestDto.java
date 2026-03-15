@@ -1,14 +1,18 @@
 package com.smart_reservation.api.dto.request;
 
 
-import com.smart_reservation.api.dto.resume.EquipementDtoReduit;
+import com.smart_reservation.api.dto.resume.EquipementResumeDto;
+import com.smart_reservation.api.model.StatutDisponibilite;
+import jakarta.validation.constraints.NotNull;
 
 public class ExemplaireRequestDto {
 
-    public Long id;
+    @NotNull(message = "un exemplaire doit faire référence à un équipement")
+    public Long equipementId;
 
-    public EquipementDtoReduit equipement;
+    @NotNull
+    public StatutDisponibilite statutDisponibilite;
 
-    public String statutDisponibilite;
+    public String nomSerie;
 
 }

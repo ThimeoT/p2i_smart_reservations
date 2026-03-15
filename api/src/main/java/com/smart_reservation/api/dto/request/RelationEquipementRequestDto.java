@@ -1,7 +1,8 @@
 package com.smart_reservation.api.dto.request;
 
-import com.smart_reservation.api.dto.resume.EquipementDtoReduit;
+import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 import com.smart_reservation.api.model.StatutRelationEquipement;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
@@ -9,16 +10,10 @@ import java.util.List;
 public class RelationEquipementRequestDto {
 
     @NotNull
-    public Long id;
-
-    @NotNull
     public StatutRelationEquipement statutRelationEquipement;
 
-    @NotNull
-    public EquipementDtoReduit equipementSource;
-
-    @NotNull
-    public List<EquipementDtoReduit> equipementsCible;
+    @NotEmpty
+    public List<Long> equipementsCibleId;
 
     @NotNull
     public String commentaire;

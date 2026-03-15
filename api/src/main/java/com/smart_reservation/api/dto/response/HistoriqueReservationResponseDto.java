@@ -5,7 +5,7 @@ import com.smart_reservation.api.model.StatutActionReservation;
 
 import java.time.LocalDateTime;
 
-public class HistoriqueReservationDto {
+public class HistoriqueReservationResponseDto {
 
     public Long id;
 

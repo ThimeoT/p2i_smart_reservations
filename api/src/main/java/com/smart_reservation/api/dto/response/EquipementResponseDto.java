@@ -19,5 +19,4 @@ public class EquipementResponseDto {
     public List<String> lienRessources;
 
     public List<RelationEquipementResponseDto> relationsEquipement;
-
 }

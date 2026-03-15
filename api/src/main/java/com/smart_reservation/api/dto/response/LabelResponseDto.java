@@ -1,7 +1,7 @@
 package com.smart_reservation.api.dto.response;
 
 
-import com.smart_reservation.api.dto.resume.EquipementDtoReduit;
+import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class LabelResponseDto {
 
     public String color;
 
-    public List<EquipementDtoReduit> equipements;
+    public List<EquipementResumeDto> equipements;
 
 
 }

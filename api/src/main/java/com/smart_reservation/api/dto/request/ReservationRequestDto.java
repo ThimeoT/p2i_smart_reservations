@@ -1,5 +1,5 @@
 package com.smart_reservation.api.dto.request;
-import com.smart_reservation.api.dto.resume.UtilisateurDtoReduit;
+import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import com.smart_reservation.api.model.StatutReservation;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -10,10 +10,7 @@ import java.util.List;
 public class ReservationRequestDto {
 
     @NotNull
-    public Long id;
-
-    @NotNull
-    public UtilisateurDtoReduit utilisateur;
+    public Long utilisateurId;
 
     @NotNull
     public String titre;
@@ -23,7 +20,4 @@ public class ReservationRequestDto {
 
     @NotNull
     public List<SessionRequestDto> sessions;
-
-
-    public List<HistoriqueRequestDto> historiqueReservation;
 }

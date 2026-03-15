@@ -1,5 +1,6 @@
-package com.smart_reservation.api.mapper;
+package com.smart_reservation.api.dto.mapper;
 
+import com.smart_reservation.api.dto.request.SessionRequestDto;
 import com.smart_reservation.api.dto.response.SessionResponseDto;
 import com.smart_reservation.api.dto.resume.SessionResumeDto;
 import com.smart_reservation.api.model.Session;
@@ -9,14 +10,14 @@ public interface SessionMapper {
 
     SessionResponseDto toDto(Session session);
 
-    Session toEntite(SessionResponseDto sessionDto);
+    Session toEntite(SessionRequestDto sessionDto);
 
-    SessionResumeDto toDtoReduit(Session session);
+    SessionResumeDto toResumeDto(Session session);
 
     Iterable<SessionResponseDto> toDtoIterable(Iterable<Session> sessions);
 
 
-    Iterable<SessionResumeDto>  toDtoReduitIterable(Iterable<Session> sessions);
+    Iterable<SessionResumeDto>  toDtoResumeIterable(Iterable<Session> sessions);
 
-    Session actualiserEntity(SessionResponseDto sessionDto, @MappingTarget Session session);
+    Session updateEntity(SessionRequestDto sessionDto, @MappingTarget Session session);
 }

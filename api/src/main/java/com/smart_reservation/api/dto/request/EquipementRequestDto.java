@@ -1,22 +1,27 @@
 package com.smart_reservation.api.dto.request;
 
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.URL;
+
 import java.util.List;
 
 public class EquipementRequestDto {
 
-    public Long id;
-
+    @NotNull
     public String nom;
 
+    @NotNull
     public String description;
 
+    @NotNull
+    @URL(message = "le lien renseigné pour l'image est invalide")
     public String urlImage;
 
-    public List<LabelRequestDto> labels;
+    public List<Long> labelsId;
 
-    public List<ExemplaireRequestDto> exemplaires;
+    @NotNull
 
-    public List<String> lienRessources;
+    public List< @URL(message="un des liens des ressources est invalide") String> lienRessources;
 
     public List<RelationEquipementRequestDto> relationsEquipement;
 

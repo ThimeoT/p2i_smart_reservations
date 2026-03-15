@@ -1,4 +1,4 @@
-package com.smart_reservation.api.mapper;
+package com.smart_reservation.api.dto.mapper;
 
 import com.smart_reservation.api.dto.response.EmpruntResponseDto;
 import com.smart_reservation.api.model.Emprunt;

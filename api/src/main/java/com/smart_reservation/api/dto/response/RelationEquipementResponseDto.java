@@ -1,6 +1,6 @@
 package com.smart_reservation.api.dto.response;
 
-import com.smart_reservation.api.dto.resume.EquipementDtoReduit;
+import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 import com.smart_reservation.api.model.StatutRelationEquipement;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,10 +15,10 @@ public class RelationEquipementResponseDto {
     public StatutRelationEquipement statutRelationEquipement;
 
     @NotNull
-    public EquipementDtoReduit equipementSource;
+    public EquipementResumeDto equipementSource;
 
     @NotNull
-    public List<EquipementDtoReduit> equipementsCible;
+    public List<EquipementResumeDto> equipementsCible;
 
     @NotNull
     public String commentaire;
