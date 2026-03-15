@@ -2,7 +2,7 @@ package com.smart_reservation.api.model;
 
 public enum StatutDisponibilite {
     DISPONIBLE("DISPONIBLE"),
-    INDISPONIBLE("INDISPONIBLE"),
+    EMPRUNTE("EMPRUNTE"),
     MAINTENANCE("MAINTENANCE"),
     HORS_SERVICE("HORS_SERVICE");
 
