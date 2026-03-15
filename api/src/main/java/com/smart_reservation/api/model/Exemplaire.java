@@ -15,8 +15,11 @@ public class Exemplaire {
     @Column(name = "exemplaire_id")
     private Long id;
 
+    @Column(name="nom_serie")
+    private String nomSerie;
+
     @ManyToOne
-    @JoinColumn(name= "equipement_id")
+    @JoinColumn(name= "equipement_id", nullable = false)
     private Equipement equipement;
 
     @Column(name = "statut_disponibilite")

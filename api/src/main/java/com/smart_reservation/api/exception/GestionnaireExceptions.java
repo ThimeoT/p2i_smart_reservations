@@ -13,5 +13,12 @@ public class GestionnaireExceptions {
     {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
+
+    @ExceptionHandler(EmpruntTermineAvantDebutSessionException.class)
+    public ResponseEntity<String> handleEmpruntRetourAvantDebutSession(
+            EmpruntTermineAvantDebutSessionException exception
+    ) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(exception.getMessage());
+    }
     
 }

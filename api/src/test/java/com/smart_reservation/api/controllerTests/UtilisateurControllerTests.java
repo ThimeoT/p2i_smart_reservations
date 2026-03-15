@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.smart_reservation.api.controller.UtilisateurController;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
-import com.smart_reservation.api.mapper.UtilisateurMapper;
+import com.smart_reservation.api.dto.mapper.UtilisateurMapper;
 import com.smart_reservation.api.model.Utilisateur;
 import com.smart_reservation.api.service.UtilisateurService;
 import org.junit.jupiter.api.Test;

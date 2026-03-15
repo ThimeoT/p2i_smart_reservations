@@ -3,7 +3,7 @@ package com.smart_reservation.api.service;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import com.smart_reservation.api.model.Utilisateur;
-import com.smart_reservation.api.mapper.UtilisateurMapper;
+import com.smart_reservation.api.dto.mapper.UtilisateurMapper;
 import com.smart_reservation.api.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
