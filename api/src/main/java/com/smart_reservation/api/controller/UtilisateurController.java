@@ -1,12 +1,15 @@
 package com.smart_reservation.api.controller;
 
-import com.smart_reservation.api.dto.response.ListeEquipementResponseDto;
+import com.smart_reservation.api.dto.request.ListeEquipementsRequestDto;
+import com.smart_reservation.api.dto.request.UtilisateurRequestDto;
+import com.smart_reservation.api.dto.response.ListeEquipementsResponseDto;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
+import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.smart_reservation.api.model.Utilisateur;
 import com.smart_reservation.api.service.UtilisateurService;
 
 
@@ -18,7 +21,7 @@ public class UtilisateurController {
     private UtilisateurService utilisateurService;
 
     @GetMapping
-    public Iterable<UtilisateurResponseDto> getUtilisateurs() {
+    public Iterable<UtilisateurResumeDto> getUtilisateurs() {
         return utilisateurService.getUtilisateurs();
     }
 
@@ -30,15 +33,15 @@ public class UtilisateurController {
 
     @PostMapping
     public ResponseEntity<UtilisateurResponseDto> createUtilisateur(
-            @RequestBody Utilisateur utilisateurDto) {
+            @Valid @RequestBody UtilisateurRequestDto utilisateurDto) {
         return ResponseEntity.ok(utilisateurService.saveUtilisateur(utilisateurDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UtilisateurResponseDto> updateUtilisateur(
             @PathVariable Long id,
-            @RequestBody UtilisateurResponseDto utilisateurResponseDto) {
-        return ResponseEntity.ok(utilisateurService.updateUtilisateur(utilisateurResponseDto));
+            @Valid @RequestBody UtilisateurRequestDto utilisateurRequestDto) {
+        return ResponseEntity.ok(utilisateurService.updateUtilisateur(id,utilisateurRequestDto));
     }
 
     @DeleteMapping("/{id}")
@@ -47,41 +50,37 @@ public class UtilisateurController {
         return ResponseEntity.noContent().build();
     }
 
-    // LISTE EQUIPEMENT
 
     @GetMapping("/{idUtilisateur}/listeEquipement")
-    public Iterable<ListeEquipementResponseDto> getListesEquipement(@PathVariable Long idUtilisateur) {
+    public Iterable<ListeEquipementsResponseDto> getListesEquipement(@PathVariable Long idUtilisateur) {
         return utilisateurService.getListesEquipements(idUtilisateur);
     }
 
     @GetMapping("/{idUtilisateur}/listeEquipement/{idListe}")
-    public ResponseEntity<ListeEquipementResponseDto> getListeEquipement(
-            @PathVariable Long idUtilisateur,
+    public ResponseEntity<ListeEquipementsResponseDto> getListeEquipements(
             @PathVariable Long idListeEquipement)
     {
-        return ResponseEntity.ok(utilisateurService.getListeEquipement(idUtilisateur, idListeEquipement));
+        return ResponseEntity.ok(utilisateurService.getListeEquipements(idListeEquipement));
     }
 
     @PostMapping("/{idUtilisateur}/listeEquipement")
-    public ResponseEntity<ListeEquipementResponseDto> createListeEquipement(
+    public ResponseEntity<ListeEquipementsResponseDto> createListeEquipement(
             @PathVariable Long idUtilisateur,
-            @RequestBody ListeEquipementResponseDto listeEquipementResponseDto) {
-        return ResponseEntity.ok(utilisateurService.saveListeEquipement(idUtilisateur, listeEquipementResponseDto));
+            @Valid @RequestBody ListeEquipementsRequestDto listeEquipementDto) {
+        return ResponseEntity.ok(utilisateurService.createListeEquipements(idUtilisateur, listeEquipementDto));
     }
 
     @PutMapping("/{idUtilisateur}/listeEquipement/{idListe}")
-    public ResponseEntity<ListeEquipementResponseDto> updateListeEquipement(
-            @PathVariable Long idUtilisateur,
+    public ResponseEntity<ListeEquipementsResponseDto> updateListeEquipement(
             @PathVariable Long idListeEquipement,
-            @RequestBody UtilisateurResponseDto listeEquipementDto) {
-        return ResponseEntity.ok(utilisateurService.updateListeEquipement(idUtilisateur,idListeEquipement,listeEquipementDto));
+            @Valid @RequestBody ListeEquipementsRequestDto listeEquipementsDto) {
+        return ResponseEntity.ok(utilisateurService.updateListeEquipements(idListeEquipement,listeEquipementsDto));
     }
 
     @DeleteMapping("/{idUtilisateur}/listeEquipement/{idListe}")
     public ResponseEntity<Void> deleteListeEquipement(
-            @PathVariable Long idUtilisateur,
             @PathVariable Long idListe) {
-        utilisateurService.deleteListeEquipement();
+        utilisateurService.deleteListeEquipements(idListe);
         return ResponseEntity.noContent().build();
     }
 

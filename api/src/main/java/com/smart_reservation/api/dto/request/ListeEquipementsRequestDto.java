@@ -1,14 +1,13 @@
 package com.smart_reservation.api.dto.request;
 
-import com.smart_reservation.api.dto.resume.EquipementResumeDto;
-import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public class ListeEquipementRequestDto {
+public class ListeEquipementsRequestDto {
 
-    @NotNull
+    @NotBlank
     public String nom;
 
     @NotNull

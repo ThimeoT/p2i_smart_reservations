@@ -1,5 +1,6 @@
 package com.smart_reservation.api.dto.request;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.URL;
 
@@ -23,6 +24,7 @@ public class EquipementRequestDto {
 
     public List< @URL(message="un des liens des ressources est invalide") String> lienRessources;
 
+    @Valid
     public List<RelationEquipementRequestDto> relationsEquipement;
 
 }

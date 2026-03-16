@@ -5,7 +5,7 @@ import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 
 import java.util.List;
 
-public class ListeEquipementResponseDto {
+public class ListeEquipementsResponseDto {
 
     public Long id;
 

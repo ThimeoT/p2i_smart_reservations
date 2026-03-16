@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>4.0.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.smart-reservation</groupId>
     <artifactId>api</artifactId>
@@ -30,6 +30,7 @@
         <java.version>25</java.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -82,6 +83,11 @@
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -100,13 +106,34 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
                         </path>
-
                     </annotationProcessorPaths>
                     <compilerArgs>
-                        <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
+                        <arg>-Amapstruct.defaultComponentModel=spring</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>resolve-agent-path</id>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-javaagent:${net.bytebuddy:byte-buddy-agent:jar}</argLine>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

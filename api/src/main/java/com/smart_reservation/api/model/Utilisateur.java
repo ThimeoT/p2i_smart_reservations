@@ -48,7 +48,7 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private List<ListeEquipement> listesEnregistrees = new ArrayList<>();
+    private List<ListeEquipements> listeEquipements = new ArrayList<>();
 
     public void addEquipementFavori(Equipement equipement) {
         equipementsFavoris.add(equipement);

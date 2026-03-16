@@ -17,7 +17,7 @@ public interface UtilisateurMapper {
     @Mapping(target = "dateExpiration", dateFormat = "yyyy-MM-dd")
     Utilisateur toEntity(UtilisateurRequestDto utilisateurRequestDto);
 
-    Iterable<UtilisateurResumeDto> toResumeDtoIterable(Iterable<Reservation> reservations);
+    Iterable<UtilisateurResumeDto> toResumeDtoIterable(Iterable<Utilisateur> utilisateurs);
 
     Utilisateur updateEntity(UtilisateurRequestDto utilisateurDto, @MappingTarget Utilisateur utilisateur);
 
