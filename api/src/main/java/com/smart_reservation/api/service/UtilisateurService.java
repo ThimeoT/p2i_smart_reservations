@@ -50,8 +50,7 @@ public class UtilisateurService {
     @Transactional(readOnly = true)
     public Iterable<UtilisateurResumeDto> getUtilisateurs() {
         return utilisateurMapper.toResumeDtoIterable(
-                utilisateurRepository.findAll()
-        );
+                utilisateurRepository.findAll());
     }
 
     @Transactional
@@ -68,8 +67,7 @@ public class UtilisateurService {
 
         Utilisateur utilisateur = utilisateurMapper.toEntity(utilisateurRequestDto);
         return utilisateurMapper.toDto(
-                utilisateurRepository.save(utilisateur)
-        );
+                utilisateurRepository.save(utilisateur));
     }
 
     @Transactional
@@ -89,8 +87,7 @@ public class UtilisateurService {
             throw new RessourceIntrouvableException("Utilisateur", idUtilisateur);
         }
         return listeEquipementsMapper.toDtoIterable(
-                listeEquipementsRepository.findByUtilisateurId(idUtilisateur)
-        );
+                listeEquipementsRepository.findByUtilisateurId(idUtilisateur));
     }
 
     @Transactional
