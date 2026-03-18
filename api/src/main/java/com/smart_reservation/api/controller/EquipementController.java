@@ -1,14 +1,26 @@
 package com.smart_reservation.api.controller;
 
-import org.mapstruct.MappingTarget;
+import com.smart_reservation.api.dto.response.EquipementResponseDto;
+import com.smart_reservation.api.service.EquipementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-public class InventaireController {
+@RestController
+@RequestMapping("/equipements")
+public class EquipementController {
+
+    @Autowired
+    private EquipementService equipementService;
+
 
     // TODO : get equipements /
 
 
 
+
     // TODO : get equipements / id
+
 
     // TODO : get equipements / labels
 

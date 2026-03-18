@@ -1,27 +1,30 @@
 package com.smart_reservation.api.service;
 
 import com.smart_reservation.api.dto.mapper.EquipementMapper;
+import com.smart_reservation.api.dto.request.EquipementRequestDto;
 import com.smart_reservation.api.dto.response.EquipementResponseDto;
 import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
+import com.smart_reservation.api.model.Equipement;
+import com.smart_reservation.api.model.Exemplaire;
 import com.smart_reservation.api.repository.EmpruntRepository;
 import com.smart_reservation.api.repository.EquipementRepository;
 import com.smart_reservation.api.repository.LabelRepository;
 import com.smart_reservation.api.repository.RegleRelationEquipementRepository;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class InventaireService {
+public class EquipementService {
 
     private final EquipementRepository equipementRepository;
-    private final LabelRepository labelRepository;
     private final EmpruntRepository empruntRepository;
+    private final ExemplaireService exemplaireService;
     private final RegleRelationEquipementRepository regleRelationEquipementRepository;
 
     private final EquipementMapper equipementMapper;
@@ -54,16 +57,32 @@ public class InventaireService {
         );
     }
 
-
     // TODO : Ajouter un équipement
-
+    @Transactional
+    public EquipementResponseDto createEquipement(EquipementRequestDto equipementRequestDto) {
+        Equipement equipement = equipementMapper.toEntity(equipementRequestDto);
+        return equipementMapper.toDto(
+                equipementRepository.save(equipement));
+    }
     // TODO : Modifier un équipement
 
+    @Transactional
+    public EquipementResponseDto updateEquipement(EquipementRequestDto equipementRequestDto, Long id){
+        Equipement equipement = equipementRepository.findById(id).orElseThrow(()-> new RessourceIntrouvableException("Equipement",id));
+        equipementMapper.updateToEntity(equipementRequestDto,equipement);
+        equipementRepository.save(equipement);
+        return equipementMapper.toDto(equipement);
+    }
+
     // TODO : Supprimer un équipement
-
-
-
-    // TODO : Vérifier la disponibilité d'un équipement selon la période
+    @Transactional
+    public void deleteEquipement(Long id) {
+        if(!empruntRepository.existsById(id))
+        {
+            throw new RessourceIntrouvableException("Equipement",id);
+        }
+        equipementRepository.deleteById(id);
+    }
 
     // Règles sur les équipements
 
@@ -76,19 +95,6 @@ public class InventaireService {
     // TODO : Vérifier la conformité des relations d'un équipement
 
 
-    // EXEMPLAIRES
-
-    // TODO : Ajouter un exemplaire
-
-    // TODO : Modifier un exemplaire
-
-    // TODO : Supprimer un exemplaire
-
-    // TODO : changer statut exemplaire
-
-    // TODO : Récupérer disponibilité exemplaire selon une période
-
-    // TODO : Vérifier selon une période
 
     // LABELS
 
