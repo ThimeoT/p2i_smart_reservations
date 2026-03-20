@@ -19,6 +19,15 @@ public class EmpruntService {
 
     private EmpruntRepository empruntRepository;
     private EmpruntMapper empruntMapper;
+
+    public Boolean existsById(Long id)
+    {
+        if(!empruntRepository.existsById(id))
+        {
+            throw new RessourceIntrouvableException("Emprunt",id);
+        }
+        return true;
+    }
     // TODO : emprunter un exemplaire
 
     // TODO : retourner un exemplaire emprunté
