@@ -20,5 +20,11 @@ public class GestionnaireExceptions {
     ) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(exception.getMessage());
     }
+
+    @ExceptionHandler(EquipementRequisManquantException.class)
+    public ResponseEntity<String> handleEquipementRequisManquant(EquipementRequisManquantException exception)
+        {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(exception.getMessage());
+        }
     
 }
