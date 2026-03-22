@@ -55,12 +55,14 @@ public class EquipementService {
 
     // TODO : Récupérer les équipements selon l'id
     @Transactional
-    public EquipementResponseDto getEquipement(Long id) {
-        return equipementMapper.toDto(
-                equipementRepository.findById(id).orElseThrow(
+    public Equipement getEquipementEntity(Long id) {
+        return equipementRepository.findById(id).orElseThrow(
                         () -> new RessourceIntrouvableException("Equipement",id)
-                )
         );
+    }
+    @Transactional
+    public EquipementResponseDto getEquipement(Long id) {
+        return equipementMapper.toDto(getEquipementEntity(id));
     }
 
     // TODO : Récupérer les équipements selon un label
