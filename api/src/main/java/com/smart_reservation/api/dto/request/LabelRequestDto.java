@@ -17,8 +17,4 @@ public class LabelRequestDto {
     @NotNull
     public String color;
 
-    @NotNull
-    public List<Long> equipementsId;
-
-
 }
