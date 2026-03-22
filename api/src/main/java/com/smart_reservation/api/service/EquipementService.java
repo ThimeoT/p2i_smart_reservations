@@ -5,11 +5,13 @@ import com.smart_reservation.api.dto.mapper.RelationEquipementMapper;
 import com.smart_reservation.api.dto.request.EquipementRequestDto;
 import com.smart_reservation.api.dto.request.RelationEquipementRequestDto;
 import com.smart_reservation.api.dto.response.EquipementResponseDto;
+import com.smart_reservation.api.dto.response.LabelResponseDto;
 import com.smart_reservation.api.dto.response.RelationEquipementResponseDto;
 import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 import com.smart_reservation.api.exception.EquipementRequisManquantException;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import com.smart_reservation.api.model.Equipement;
+import com.smart_reservation.api.model.Label;
 import com.smart_reservation.api.model.RelationEquipement;
 import com.smart_reservation.api.model.StatutRelationEquipement;
 import com.smart_reservation.api.repository.EquipementRepository;
@@ -19,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.management.InvalidAttributeValueException;
-import javax.management.relation.Relation;
 import java.util.*;
 
 @Service
@@ -31,6 +32,7 @@ public class EquipementService {
     private final EmpruntService empruntService;
     private final ExemplaireService exemplaireService;
     private final RelationEquipementRepository relationEquipementRepository;
+    private final LabelService labelService;
 
     private final EquipementMapper equipementMapper;
 
@@ -161,15 +163,24 @@ public class EquipementService {
     }
 
     // LABELS
+    @Transactional
+    public EquipementResponseDto addLabelToEquipement (Long labelId, Long equipementId)
+    {
+        Equipement equipement = equipementRepository.findById(equipementId).orElseThrow(()->new RessourceIntrouvableException("Equipement", equipementId));
+        Label label = labelService.getLabelEntityById(labelId);
+        equipement.addLabel(label);
+        return equipementMapper.toDto(equipementRepository.save(equipement));
+    }
 
-    // TODO : Créer un label
+    @Transactional
+    public EquipementResponseDto removeLabelFromEquipement (Long labelId, Long equipementId)
+    {
+        Equipement equipement = equipementRepository.findById(equipementId).orElseThrow(()->new RessourceIntrouvableException("Equipement", equipementId));
+        Label label = labelService.getLabelEntityById(labelId);
+        equipement.removeLabel(label);
+        return equipementMapper.toDto(equipementRepository.save(equipement));
+    }
 
-    // TODO : Modifier un label
 
-    // TODO : Retirer un label
-
-    // TODO : Ajouter un label à un équipement
-
-    // TODO : Retirer un label à un équipement
 
 }
