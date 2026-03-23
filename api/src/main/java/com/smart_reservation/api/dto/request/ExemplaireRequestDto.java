@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 
 public class ExemplaireRequestDto {
 
+    public Long id;
+
     @NotNull(message = "un exemplaire doit faire référence à un équipement")
     public Long equipementId;
 

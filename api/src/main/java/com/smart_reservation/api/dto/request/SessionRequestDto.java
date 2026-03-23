@@ -9,7 +9,6 @@ import java.util.List;
 
 public class SessionRequestDto {
 
-    @NotNull
     public Long id;
 
     @NotEmpty(message = "une session doit comporter au moins un équipement à réserver")

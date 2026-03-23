@@ -14,11 +14,14 @@ public interface UtilisateurMapper {
 
     UtilisateurResponseDto toDto(Utilisateur utilisateur);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "dateExpiration", dateFormat = "yyyy-MM-dd")
     Utilisateur toEntity(UtilisateurRequestDto utilisateurRequestDto);
 
+
     Iterable<UtilisateurResumeDto> toResumeDtoIterable(Iterable<Utilisateur> utilisateurs);
 
+    @Mapping(target = "id", ignore = true)
     Utilisateur updateEntity(UtilisateurRequestDto utilisateurDto, @MappingTarget Utilisateur utilisateur);
 
 

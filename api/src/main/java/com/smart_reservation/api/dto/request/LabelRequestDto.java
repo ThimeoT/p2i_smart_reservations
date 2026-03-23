@@ -8,6 +8,8 @@ import java.util.List;
 
 public class LabelRequestDto {
 
+    public Long id;
+
     @NotNull
     public String nom;
 

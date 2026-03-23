@@ -26,13 +26,13 @@ public class LabelService {
 
     // TODO : Récupérer un label selon l'id
     @Transactional
-    public Label getLabelEntityById(Long labelId) {
+    public Label getLabelEntity(Long labelId) {
         return labelRepository.findById(labelId)
                 .orElseThrow(() -> new RessourceIntrouvableException("Label", labelId));
     }
     @Transactional
-    public LabelResponseDto getLabelById(Long labelId) {;
-        return labelMapper.toDto(getLabelEntityById(labelId));
+    public LabelResponseDto getLabel(Long labelId) {;
+        return labelMapper.toDto(getLabelEntity(labelId));
     }
     // TODO : Créer un label
     @Transactional
@@ -42,10 +42,11 @@ public class LabelService {
     }
     // TODO : Modifier un label
     @Transactional
-    public LabelResponseDto updateLabel(Long labelId, LabelRequestDto labelRequestDto) {
-        Label label = labelRepository.findById(labelId)
-                .orElseThrow(() -> new RessourceIntrouvableException("Label", labelId));
-        labelMapper.updateEntity(labelRequestDto, label);
+    public LabelResponseDto updateLabel(LabelRequestDto labelDto) {
+        if(labelDto.id==null) {throw new IllegalArgumentException("Id nécessaire pour mettre le label à jour");}
+        Label label = labelRepository.findById(labelDto.id)
+                .orElseThrow(() -> new RessourceIntrouvableException("Label", labelDto.id));
+        labelMapper.updateEntity(labelDto, label);
         return labelMapper.toDto(labelRepository.save(label));
     }
 

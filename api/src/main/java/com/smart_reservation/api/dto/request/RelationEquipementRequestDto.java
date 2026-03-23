@@ -9,6 +9,8 @@ import java.util.List;
 
 public class RelationEquipementRequestDto {
 
+    public Long id;
+
     @NotNull
     public StatutRelationEquipement statutRelationEquipement;
 

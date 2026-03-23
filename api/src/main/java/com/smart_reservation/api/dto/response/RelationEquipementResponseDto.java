@@ -8,18 +8,14 @@ import java.util.List;
 
 public class RelationEquipementResponseDto {
 
-    @NotNull
+
     public Long id;
 
-    @NotNull
     public StatutRelationEquipement statutRelationEquipement;
 
-    @NotNull
     public EquipementResumeDto equipementSource;
 
-    @NotNull
     public List<EquipementResumeDto> equipementsCible;
 
-    @NotNull
     public String commentaire;
 }

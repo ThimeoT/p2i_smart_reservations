@@ -9,6 +9,8 @@ import java.util.List;
 @Data
 public class ReservationRequestDto {
 
+    public Long id;
+
     @NotNull
     public Long utilisateurId;
 

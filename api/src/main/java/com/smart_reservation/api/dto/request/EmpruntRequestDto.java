@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 public class EmpruntRequestDto {
 
+    public Long id;
+
     @NotNull(message = "Un exemplaire doit être renseigné pour réaliser un emprunt.")
     public Long exemplaireId;
 

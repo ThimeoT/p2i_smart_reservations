@@ -25,7 +25,7 @@ public class Utilisateur {
     @Column(unique = true, nullable = false)
     private String prenom;
 
-    @Column
+    @Column(unique = true, nullable = false)
     private String mail;
 
     @Column(name = "mot_de_passe_hash")

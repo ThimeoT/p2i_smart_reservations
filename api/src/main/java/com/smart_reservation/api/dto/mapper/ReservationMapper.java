@@ -17,9 +17,11 @@ public interface ReservationMapper {
 
     ReservationResponseDto toDto(Reservation reservation);
 
+    @Mapping(target = "id", ignore = true)
     Reservation toEntity(ReservationRequestDto reservationRequestDto);
 
     Iterable<ReservationResponseDto> toDtoIterable(Iterable<Reservation> reservations);
 
+    @Mapping(target = "id", ignore = true)
     Reservation updateEntity(ReservationRequestDto reservationDto, @MappingTarget Reservation reservation);
 }

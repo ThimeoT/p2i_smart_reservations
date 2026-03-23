@@ -28,7 +28,8 @@ public class EmpruntService {
         }
         return true;
     }
-    // TODO : emprunter un exemplaire
+    // TODO : ajouter un emprunt à un exemplaire
+
 
     // TODO : retourner un exemplaire emprunté
     @Transactional

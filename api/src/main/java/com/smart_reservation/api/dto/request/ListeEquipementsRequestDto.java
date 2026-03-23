@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ListeEquipementsRequestDto {
 
+    public Long id;
+
     @NotBlank
     public String nom;
 

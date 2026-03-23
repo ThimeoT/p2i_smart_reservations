@@ -7,6 +7,8 @@ import java.util.List;
 
 public class LabelResponseDto {
 
+    public Long id;
+
     public String nom;
 
     public String description;

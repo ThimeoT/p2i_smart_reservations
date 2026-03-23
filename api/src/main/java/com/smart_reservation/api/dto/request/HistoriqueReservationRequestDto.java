@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 public class HistoriqueReservationRequestDto {
 
+    public Long id;
+
     @NotNull
     public StatutActionReservation action;
 
