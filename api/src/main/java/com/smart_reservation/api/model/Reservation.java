@@ -26,8 +26,8 @@ public class Reservation {
     @Column
     private String description;
 
-    @Column(name = "statut_reservation")
-    private StatutReservation statutReservation;
+    @Column(name = "statut")
+    private StatutReservation statut;
 
     @OneToMany(mappedBy = "reservation",
             cascade = CascadeType.ALL,

@@ -24,4 +24,9 @@ public class Exemplaire {
 
     @Column(name = "statut_disponibilite")
     private StatutDisponibilite statutDisponibilite;
+
+    @OneToMany(mappedBy = "exemplaire",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Emprunt> emprunts = new ArrayList<>();
 }

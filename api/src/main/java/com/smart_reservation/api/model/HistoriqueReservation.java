@@ -30,7 +30,6 @@ public class HistoriqueReservation {
     private String commentaire;
 
     @Column(name = "statut_action_reservation", nullable = false)
-    private StatutActionReservation statutActionReservation;
-
+    private StatutActionReservation action;
 
 }

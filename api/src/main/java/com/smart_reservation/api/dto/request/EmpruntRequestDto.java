@@ -10,7 +10,10 @@ public class EmpruntRequestDto {
 
     public Long id;
 
-    @NotNull(message = "Un exemplaire doit être renseigné pour réaliser un emprunt.")
+    public Long sessionId;
+
+    public Long utilisateurId;
+
     public Long exemplaireId;
 
     @Future(message="la date de retour doit être fixée dans le futur")

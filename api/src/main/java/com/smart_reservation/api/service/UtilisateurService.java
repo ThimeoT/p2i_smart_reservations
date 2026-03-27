@@ -1,10 +1,12 @@
 package com.smart_reservation.api.service;
 
+import com.smart_reservation.api.dto.mapper.EquipementMapper;
 import com.smart_reservation.api.dto.mapper.ListeEquipementsMapper;
 import com.smart_reservation.api.dto.request.ListeEquipementsRequestDto;
 import com.smart_reservation.api.dto.request.UtilisateurRequestDto;
 import com.smart_reservation.api.dto.response.ListeEquipementsResponseDto;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
+import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import com.smart_reservation.api.model.Equipement;
@@ -18,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,20 +32,29 @@ public class UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
 
-    private final EquipementRepository equipementRepository;
-
     private final UtilisateurMapper utilisateurMapper;
+
+    private final EquipementService equipementService;
+
+    private final EquipementMapper equipementMapper;
 
     private Boolean existsById(final long id) {
         return utilisateurRepository.existsById(id);
     }
 
-    @Transactional(readOnly = true)
-    public UtilisateurResponseDto getUtilisateur(final Long id) {
-        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(
+    // UTILISATEURS
+
+    @Transactional
+    public Utilisateur getUtilisateurEntity(Long id) {
+        return utilisateurRepository.findById(id).orElseThrow(
                 () -> new RessourceIntrouvableException("Utilisateur", id)
         );
-        return utilisateurMapper.toDto(utilisateur);
+    }
+
+    @Transactional(readOnly = true)
+    public UtilisateurResponseDto getUtilisateur(final Long id) {
+
+        return utilisateurMapper.toDto(getUtilisateurEntity(id));
     }
 
     @Transactional(readOnly = true)
@@ -73,12 +83,13 @@ public class UtilisateurService {
     @Transactional
     public UtilisateurResponseDto updateUtilisateur(Long id, UtilisateurRequestDto utilisateurRequestDto) {
 
-        Utilisateur utilisateur = utilisateurRepository.findById(id)
-                .orElseThrow(() -> new RessourceIntrouvableException("Utilisateur", id));
+        Utilisateur utilisateur = getUtilisateurEntity(id);
         utilisateurMapper.updateEntity(utilisateurRequestDto, utilisateur);
         utilisateurRepository.save(utilisateur);
         return utilisateurMapper.toDto(utilisateur);
     }
+
+    //LISTES EQUIPEMENTS
 
     @Transactional(readOnly = true)
     public Iterable<ListeEquipementsResponseDto> getListesEquipements(long idUtilisateur) {
@@ -93,14 +104,16 @@ public class UtilisateurService {
     @Transactional
     public void deleteListeEquipements(Long idListe) {
 
-        ListeEquipements liste = listeEquipementsRepository.findById(idListe).orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
+        ListeEquipements liste = listeEquipementsRepository.findById(idListe)
+                .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
         listeEquipementsRepository.delete(liste);
     }
 
     @Transactional(readOnly = true)
     public ListeEquipementsResponseDto getListeEquipements(Long idListe) {
 
-        ListeEquipements liste = listeEquipementsRepository.findById(idListe).orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
+        ListeEquipements liste = listeEquipementsRepository.findById(idListe)
+                .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
 
         return listeEquipementsMapper.toDto(liste);
     }
@@ -108,9 +121,10 @@ public class UtilisateurService {
     @Transactional
     public ListeEquipementsResponseDto updateListeEquipements(Long idListe, ListeEquipementsRequestDto listeEquipementsDto) {
 
-        ListeEquipements liste = listeEquipementsRepository.findById(idListe).orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
+        ListeEquipements liste = listeEquipementsRepository.findById(idListe)
+                .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
         listeEquipementsMapper.updateEntity(listeEquipementsDto, liste);
-        liste.setEquipements(getEquipementsFromIdList(listeEquipementsDto.equipementsId));
+        liste.setEquipements(equipementService.getEquipementsEntities(listeEquipementsDto.equipementsId));
         listeEquipementsRepository.save(liste);
 
         return listeEquipementsMapper.toDto(liste);
@@ -119,22 +133,35 @@ public class UtilisateurService {
     @Transactional
     public ListeEquipementsResponseDto createListeEquipements(Long utilisateurId, ListeEquipementsRequestDto listeEquipementsDto) {
 
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new
-                RessourceIntrouvableException("Utilisateur", utilisateurId));
+        Utilisateur utilisateur = getUtilisateurEntity(utilisateurId);
         ListeEquipements liste = listeEquipementsMapper.toEntity(listeEquipementsDto);
         liste.setUtilisateur(utilisateur);
-        liste.setEquipements(getEquipementsFromIdList(listeEquipementsDto.equipementsId));
+        liste.setEquipements(equipementService.getEquipementsEntities(listeEquipementsDto.equipementsId));
         listeEquipementsRepository.save(liste);
 
         return listeEquipementsMapper.toDto(liste);
     }
 
-    private List<Equipement> getEquipementsFromIdList(List<Long> equipementsId) {
+    // EQUIPEMENTS FAVORIS
 
-        return equipementsId.stream()
-                .map(id -> equipementRepository.findById(id)
-                        .orElseThrow(() -> new RessourceIntrouvableException("Equipement", id)))
-                .toList();
+    @Transactional
+    public Iterable<EquipementResumeDto> getEquipementsFavoris(Long utilisateurId) {
+        Utilisateur utilisateur = getUtilisateurEntity(utilisateurId);
+        return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
+    }
+
+    public Iterable<EquipementResumeDto> addEquipementFavori(Long utilisateurId, Long idEquipement) {
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new
+                RessourceIntrouvableException("Utilisateur", utilisateurId));
+        utilisateur.addEquipementFavori(equipementService.getEquipementEntity(idEquipement));
+        return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
+    }
+
+    public Iterable<EquipementResumeDto> removeEquipementFavori(Long utilisateurId, Long idEquipement) {
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new
+                RessourceIntrouvableException("Utilisateur", utilisateurId));
+        utilisateur.removeEquipementFavori(equipementService.getEquipementEntity(idEquipement));
+        return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
     }
 
 }

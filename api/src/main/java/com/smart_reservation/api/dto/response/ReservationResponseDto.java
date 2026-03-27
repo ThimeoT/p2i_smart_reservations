@@ -14,7 +14,7 @@ public class ReservationResponseDto {
 
     public String titre;
 
-    public StatutReservation statutReservation;
+    public StatutReservation statut;
 
     public List<SessionResponseDto> sessions;
 

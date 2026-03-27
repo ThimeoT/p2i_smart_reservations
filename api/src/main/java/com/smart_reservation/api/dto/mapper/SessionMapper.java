@@ -4,23 +4,37 @@ import com.smart_reservation.api.dto.request.SessionRequestDto;
 import com.smart_reservation.api.dto.response.SessionResponseDto;
 import com.smart_reservation.api.dto.resume.SessionResumeDto;
 import com.smart_reservation.api.model.Session;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 
+import java.util.List;
+
+@Mapper
 public interface SessionMapper {
 
+    @Named("toDto")
     SessionResponseDto toDto(Session session);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "reservation", ignore = true)
     Session toEntity(SessionRequestDto sessionDto);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "reservation", ignore = true)
+    List<Session> toEntityList(List<SessionRequestDto> sessionDtos);
+
+    @Named("toResumeDto")
     SessionResumeDto toResumeDto(Session session);
 
     Iterable<SessionResponseDto> toDtoIterable(Iterable<Session> sessions);
 
-
     Iterable<SessionResumeDto>  toDtoResumeIterable(Iterable<Session> sessions);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "reservation", ignore = true)
     Session updateEntity(SessionRequestDto sessionDto, @MappingTarget Session session);
+
+
 }

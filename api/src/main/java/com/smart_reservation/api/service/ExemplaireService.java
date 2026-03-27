@@ -3,6 +3,7 @@ package com.smart_reservation.api.service;
 import com.smart_reservation.api.dto.mapper.ExemplaireMapper;
 import com.smart_reservation.api.dto.request.ExemplaireRequestDto;
 import com.smart_reservation.api.dto.response.ExemplaireResponseDto;
+import com.smart_reservation.api.exception.QuantiteExemplaireIndisponibleException;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import com.smart_reservation.api.model.Equipement;
 import com.smart_reservation.api.model.Exemplaire;
@@ -23,6 +24,19 @@ public class ExemplaireService {
     private final EquipementService equipementService;
     private final ExemplaireRepository exemplaireRepository;
     private final ExemplaireMapper exemplaireMapper;
+
+    @Transactional
+    public Exemplaire getExemplaireEntity(Long exemplaireId)
+    {
+        return exemplaireRepository.findById(exemplaireId)
+                .orElseThrow(()->new RessourceIntrouvableException("Exemplaire", exemplaireId));
+    }
+
+    @Transactional
+    public ExemplaireResponseDto getExemplaire(Long exemplaireId)
+    {
+        return exemplaireMapper.toDto(getExemplaireEntity(exemplaireId));
+    }
 
     // TODO : Ajouter un exemplaire
     @Transactional
@@ -67,6 +81,16 @@ public class ExemplaireService {
                                                       LocalDateTime dateDebut,
                                                       LocalDateTime dateFin) {
         return exemplaireRepository.findExemplairesDisponibles(equipementId, dateDebut, dateFin);
+    }
+
+    public List<Exemplaire> getExemplairesDisponibles(Long equipementId,
+                                                      LocalDateTime dateDebut,
+                                                      LocalDateTime dateFin,Integer quantite) {
+        List<Exemplaire> exemplaires =  exemplaireRepository.findExemplairesDisponibles(equipementId, dateDebut, dateFin);
+        if(exemplaires.size()<quantite){
+            throw new QuantiteExemplaireIndisponibleException(equipementService.getEquipement(equipementId).nom, quantite, exemplaires.size());
+        }
+        return(exemplaires);
     }
 
 }

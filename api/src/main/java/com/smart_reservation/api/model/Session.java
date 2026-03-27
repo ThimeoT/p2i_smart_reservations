@@ -21,24 +21,24 @@ public class Session {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
-        @OneToMany(mappedBy = "session",
-                cascade = CascadeType.ALL,
-                orphanRemoval = true)
-        private List<Emprunt> emprunts = new ArrayList<>();
+    @OneToMany(mappedBy = "session",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Emprunt> emprunts = new ArrayList<>();
 
-        @Column
-        private LocalDateTime debut;
+    @Column
+    private LocalDateTime debut;
 
-        @Column
-        private LocalDateTime fin;
+    @Column
+    private LocalDateTime fin;
 
-        public void addEmprunt(Emprunt emprunt) {
-            this.emprunts.add(emprunt);
-            emprunt.setSession(this);
-        }
-
-        public void removeEmprunt(Emprunt emprunt) {
-            this.emprunts.remove(emprunt);
-            emprunt.setSession(null);
-        }
+    public void addEmprunt(Emprunt emprunt) {
+        this.emprunts.add(emprunt);
+        emprunt.setSession(this);
     }
+
+    public void removeEmprunt(Emprunt emprunt) {
+        this.emprunts.remove(emprunt);
+        emprunt.setSession(null);
+    }
+}

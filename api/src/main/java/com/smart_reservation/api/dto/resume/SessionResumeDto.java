@@ -9,4 +9,6 @@ public class SessionResumeDto {
     public LocalDateTime debut;
 
     public LocalDateTime fin;
+
+    public ReservationResumeDto reservation;
 }

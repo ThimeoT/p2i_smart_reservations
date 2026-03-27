@@ -7,14 +7,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper
+@Mapper(uses = EquipementMapper.class)
 public interface ListeEquipementsMapper {
 
     @Mapping(target = "id", ignore = true)
     ListeEquipements toEntity(ListeEquipementsRequestDto listeEquipementResponseDto);
 
+    @Mapping(target = "utilisateur", ignore = true)
+    @Mapping(target = "equipements", qualifiedByName = "toResumeDto")
     ListeEquipementsResponseDto toDto(ListeEquipements listeEquipements);
     Iterable<ListeEquipementsResponseDto> toDtoIterable(Iterable<ListeEquipements> listeEquipement);
+
+
     @Mapping(target = "id", ignore = true)
     ListeEquipements updateEntity(ListeEquipementsRequestDto listeEquipementDto, @MappingTarget ListeEquipements listeEquipements);
 

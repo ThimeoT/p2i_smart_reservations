@@ -18,7 +18,7 @@ public class ReservationRequestDto {
     public String titre;
 
     @NotNull
-    public StatutReservation statutReservation;
+    public StatutReservation statut;
 
     @NotNull
     public List<SessionRequestDto> sessions;

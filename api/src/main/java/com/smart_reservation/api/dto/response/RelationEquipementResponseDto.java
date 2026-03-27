@@ -13,9 +13,9 @@ public class RelationEquipementResponseDto {
 
     public StatutRelationEquipement statutRelationEquipement;
 
-    public EquipementResumeDto equipementSource;
+    public Long equipementSourceId;
 
-    public List<EquipementResumeDto> equipementsCible;
+    public List<Long> equipementsCibleIds;
 
     public String commentaire;
 }

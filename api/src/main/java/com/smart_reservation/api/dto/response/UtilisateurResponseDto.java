@@ -20,4 +20,5 @@ public class UtilisateurResponseDto {
     public String formation;
 
     public LocalDateTime dateExpiration;
+
 }

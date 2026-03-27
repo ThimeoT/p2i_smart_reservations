@@ -15,7 +15,5 @@ public class LabelResponseDto {
 
     public String color;
 
-    public List<EquipementResumeDto> equipements;
-
 
 }

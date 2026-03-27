@@ -7,7 +7,9 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -43,7 +45,7 @@ public class Utilisateur {
             joinColumns = @JoinColumn(name = "utilisateur_id"),
             inverseJoinColumns = @JoinColumn(name = "equipement_id")
     )
-    private List<Equipement> equipementsFavoris = new ArrayList<>();
+    private Set<Equipement> equipementsFavoris = new HashSet<>();
 
     @OneToMany(mappedBy = "utilisateur",
             cascade = CascadeType.ALL,
@@ -56,5 +58,4 @@ public class Utilisateur {
     public void removeEquipementFavori(Equipement equipement){
         equipementsFavoris.remove(equipement);
     }
-
 }
