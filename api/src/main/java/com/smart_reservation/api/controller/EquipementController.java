@@ -71,3 +71,4 @@ public class EquipementController {
     // TODO :
 
 }
+

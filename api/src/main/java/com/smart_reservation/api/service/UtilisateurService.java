@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @Service
@@ -110,11 +111,13 @@ public class UtilisateurService {
     }
 
     @Transactional(readOnly = true)
-    public ListeEquipementsResponseDto getListeEquipements(Long idListe) {
+    public ListeEquipementsResponseDto getListeEquipements(Long idListe,Long idUtilisateur) {
 
         ListeEquipements liste = listeEquipementsRepository.findById(idListe)
                 .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
-
+        if(!liste.getUtilisateur().getId().equals(idUtilisateur)) {
+            throw new AccesRefuseException("Vous n'avez pas le droit d'accéder à la liste d'un autre utilisateur");
+        }
         return listeEquipementsMapper.toDto(liste);
     }
 

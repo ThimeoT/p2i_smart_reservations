@@ -35,4 +35,9 @@ public class GestionnaireExceptions {
     public ResponseEntity<String> handleQuantiteExemplaireIndisponible(QuantiteExemplaireIndisponibleException exception) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(exception.getMessage());
     }
+
+    @ExceptionHandler(AccesRefuseException.class)
+    public ResponseEntity<String> handleAccesRefuse(AccesRefuseException exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
+    }
 }
