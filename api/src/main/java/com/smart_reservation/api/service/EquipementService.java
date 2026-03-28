@@ -187,7 +187,7 @@ public class EquipementService {
 
     // LABELS
     @Transactional
-    public EquipementResponseDto addLabelToEquipement(Long labelId, Long equipementId) {
+    public EquipementResponseDto addLabelFromEquipement(Long labelId, Long equipementId) {
         Equipement equipement = equipementRepository.findById(equipementId).orElseThrow(() -> new RessourceIntrouvableException("Equipement", equipementId));
         Label label = labelService.getLabelEntity(labelId);
         equipement.addLabel(label);

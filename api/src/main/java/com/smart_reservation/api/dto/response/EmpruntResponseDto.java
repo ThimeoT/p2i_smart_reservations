@@ -9,8 +9,6 @@ public class EmpruntResponseDto {
 
     public Long id;
 
-    public UtilisateurResumeDto utilisateur;
-
     public SessionResumeDto session;
 
     public ExemplaireResponseDto exemplaire;

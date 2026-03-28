@@ -18,5 +18,5 @@ public class ReservationResponseDto {
 
     public List<SessionResponseDto> sessions;
 
-    public List<HistoriqueReservationResponseDto> historiqueReservation;
+    public List<HistoriqueReservationResponseDto> historiques;
 }

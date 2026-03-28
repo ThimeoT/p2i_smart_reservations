@@ -27,4 +27,6 @@ public interface ExemplaireRepository extends CrudRepository<Exemplaire,Long> {
             @Param("dateDebut") LocalDateTime dateDebut,
             @Param("dateFin") LocalDateTime dateFin
     );
+
+    Iterable<Exemplaire> findAllByEquipement_Id(Long equipementId);
 }

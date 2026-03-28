@@ -10,7 +10,6 @@ import com.smart_reservation.api.model.Exemplaire;
 import com.smart_reservation.api.model.StatutDisponibilite;
 import com.smart_reservation.api.repository.ExemplaireRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +25,12 @@ public class ExemplaireService {
     private final ExemplaireMapper exemplaireMapper;
 
     @Transactional
+    public Iterable<ExemplaireResponseDto> getExemplaires()
+    {
+        return exemplaireMapper.toDtoIterable(exemplaireRepository.findAll());
+    }
+
+    @Transactional
     public Exemplaire getExemplaireEntity(Long exemplaireId)
     {
         return exemplaireRepository.findById(exemplaireId)
@@ -36,6 +41,12 @@ public class ExemplaireService {
     public ExemplaireResponseDto getExemplaire(Long exemplaireId)
     {
         return exemplaireMapper.toDto(getExemplaireEntity(exemplaireId));
+    }
+
+    @Transactional
+    public Iterable<ExemplaireResponseDto> getExemplairesFromEquipement(Long equipementId)
+    {
+        return exemplaireMapper.toDtoIterable(exemplaireRepository.findAllByEquipement_Id(equipementId));
     }
 
     // TODO : Ajouter un exemplaire

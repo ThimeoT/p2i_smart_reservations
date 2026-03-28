@@ -146,6 +146,12 @@ public class UtilisateurService {
         return listeEquipementsMapper.toDto(liste);
     }
 
+    private void verifierProprietaire(ListeEquipements liste, Long idUtilisateur) {
+        if(!liste.getUtilisateur().getId().equals(idUtilisateur)) {
+            throw new AccesRefuseException("Vous n'avez pas le droit d'accéder à la liste d'un autre utilisateur");
+        }
+    }
+
     // EQUIPEMENTS FAVORIS
 
     @Transactional

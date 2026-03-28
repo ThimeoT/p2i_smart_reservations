@@ -1,36 +1,53 @@
 package com.smart_reservation.api.controller;
 
+import com.smart_reservation.api.dto.request.EquipementRequestDto;
 import com.smart_reservation.api.dto.response.EquipementResponseDto;
+import com.smart_reservation.api.dto.response.ExemplaireResponseDto;
+import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 import com.smart_reservation.api.service.EquipementService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.smart_reservation.api.service.ExemplaireService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/equipements")
+@RequiredArgsConstructor
 public class EquipementController {
 
-    @Autowired
-    private EquipementService equipementService;
+
+    private final EquipementService equipementService;
+    private final ExemplaireService exemplaireService;
 
 
-    // TODO : get equipements /
+    @GetMapping
+    public ResponseEntity<Iterable<EquipementResumeDto>> getEquipements() {
+        return ResponseEntity.ok(equipementService.getEquipements());
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<EquipementResponseDto> getEquipement(@PathVariable Long id) {
+        return ResponseEntity.ok(equipementService.getEquipement(id));
+    }
 
+    @PostMapping
+    public ResponseEntity<EquipementResponseDto> createEquipement(@RequestBody EquipementRequestDto equipementRequestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(equipementService.createEquipement(equipementRequestDto));
+    }
 
+    @PutMapping("/id")
+    public ResponseEntity<EquipementResponseDto>  updateEquipement(@RequestBody EquipementRequestDto equipementRequestDto,@PathVariable Long id) {
+        return ResponseEntity.ok(equipementService.updateEquipement(equipementRequestDto,id));
+    }
 
-    // TODO : get equipements / id
+    @DeleteMapping
+    public ResponseEntity<Void> deleteEquipement(@PathVariable Long id) {
+        equipementService.deleteEquipement(id);
+        return ResponseEntity.noContent().build();
+    }
 
-
-    // TODO : get equipements / labels
-
-    // TODO : post equipements
-
-    // TODO : put equipements / id
-
-    // TODO : delete equipements / id
-
-    // -- relations
+    // -- relations // pour l'instant pas utile car on modifie tout depuis l'équipement
 
     // TODO : GET equipements/{id}/relations
 
@@ -47,20 +64,30 @@ public class EquipementController {
     // TODO : GET equipements/{id}/labels
 
     // TODO : PUT equipements/{id}/labels
+    @PatchMapping("/{equipementId}/labels/{labelId}/add")
+    public ResponseEntity<EquipementResponseDto> addLabel(@PathVariable Long labelId, @PathVariable Long equipementId) {
+        return ResponseEntity.ok(equipementService.addLabelFromEquipement(labelId, equipementId));
+    }
+
+
+    @PatchMapping("/{equipementId}/labels/{labelId}/remove")
+    public ResponseEntity<EquipementResponseDto> removeLabel(@PathVariable Long labelId, @PathVariable Long equipementId) {
+        return ResponseEntity.ok(equipementService.removeLabelFromEquipement(labelId, equipementId));
+    }
 
     // TODO : POST equipements/{id}/labels
 
     // TODO : DELETE equipements/{id}/labels/{id}
 
 
+
     // -- exemplaires --
 
     // TODO : GET equipements/{id}/exemplaires
-
-    // TODO : Get équipements/{idEquipement}/exemplaires/{id}
-
-
-    // TODO :
+    @GetMapping("/{id}/exemplaires")
+    public ResponseEntity<Iterable<ExemplaireResponseDto>> getExemplairesFromEquipement(@PathVariable Long id) {
+        return ResponseEntity.ok(exemplaireService.getExemplairesFromEquipement(id));
+    }
 
     // TODO :
 

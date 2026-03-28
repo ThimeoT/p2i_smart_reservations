@@ -21,7 +21,7 @@ public class EquipementRequestDto {
     public List<Long> labelsId;
 
     @NotNull
-    public List< @URL(message="un des liens des ressources est invalide") String> lienRessources;
+    public List<@URL(message="un des liens des ressources est invalide") String> liensRessources;
 
     @Valid
     public List<RelationEquipementRequestDto> relationsEquipement;

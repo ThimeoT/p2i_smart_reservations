@@ -4,7 +4,6 @@ import com.smart_reservation.api.dto.EquipementQuantiteDto;
 import com.smart_reservation.api.dto.mapper.HistoriqueReservationMapper;
 import com.smart_reservation.api.dto.mapper.ReservationMapper;
 import com.smart_reservation.api.dto.mapper.SessionMapper;
-import com.smart_reservation.api.dto.request.HistoriqueReservationRequestDto;
 import com.smart_reservation.api.dto.request.ReservationRequestDto;
 import com.smart_reservation.api.dto.request.SessionRequestDto;
 import com.smart_reservation.api.dto.response.HistoriqueReservationResponseDto;
@@ -45,12 +44,12 @@ public class ReservationService {
     // TODO : Récupérer toutes les réservations
     @Transactional
     public Iterable<ReservationResumeDto> getReservations() {
-        return reservationMapper.toDtoIterable(reservationRepository.findAll());
+        return reservationMapper.toResumeDtoIterable(reservationRepository.findAll());
     }
 
     @Transactional
     public Iterable<ReservationResumeDto> getReservations(List<Long> ids) {
-        return reservationMapper.toDtoIterable(reservationRepository.findAllById(ids));
+        return reservationMapper.toResumeDtoIterable(reservationRepository.findAllById(ids));
     }
 
     // TODO : Récupérer une réservation selon son id
@@ -69,7 +68,7 @@ public class ReservationService {
     // TODO : Récupérer les réservations d'un utilisateur
 
     public Iterable<ReservationResumeDto> getReservationsByUtilisateurId(Long id) {
-        return reservationMapper.toDtoIterable(reservationRepository.findByUtilisateur_Id(id));
+        return reservationMapper.toResumeDtoIterable(reservationRepository.findByUtilisateur_Id(id));
     }
 
     // TODO : Ajouter une réservation
@@ -131,7 +130,7 @@ public class ReservationService {
     }
     // TODO : Valider une réservation
     @Transactional
-    public ReservationResponseDto validerReservation(Long reservationId,Long utilisateurId, String message, StatutActionReservation action) {
+    public ReservationResponseDto validerReservation(Long reservationId,Long utilisateurId, String message) {
         Reservation reservation = getReservationEntity(reservationId);
         Utilisateur utilisateur = utilisateurService.getUtilisateurEntity(utilisateurId);
         reservation.setStatut(StatutReservation.VALIDEE);
@@ -143,14 +142,24 @@ public class ReservationService {
 
     // TODO : Refuser une réservation
     @Transactional
-    public ReservationResponseDto refuserReservation(Long reservationId,Long utilisateurId, String message, StatutActionReservation action) {
+    public ReservationResponseDto refuserReservation(Long reservationId,Long utilisateurId, String message) {
         Reservation reservation = getReservationEntity(reservationId);
         Utilisateur utilisateur = utilisateurService.getUtilisateurEntity(utilisateurId);
-        reservation.setStatut(StatutReservation.VALIDEE);
+        reservation.setStatut(StatutReservation.REFUSEE);
         reservationRepository.save(reservation);
         ajouterHistoriqueReservation(
-                reservation, utilisateur, StatutActionReservation.VALIDATION, message);
+                reservation, utilisateur, StatutActionReservation.REFUS, message);
         return reservationMapper.toDto(reservation);
+    }
+
+    @Transactional
+    public void deleteReservation(Long reservationId)
+    {
+        if(!reservationRepository.existsById(reservationId))
+        {
+            throw new RessourceIntrouvableException("Réservation", reservationId);
+        }
+        reservationRepository.deleteById(reservationId);
     }
 
 
@@ -227,6 +236,7 @@ public class ReservationService {
         sessionRepository.delete(session);
     }
 
+    @Transactional
     private void verifierAbsenceSuperposition(List<SessionRequestDto> sessionRequestDtos) {
         for(int i = 0; i < sessionRequestDtos.size(); i++) {
             for(int j = i + 1; j < sessionRequestDtos.size(); j++) {
@@ -240,10 +250,12 @@ public class ReservationService {
     }
 
     // HISTORIQUE DE RESERVATION
+
     public List<HistoriqueReservationResponseDto> getHistoriqueFromReservation(Long reservationId) {
-        return getReservation(reservationId).historiqueReservation;
+        return getReservation(reservationId).historiques;
     }
 
+    @Transactional
     private HistoriqueReservationResponseDto ajouterHistoriqueReservation(Reservation reservation, Utilisateur utilisateur, StatutActionReservation statut, String commentaire) {
         HistoriqueReservation historique = new HistoriqueReservation();
         historique.setUtilisateur(utilisateur);

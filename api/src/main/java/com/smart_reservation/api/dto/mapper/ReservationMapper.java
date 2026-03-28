@@ -4,10 +4,7 @@ import com.smart_reservation.api.dto.request.ReservationRequestDto;
 import com.smart_reservation.api.dto.response.ReservationResponseDto;
 import com.smart_reservation.api.dto.resume.ReservationResumeDto;
 import com.smart_reservation.api.model.Reservation;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
 @Mapper(uses = {UtilisateurMapper.class, SessionMapper.class, HistoriqueReservationMapper.class})
 public interface ReservationMapper {
@@ -19,6 +16,7 @@ public interface ReservationMapper {
 
     @Mapping(target="sessions", qualifiedByName="toDto")
     @Mapping(target = "utilisateur", qualifiedByName = "toResumeDto")
+    @Mapping(target = "historiques", qualifiedByName = "toDto")
     ReservationResponseDto toDto(Reservation reservation);
 
 
@@ -28,9 +26,8 @@ public interface ReservationMapper {
     @Mapping(target = "historiques", ignore = true)
     Reservation toEntity(ReservationRequestDto reservationRequestDto);
 
-    @Mapping(target="sessions", qualifiedByName="toDto")
-    @Mapping(target = "utilisateur", qualifiedByName = "toResumeDto")
-    Iterable<ReservationResumeDto> toDtoIterable(Iterable<Reservation> reservations);
+    @IterableMapping(qualifiedByName = "toResumeDto")
+    Iterable<ReservationResumeDto> toResumeDtoIterable(Iterable<Reservation> reservations);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "sessions", ignore = true)

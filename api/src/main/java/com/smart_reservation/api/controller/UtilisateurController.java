@@ -7,8 +7,6 @@ import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
 import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.connector.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

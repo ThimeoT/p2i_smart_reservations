@@ -48,6 +48,12 @@ public class EmpruntService {
         return empruntRepository.findAllBySession_DebutAfterAndSession_FinBefore(dateDebut,dateFin);
     }
 
+    @Transactional
+    public EmpruntResponseDto getEmprunt(Long id)
+    {
+        return empruntMapper.toDto(getEmpruntEntity(id));
+    }
+
 
     @Transactional
     public Emprunt getEmpruntEntity(Long id)

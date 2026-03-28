@@ -16,7 +16,7 @@ public class EquipementResponseDto {
 
     public List<ExemplaireResponseDto> exemplaires;
 
-    public List<String> lienRessources;
+    public List<String> liensRessources;
 
     public List<RelationEquipementResponseDto> relationsEquipement;
 }

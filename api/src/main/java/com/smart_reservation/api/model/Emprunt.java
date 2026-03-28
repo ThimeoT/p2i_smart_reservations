@@ -23,8 +23,6 @@ public class Emprunt {
     @JoinColumn(name = "exemplaire_id", nullable = false)
     private Exemplaire exemplaire;
 
-
-
     @Column
     private LocalDateTime dateRetourPrevue;
 

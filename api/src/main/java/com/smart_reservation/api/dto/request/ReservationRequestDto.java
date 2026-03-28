@@ -1,6 +1,7 @@
 package com.smart_reservation.api.dto.request;
 import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import com.smart_reservation.api.model.StatutReservation;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -14,8 +15,11 @@ public class ReservationRequestDto {
     @NotNull
     public Long utilisateurId;
 
-    @NotNull
+    @NotBlank
     public String titre;
+
+    @NotNull
+    public String description;
 
     @NotNull
     public StatutReservation statut;
