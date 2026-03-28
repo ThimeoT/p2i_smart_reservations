@@ -60,7 +60,8 @@ public class UtilisateurController {
 
     @GetMapping("/{idUtilisateur}/listeEquipement/{idListeEquipement}")
     public ResponseEntity<ListeEquipementsResponseDto> getListeEquipements(
-            @PathVariable Long idListeEquipement)
+            @PathVariable Long idListeEquipement,
+            @PathVariable Long idUtilisateur)
     {
         return ResponseEntity.ok(utilisateurService.getListeEquipements(idListeEquipement,idUtilisateur));
     }

@@ -8,6 +8,7 @@ import com.smart_reservation.api.dto.response.ListeEquipementsResponseDto;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
 import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
+import com.smart_reservation.api.exception.AccesRefuseException;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import com.smart_reservation.api.model.Equipement;
 import com.smart_reservation.api.model.ListeEquipements;
