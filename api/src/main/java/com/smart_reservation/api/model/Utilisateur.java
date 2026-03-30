@@ -24,7 +24,7 @@ public class Utilisateur {
     @Column
     private String nom;
 
-    @Column(unique = true, nullable = false)
+    @Column
     private String prenom;
 
     @Column(unique = true, nullable = false)
@@ -32,6 +32,9 @@ public class Utilisateur {
 
     @Column(name = "mot_de_passe_hash")
     private String motDePasseHash;
+
+    @Column
+    private String role;
 
     @Column
     private String formation;

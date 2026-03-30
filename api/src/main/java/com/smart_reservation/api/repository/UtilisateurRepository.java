@@ -7,4 +7,5 @@ import com.smart_reservation.api.model.Utilisateur;
 
 @Repository
 public interface UtilisateurRepository extends CrudRepository<Utilisateur, Long> {
+    Utilisateur findByMail(String username);
 }
