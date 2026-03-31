@@ -3,6 +3,8 @@ package com.smart_reservation.api.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.smart_reservation.api.exception.RessourceIntrouvableException;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 import com.smart_reservation.api.model.Utilisateur;
 import com.smart_reservation.api.repository.UtilisateurRepository;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -25,14 +29,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UtilisateurRepository dbUserRepository;
 
     @Override
-    public UserDetails loadUserByUsername(@NotNull String mail) throws UsernameNotFoundException {
-        if(mail == null) {
-            throw new UsernameNotFoundException("Mail ne peut pas être null");
-        }
-        Utilisateur user = dbUserRepository.findByMail(mail);
-        if(user == null) {
-            throw new UsernameNotFoundException("Utilisateur non trouvé : " + mail);
-        }
+    public UserDetails loadUserByUsername(@Email String mail) throws UsernameNotFoundException {
+        Utilisateur user = dbUserRepository.findByMail(mail).orElseThrow(()-> new RessourceIntrouvableException("Utilisateur","le mail",mail));
 
         return new User(user.getMail(), user.getMotDePasseHash(), getGrantedAuthorities(user.getRole()));
     }

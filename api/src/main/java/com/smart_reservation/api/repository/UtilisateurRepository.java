@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.smart_reservation.api.model.Utilisateur;
 
+import java.util.Optional;
+
 @Repository
 public interface UtilisateurRepository extends CrudRepository<Utilisateur, Long> {
-    Utilisateur findByMail(String username);
+    Optional<Utilisateur> findByMail(String username);
 }

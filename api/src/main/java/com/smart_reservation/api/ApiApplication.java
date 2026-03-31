@@ -30,7 +30,7 @@ public class ApiApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("=== SMART RESERVATIONS | BACK-END ===");
-		if(utilisateurRepository.findByMail("admin@test.com") == null) {
+		if(utilisateurRepository.findByMail("admin@test.com").isEmpty()) {
 			Utilisateur admin = new Utilisateur();
 			admin.setMail("admin@test.com");
 			admin.setMotDePasseHash(passwordEncoder.encode("admin"));
@@ -38,7 +38,7 @@ public class ApiApplication implements CommandLineRunner{
 			utilisateurRepository.save(admin);
 		}
 
-		if(utilisateurRepository.findByMail("user@test.com") == null) {
+		if(utilisateurRepository.findByMail("user@test.com").isEmpty()) {
 			Utilisateur user = new Utilisateur();
 			user.setMail("user@test.com");
 			user.setMotDePasseHash(passwordEncoder.encode("user"));
