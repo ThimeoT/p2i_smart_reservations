@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { loginApi, getMeApi } from '../api/auth.api'
 import { useAuth } from '../hooks/useAuth'
 import type { LoginCredentials } from '../types/auth.types'
+import { useIsAdmin } from '../hooks/useIsAdmin'
 
 export default function LoginPage() {
   const { setUser } = useAuth()
@@ -19,7 +20,13 @@ export default function LoginPage() {
       await loginApi(data)
       const user = await getMeApi()
       setUser(user)
-      navigate('/app/admin')
+      if(useIsAdmin())
+      {
+        navigate('/app/admin')
+      }
+      else{
+        navigate('/user')
+      }
     } catch {
       setError('root', { message: 'Identifiants incorrects' })
     }

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import axiosInstance from '../../config/axiosInstance'
 import { getMeApi } from '../../features/auth/api/auth.api'
 import { useAuth } from '../../features/auth/hooks/useAuth'
 
@@ -6,9 +7,10 @@ export function useInitializeApp() {
   const { setUser } = useAuth()
 
   useEffect(() => {
-    // Au démarrage, vérifie si une session existe déjà côté Spring
-    getMeApi()
+    // 1. Récupère le cookie XSRF-TOKEN auprès de Spring
+    axiosInstance.get('/csrf')
+      .then(() => getMeApi())   // 2. Vérifie si une session existe déjà
       .then(setUser)
-      .catch(() => {}) // pas de session → reste sur /login
+      .catch(() => {})          // pas de session → reste sur /login
   }, [])
 }

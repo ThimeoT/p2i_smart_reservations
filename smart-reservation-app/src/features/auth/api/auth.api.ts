@@ -1,4 +1,4 @@
-import axiosInstance from '../../../api/axiosInstance'
+import axiosInstance from '../../../config/axiosInstance'
 import type { LoginCredentials } from '../types/auth.types'
 
 export const loginApi = async (credentials: LoginCredentials) => {
@@ -10,6 +10,6 @@ export const loginApi = async (credentials: LoginCredentials) => {
 }
 
 export const getMeApi = async () => {
-  const { data } = await axiosInstance.get('/user/me') // à créer côté Spring
+  const { data } = await axiosInstance.get('/user/current') // à créer côté Spring
   return data
 }

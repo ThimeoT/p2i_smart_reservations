@@ -1,5 +1,5 @@
 export interface LoginCredentials {
-  username: string  // Spring attend "username" par défaut
+  username: string 
   password: string
 }
 
