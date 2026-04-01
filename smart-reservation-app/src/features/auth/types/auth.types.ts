@@ -4,6 +4,7 @@ export interface LoginCredentials {
 }
 
 export interface AuthUser {
+  id : number
   mail: string
   role: 'ADMIN' | 'USER'
 }
