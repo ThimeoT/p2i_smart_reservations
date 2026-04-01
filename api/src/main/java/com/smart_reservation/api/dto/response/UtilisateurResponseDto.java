@@ -1,10 +1,6 @@
 package com.smart_reservation.api.dto.response;
-
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 public class UtilisateurResponseDto {
@@ -18,6 +14,8 @@ public class UtilisateurResponseDto {
     public String mail;
 
     public String formation;
+
+    public String role;
 
     public LocalDateTime dateExpiration;
 

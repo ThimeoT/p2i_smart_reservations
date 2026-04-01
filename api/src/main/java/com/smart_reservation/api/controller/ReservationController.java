@@ -4,6 +4,7 @@ import com.smart_reservation.api.dto.request.ReservationRequestDto;
 import com.smart_reservation.api.dto.response.ReservationResponseDto;
 import com.smart_reservation.api.dto.resume.ReservationResumeDto;
 import com.smart_reservation.api.service.ReservationService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationResponseDto> saveReservation(@RequestBody ReservationRequestDto reservationRequestDto){
+    public ResponseEntity<ReservationResponseDto> saveReservation(@Valid  @RequestBody ReservationRequestDto reservationRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.createReservation(reservationRequestDto));
     }
 
@@ -37,7 +38,7 @@ public class ReservationController {
     }
 
     @PatchMapping("/{id}/valider")
-    public ResponseEntity<ReservationResponseDto> validerReservation(@PathVariable Long id,@RequestBody Long utilisateurId, @RequestBody String message){
+    public ResponseEntity<ReservationResponseDto> validerReservation(@PathVariable Long id, @Valid @RequestBody Long utilisateurId,@Valid @RequestBody String message){
         return ResponseEntity.ok(reservationService.validerReservation(id, utilisateurId, message));
     }
 

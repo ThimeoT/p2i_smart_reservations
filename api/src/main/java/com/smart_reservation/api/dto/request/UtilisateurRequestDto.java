@@ -17,10 +17,10 @@ public class UtilisateurRequestDto {
     @PositiveOrZero
     public Long id;
 
-    @NotBlank
+    @NotBlank(message = "Un utilisateur ne peut pas avoir de nom vide !")
     public String nom;
 
-    @NotBlank
+    @NotBlank( message = "Un utilisateur ne peut pas avoir de prénom vide !")
     public String prenom;
 
     @Email

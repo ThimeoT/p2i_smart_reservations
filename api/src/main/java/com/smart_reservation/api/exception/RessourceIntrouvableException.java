@@ -5,6 +5,6 @@ public class RessourceIntrouvableException extends RuntimeException {
         super(categorie + " avec l'id " + id + " introuvable");
     }
     public RessourceIntrouvableException(String categorie, String ressource, String valeur) {
-        super(categorie + " avec "+ ressource + " : "  + valeur + " introuvable");
+        super(categorie + " avec la ressource '"+ ressource + "' : "  + valeur + " introuvable");
     }
 }

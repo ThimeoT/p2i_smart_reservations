@@ -53,6 +53,11 @@ public class UtilisateurService {
         );
     }
 
+    public UtilisateurResponseDto getUtilisateurByMail(String mail) {
+        return utilisateurMapper.toDto(utilisateurRepository.findByMail(mail)
+                .orElseThrow(() -> new RessourceIntrouvableException("Utilisateur","mail", mail)));
+    }
+
     @Transactional(readOnly = true)
     public UtilisateurResponseDto getUtilisateur(final Long id) {
 
@@ -173,5 +178,6 @@ public class UtilisateurService {
         utilisateur.removeEquipementFavori(equipementService.getEquipementEntity(idEquipement));
         return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
     }
+
 
 }
