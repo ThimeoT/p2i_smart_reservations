@@ -2,8 +2,10 @@ package com.smart_reservation.api.controller;
 
 import com.smart_reservation.api.model.Utilisateur;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,8 +15,11 @@ import java.util.Map;
 public class AuthentificationController {
 
     @GetMapping("/csrf")
-    public ResponseEntity<?> getCsrf() {
+    public ResponseEntity<?> getCsrf(HttpServletRequest request) {
+        CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        token.getToken(); // 👈 ce simple appel déclenche l'écriture du cookie
         return ResponseEntity.ok().build();
+
     }
 
     @GetMapping("/user/current")

@@ -3,6 +3,7 @@ package com.smart_reservation.api.configuration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -37,25 +38,34 @@ public class SpringSecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
+                        .ignoringRequestMatchers("/crsf","/login")
                 )
                 .authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/csrf","/login").permitAll();
-            auth.requestMatchers("/user/current").authenticated();
-            auth.requestMatchers("/user").hasRole("USER");
-            auth.requestMatchers("/admin").hasRole("ADMIN");
-            auth.anyRequest().authenticated();
-        }).formLogin(form -> form
-                .loginProcessingUrl("/login")
-                .successHandler((req, res, auth) -> res.setStatus(200))
-                .failureHandler((req, res, ex) -> res.setStatus(401))
-        ).build();
+                    auth.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll();
+                    auth.requestMatchers("/csrf", "/login").permitAll();
+                    auth.requestMatchers("/user/current").authenticated();
+                    auth.requestMatchers("/user").hasRole("USER");
+                    auth.requestMatchers("/admin").hasRole("ADMIN");
+                    auth.anyRequest().authenticated();
+                }).formLogin(form -> form
+                        .loginProcessingUrl("/login")
+                        .successHandler((req, res, auth) -> res.setStatus(200))
+                        .failureHandler((req, res, ex) -> res.setStatus(401))
+
+
+                ).logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessHandler((req, res, auth) -> res.setStatus(200))
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                ).build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config  = new CorsConfiguration();
+        CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:5173"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE","PATCH","OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
