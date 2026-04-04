@@ -31,11 +31,12 @@ public class JwtService {
         return new SecretKeySpec(keyBytes, "HmacSHA256");
     }
 
-    public String generateToken(String mail, String role) {
+    public String generateToken( String mail, String role, Long id) {
         Instant now = Instant.now();
         JWTClaimsSet claims = new JWTClaimsSet.Builder()
                 .subject(mail)
                 .claim("role", role)
+                .claim("id", id)
                 .issueTime(Date.from(now))
                 .expirationTime(Date.from(now.plusMillis(expiration)))
                 .build();

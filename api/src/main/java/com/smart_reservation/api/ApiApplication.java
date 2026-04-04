@@ -15,6 +15,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @SpringBootApplication
 @Component
 @RequiredArgsConstructor
@@ -41,8 +43,12 @@ public class ApiApplication implements CommandLineRunner{
 		if(utilisateurRepository.findByMail("user@test.com").isEmpty()) {
 			Utilisateur user = new Utilisateur();
 			user.setMail("user@test.com");
+			user.setNom("user");
+			user.setPrenom("test");
 			user.setMotDePasseHash(passwordEncoder.encode("user"));
 			user.setRole("USER");
+			user.setDateExpiration(LocalDate.now().plusYears(5));
+			user.setFormation("master test 2");
 			utilisateurRepository.save(user);
 		}
 

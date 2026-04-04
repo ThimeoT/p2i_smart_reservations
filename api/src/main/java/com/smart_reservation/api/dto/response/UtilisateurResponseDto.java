@@ -1,6 +1,7 @@
 package com.smart_reservation.api.dto.response;
 import lombok.Data;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 @Data
 public class UtilisateurResponseDto {
@@ -17,6 +18,6 @@ public class UtilisateurResponseDto {
 
     public String role;
 
-    public LocalDateTime dateExpiration;
+    public LocalDate dateExpiration;
 
 }

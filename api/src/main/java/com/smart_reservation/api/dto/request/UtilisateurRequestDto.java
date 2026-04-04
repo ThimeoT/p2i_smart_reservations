@@ -1,15 +1,10 @@
 package com.smart_reservation.api.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
 
 @Data
 public class UtilisateurRequestDto {
@@ -29,7 +24,7 @@ public class UtilisateurRequestDto {
     @NotBlank
     public String formation;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    public LocalDateTime dateExpiration;
+    @NotNull
+    public LocalDate dateExpiration;
 
 }

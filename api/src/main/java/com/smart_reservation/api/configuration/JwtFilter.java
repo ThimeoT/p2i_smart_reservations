@@ -21,12 +21,20 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final CustomUserDetailsService userDetailsService;
 
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
 
+        System.out.println("[JwtFilter] >>> requête reçue: " + request.getRequestURI()
+                + " | method: " + request.getMethod());
+
         final String authHeader = request.getHeader("Authorization");
+        System.out.println("[JwtFilter] path: " + request.getRequestURI());
+        System.out.println("[JwtFilter] authHeader: " + authHeader);
+
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             chain.doFilter(request, response);
@@ -34,9 +42,13 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         final String token = authHeader.substring(7); // Retire Bearer car inutile avec JWT
+        System.out.println("[JwtFilter] token: " + token);
+        System.out.println("[JwtFilter] isTokenValid: " + jwtService.isTokenValid(token));
 
         if (jwtService.isTokenValid(token)) {
             String mail = jwtService.extractMail(token);
+            System.out.println("[JwtFilter] mail extrait: " + mail);
+
             UserDetails userDetails = userDetailsService.loadUserByUsername(mail);
 
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(

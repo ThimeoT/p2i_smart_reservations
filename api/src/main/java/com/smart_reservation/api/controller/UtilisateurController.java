@@ -34,6 +34,7 @@ public class UtilisateurController {
     @PostMapping
     public ResponseEntity<UtilisateurResponseDto> createUtilisateur(
             @Valid @RequestBody UtilisateurRequestDto utilisateurDto) {
+
         return ResponseEntity.status(HttpStatus.CREATED).body(utilisateurService.saveUtilisateur(utilisateurDto));
     }
 

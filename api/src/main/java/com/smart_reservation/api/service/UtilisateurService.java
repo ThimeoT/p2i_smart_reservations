@@ -22,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -55,7 +57,7 @@ public class UtilisateurService {
 
     public UtilisateurResponseDto getUtilisateurByMail(String mail) {
         return utilisateurMapper.toDto(utilisateurRepository.findByMail(mail)
-                .orElseThrow(() -> new RessourceIntrouvableException("Utilisateur","mail", mail)));
+                .orElseThrow(() -> new RessourceIntrouvableException("Utilisateur", "mail", mail)));
     }
 
     @Transactional(readOnly = true)
@@ -83,101 +85,106 @@ public class UtilisateurService {
     public UtilisateurResponseDto saveUtilisateur(UtilisateurRequestDto utilisateurRequestDto) {
 
         Utilisateur utilisateur = utilisateurMapper.toEntity(utilisateurRequestDto);
-        return utilisateurMapper.toDto(
-                utilisateurRepository.save(utilisateur));
-    }
-
-    @Transactional
-    public UtilisateurResponseDto updateUtilisateur(Long id, UtilisateurRequestDto utilisateurRequestDto) {
-
-        Utilisateur utilisateur = getUtilisateurEntity(id);
-        utilisateurMapper.updateEntity(utilisateurRequestDto, utilisateur);
-        utilisateurRepository.save(utilisateur);
-        return utilisateurMapper.toDto(utilisateur);
-    }
-
-    //LISTES EQUIPEMENTS
-
-    @Transactional(readOnly = true)
-    public Iterable<ListeEquipementsResponseDto> getListesEquipements(long idUtilisateur) {
-
-        if (!utilisateurRepository.existsById(idUtilisateur)) {
-            throw new RessourceIntrouvableException("Utilisateur", idUtilisateur);
+        if (utilisateur.getId() == null) {
+            utilisateur.setDateExpiration(LocalDate.now().plusYears(5));
         }
-        return listeEquipementsMapper.toDtoIterable(
-                listeEquipementsRepository.findByUtilisateurId(idUtilisateur));
-    }
-
-    @Transactional
-    public void deleteListeEquipements(Long idListe) {
-
-        ListeEquipements liste = listeEquipementsRepository.findById(idListe)
-                .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
-        listeEquipementsRepository.delete(liste);
-    }
-
-    @Transactional(readOnly = true)
-    public ListeEquipementsResponseDto getListeEquipements(Long idListe,Long idUtilisateur) {
-
-        ListeEquipements liste = listeEquipementsRepository.findById(idListe)
-                .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
-        if(!liste.getUtilisateur().getId().equals(idUtilisateur)) {
-            throw new AccesRefuseException("Vous n'avez pas le droit d'accéder à la liste d'un autre utilisateur");
+            return utilisateurMapper.toDto(
+                    utilisateurRepository.save(utilisateur));
         }
-        return listeEquipementsMapper.toDto(liste);
-    }
 
-    @Transactional
-    public ListeEquipementsResponseDto updateListeEquipements(Long idListe, ListeEquipementsRequestDto listeEquipementsDto) {
+        @Transactional
+        public UtilisateurResponseDto updateUtilisateur (Long id, UtilisateurRequestDto utilisateurRequestDto){
 
-        ListeEquipements liste = listeEquipementsRepository.findById(idListe)
-                .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
-        listeEquipementsMapper.updateEntity(listeEquipementsDto, liste);
-        liste.setEquipements(equipementService.getEquipementsEntities(listeEquipementsDto.equipementsId));
-        listeEquipementsRepository.save(liste);
-
-        return listeEquipementsMapper.toDto(liste);
-    }
-
-    @Transactional
-    public ListeEquipementsResponseDto createListeEquipements(Long utilisateurId, ListeEquipementsRequestDto listeEquipementsDto) {
-
-        Utilisateur utilisateur = getUtilisateurEntity(utilisateurId);
-        ListeEquipements liste = listeEquipementsMapper.toEntity(listeEquipementsDto);
-        liste.setUtilisateur(utilisateur);
-        liste.setEquipements(equipementService.getEquipementsEntities(listeEquipementsDto.equipementsId));
-        listeEquipementsRepository.save(liste);
-
-        return listeEquipementsMapper.toDto(liste);
-    }
-
-    private void verifierProprietaire(ListeEquipements liste, Long idUtilisateur) {
-        if(!liste.getUtilisateur().getId().equals(idUtilisateur)) {
-            throw new AccesRefuseException("Vous n'avez pas le droit d'accéder à la liste d'un autre utilisateur");
+            Utilisateur utilisateur = getUtilisateurEntity(id);
+            utilisateurMapper.updateEntity(utilisateurRequestDto, utilisateur);
+            utilisateurRepository.save(utilisateur);
+            return utilisateurMapper.toDto(utilisateur);
         }
+
+        //LISTES EQUIPEMENTS
+
+        @Transactional(readOnly = true)
+        public Iterable<ListeEquipementsResponseDto> getListesEquipements ( long idUtilisateur){
+
+            if (!utilisateurRepository.existsById(idUtilisateur)) {
+                throw new RessourceIntrouvableException("Utilisateur", idUtilisateur);
+            }
+            return listeEquipementsMapper.toDtoIterable(
+                    listeEquipementsRepository.findByUtilisateurId(idUtilisateur));
+        }
+
+        @Transactional
+        public void deleteListeEquipements (Long idListe){
+
+            ListeEquipements liste = listeEquipementsRepository.findById(idListe)
+                    .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
+            listeEquipementsRepository.delete(liste);
+        }
+
+        @Transactional(readOnly = true)
+        public ListeEquipementsResponseDto getListeEquipements (Long idListe, Long idUtilisateur){
+
+            ListeEquipements liste = listeEquipementsRepository.findById(idListe)
+                    .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
+            if (!liste.getUtilisateur().getId().equals(idUtilisateur)) {
+                throw new AccesRefuseException("Vous n'avez pas le droit d'accéder à la liste d'un autre utilisateur");
+            }
+            return listeEquipementsMapper.toDto(liste);
+        }
+
+        @Transactional
+        public ListeEquipementsResponseDto updateListeEquipements (Long idListe, ListeEquipementsRequestDto
+        listeEquipementsDto){
+
+            ListeEquipements liste = listeEquipementsRepository.findById(idListe)
+                    .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
+            listeEquipementsMapper.updateEntity(listeEquipementsDto, liste);
+            liste.setEquipements(equipementService.getEquipementsEntities(listeEquipementsDto.equipementsId));
+            listeEquipementsRepository.save(liste);
+
+            return listeEquipementsMapper.toDto(liste);
+        }
+
+        @Transactional
+        public ListeEquipementsResponseDto createListeEquipements (Long utilisateurId, ListeEquipementsRequestDto
+        listeEquipementsDto){
+
+            Utilisateur utilisateur = getUtilisateurEntity(utilisateurId);
+            ListeEquipements liste = listeEquipementsMapper.toEntity(listeEquipementsDto);
+            liste.setUtilisateur(utilisateur);
+            liste.setEquipements(equipementService.getEquipementsEntities(listeEquipementsDto.equipementsId));
+            listeEquipementsRepository.save(liste);
+
+            return listeEquipementsMapper.toDto(liste);
+        }
+
+        private void verifierProprietaire (ListeEquipements liste, Long idUtilisateur){
+            if (!liste.getUtilisateur().getId().equals(idUtilisateur)) {
+                throw new AccesRefuseException("Vous n'avez pas le droit d'accéder à la liste d'un autre utilisateur");
+            }
+        }
+
+        // EQUIPEMENTS FAVORIS
+
+        @Transactional
+        public Iterable<EquipementResumeDto> getEquipementsFavoris (Long utilisateurId){
+            Utilisateur utilisateur = getUtilisateurEntity(utilisateurId);
+            return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
+        }
+
+        public Iterable<EquipementResumeDto> addEquipementFavori (Long utilisateurId, Long idEquipement){
+            Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new
+                    RessourceIntrouvableException("Utilisateur", utilisateurId));
+            utilisateur.addEquipementFavori(equipementService.getEquipementEntity(idEquipement));
+            return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
+        }
+
+        public Iterable<EquipementResumeDto> removeEquipementFavori (Long utilisateurId, Long idEquipement){
+            Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new
+                    RessourceIntrouvableException("Utilisateur", utilisateurId));
+            utilisateur.removeEquipementFavori(equipementService.getEquipementEntity(idEquipement));
+            return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
+        }
+
+
     }
-
-    // EQUIPEMENTS FAVORIS
-
-    @Transactional
-    public Iterable<EquipementResumeDto> getEquipementsFavoris(Long utilisateurId) {
-        Utilisateur utilisateur = getUtilisateurEntity(utilisateurId);
-        return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
-    }
-
-    public Iterable<EquipementResumeDto> addEquipementFavori(Long utilisateurId, Long idEquipement) {
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new
-                RessourceIntrouvableException("Utilisateur", utilisateurId));
-        utilisateur.addEquipementFavori(equipementService.getEquipementEntity(idEquipement));
-        return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
-    }
-
-    public Iterable<EquipementResumeDto> removeEquipementFavori(Long utilisateurId, Long idEquipement) {
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new
-                RessourceIntrouvableException("Utilisateur", utilisateurId));
-        utilisateur.removeEquipementFavori(equipementService.getEquipementEntity(idEquipement));
-        return equipementMapper.toResumeDtoIterable(utilisateur.getEquipementsFavoris());
-    }
-
-
-}

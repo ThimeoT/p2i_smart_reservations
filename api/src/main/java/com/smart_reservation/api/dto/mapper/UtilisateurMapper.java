@@ -17,6 +17,7 @@ public interface UtilisateurMapper {
     @Mapping(target = "motDePasseHash", ignore = true)
     @Mapping(target = "equipementsFavoris",ignore = true)
     @Mapping(target = "listeEquipements", ignore = true)
+    @Mapping(target = "role", ignore = true)
     @Mapping(target = "dateExpiration", dateFormat = "yyyy-MM-dd")
     Utilisateur toEntity(UtilisateurRequestDto utilisateurRequestDto);
 

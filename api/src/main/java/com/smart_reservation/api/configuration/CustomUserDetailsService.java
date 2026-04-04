@@ -5,11 +5,7 @@ import java.util.List;
 
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.NullMarked;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -20,7 +16,6 @@ import org.springframework.stereotype.Service;
 import com.smart_reservation.api.model.Utilisateur;
 import com.smart_reservation.api.repository.UtilisateurRepository;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 @RequiredArgsConstructor
