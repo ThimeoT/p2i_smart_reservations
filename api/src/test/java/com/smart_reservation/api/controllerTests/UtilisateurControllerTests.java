@@ -2,7 +2,6 @@ package com.smart_reservation.api.controllerTests;
 
 import com.smart_reservation.api.controller.UtilisateurController;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
-import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import com.smart_reservation.api.service.UtilisateurService;
 import org.junit.jupiter.api.Test;
@@ -44,10 +43,10 @@ public class UtilisateurControllerTests {
     @WithMockUser
     public void testGetUtilisateursRenvoieOk() throws Exception {
         // GIVEN
-        List<UtilisateurResumeDto> dtos = List.of(
-                new UtilisateurResumeDto(),
-                new UtilisateurResumeDto(),
-                new UtilisateurResumeDto()
+        List<UtilisateurResponseDto> dtos = List.of(
+                new UtilisateurResponseDto(),
+                new UtilisateurResponseDto(),
+                new UtilisateurResponseDto()
         );
         when(utilisateurService.getUtilisateurs()).thenReturn(dtos);
 

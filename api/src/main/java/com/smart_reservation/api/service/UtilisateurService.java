@@ -7,24 +7,18 @@ import com.smart_reservation.api.dto.request.UtilisateurRequestDto;
 import com.smart_reservation.api.dto.response.ListeEquipementsResponseDto;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
 import com.smart_reservation.api.dto.resume.EquipementResumeDto;
-import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import com.smart_reservation.api.exception.AccesRefuseException;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
-import com.smart_reservation.api.model.Equipement;
 import com.smart_reservation.api.model.ListeEquipements;
 import com.smart_reservation.api.model.Utilisateur;
 import com.smart_reservation.api.dto.mapper.UtilisateurMapper;
-import com.smart_reservation.api.repository.EquipementRepository;
 import com.smart_reservation.api.repository.ListeEquipementsRepository;
 import com.smart_reservation.api.repository.UtilisateurRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -67,8 +61,8 @@ public class UtilisateurService {
     }
 
     @Transactional(readOnly = true)
-    public Iterable<UtilisateurResumeDto> getUtilisateurs() {
-        return utilisateurMapper.toResumeDtoIterable(
+    public Iterable<UtilisateurResponseDto> getUtilisateurs() {
+        return utilisateurMapper.toDtoIterable(
                 utilisateurRepository.findAll());
     }
 
@@ -133,11 +127,12 @@ public class UtilisateurService {
         }
 
         @Transactional
-        public ListeEquipementsResponseDto updateListeEquipements (Long idListe, ListeEquipementsRequestDto
+        public ListeEquipementsResponseDto updateListeEquipements (Long idUtilisateur, Long idListe, ListeEquipementsRequestDto
         listeEquipementsDto){
 
             ListeEquipements liste = listeEquipementsRepository.findById(idListe)
                     .orElseThrow(() -> new RessourceIntrouvableException("Liste d'équipements", idListe));
+            verifierProprietaire(liste, idUtilisateur);
             listeEquipementsMapper.updateEntity(listeEquipementsDto, liste);
             liste.setEquipements(equipementService.getEquipementsEntities(listeEquipementsDto.equipementsId));
             listeEquipementsRepository.save(liste);

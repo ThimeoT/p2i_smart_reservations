@@ -1,7 +1,6 @@
 package com.smart_reservation.api.dto.response;
 
 import com.smart_reservation.api.dto.resume.SessionResumeDto;
-import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 
 import java.time.LocalDateTime;
 

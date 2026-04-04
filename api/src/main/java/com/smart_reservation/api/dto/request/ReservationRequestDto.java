@@ -1,5 +1,4 @@
 package com.smart_reservation.api.dto.request;
-import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import com.smart_reservation.api.model.StatutReservation;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

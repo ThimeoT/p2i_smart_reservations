@@ -15,7 +15,7 @@ public interface ReservationMapper {
     ReservationResumeDto toResumeDto(Reservation reservation);
 
     @Mapping(target="sessions", qualifiedByName="toDto")
-    @Mapping(target = "utilisateur", qualifiedByName = "toResumeDto")
+    @Mapping(target = "utilisateur", qualifiedByName = "toDto")
     @Mapping(target = "historiques", qualifiedByName = "toDto")
     ReservationResponseDto toDto(Reservation reservation);
 

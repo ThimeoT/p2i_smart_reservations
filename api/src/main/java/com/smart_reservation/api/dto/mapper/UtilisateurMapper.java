@@ -2,8 +2,6 @@ package com.smart_reservation.api.dto.mapper;
 
 import com.smart_reservation.api.dto.request.UtilisateurRequestDto;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
-import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
-import com.smart_reservation.api.model.Reservation;
 import com.smart_reservation.api.model.Utilisateur;
 import org.mapstruct.*;
 
@@ -21,11 +19,10 @@ public interface UtilisateurMapper {
     @Mapping(target = "dateExpiration", dateFormat = "yyyy-MM-dd")
     Utilisateur toEntity(UtilisateurRequestDto utilisateurRequestDto);
 
-    @Named("toResumeDto")
-    UtilisateurResumeDto toResumeDto(Utilisateur utilisateur);
 
-    @IterableMapping(qualifiedByName = "toResumeDto")
-    Iterable<UtilisateurResumeDto> toResumeDtoIterable(Iterable<Utilisateur> utilisateurs);
+
+    @IterableMapping(qualifiedByName = "toDto")
+    Iterable<UtilisateurResponseDto> toDtoIterable(Iterable<Utilisateur> utilisateurs);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "motDePasseHash", ignore = true)

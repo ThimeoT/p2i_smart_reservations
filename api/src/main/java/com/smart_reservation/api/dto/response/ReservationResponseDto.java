@@ -1,5 +1,4 @@
 package com.smart_reservation.api.dto.response;
-import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import com.smart_reservation.api.model.StatutReservation;
 import lombok.Data;
 
@@ -10,7 +9,7 @@ public class ReservationResponseDto {
 
     public Long id;
 
-    public UtilisateurResumeDto utilisateur;
+    public UtilisateurResponseDto utilisateur;
 
     public String titre;
 

@@ -20,37 +20,39 @@ import java.time.LocalDate;
 @SpringBootApplication
 @Component
 @RequiredArgsConstructor
-public class ApiApplication implements CommandLineRunner{
+public class ApiApplication implements CommandLineRunner {
 
-	private final UtilisateurRepository utilisateurRepository;
-	private final BCryptPasswordEncoder passwordEncoder;
+    private final UtilisateurRepository utilisateurRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-	static void main(String[] args) {
-		SpringApplication.run(ApiApplication.class, args);
-	}
+    static void main(String[] args) {
+        SpringApplication.run(ApiApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println("=== SMART RESERVATIONS | BACK-END ===");
-		if(utilisateurRepository.findByMail("admin@test.com").isEmpty()) {
-			Utilisateur admin = new Utilisateur();
-			admin.setMail("admin@test.com");
-			admin.setMotDePasseHash(passwordEncoder.encode("admin"));
-			admin.setRole("ADMIN");
-			utilisateurRepository.save(admin);
-		}
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("=== SMART RESERVATIONS | BACK-END ===");
+        if (utilisateurRepository.findByMail("admin@test.com").isEmpty()) {
+            Utilisateur admin = new Utilisateur();
+            admin.setMail("admin@test.com");
+            admin.setMotDePasseHash(passwordEncoder.encode("admin"));
+            admin.setRole("ADMIN");
+            admin.setNom("admiprenom");
+            admin.setPrenom("adminom");
+            utilisateurRepository.save(admin);
+        }
 
-		if(utilisateurRepository.findByMail("user@test.com").isEmpty()) {
-			Utilisateur user = new Utilisateur();
-			user.setMail("user@test.com");
-			user.setNom("user");
-			user.setPrenom("test");
-			user.setMotDePasseHash(passwordEncoder.encode("user"));
-			user.setRole("USER");
-			user.setDateExpiration(LocalDate.now().plusYears(5));
-			user.setFormation("master test 2");
-			utilisateurRepository.save(user);
-		}
+        if (utilisateurRepository.findByMail("user@test.com").isEmpty()) {
+            Utilisateur user = new Utilisateur();
+            user.setMail("user@test.com");
+            user.setNom("user");
+            user.setPrenom("test");
+            user.setMotDePasseHash(passwordEncoder.encode("user"));
+            user.setRole("USER");
+            user.setFormation("master test 2");
+            user.setDateExpiration(LocalDate.now());
+            utilisateurRepository.save(user);
+        }
 
-	}
+    }
 }

@@ -38,6 +38,13 @@ public class SpringSecurityConfig {
                     auth.requestMatchers("/user/current").authenticated();
                     auth.requestMatchers("/user").hasRole("USER");
                     auth.requestMatchers("/admin").hasRole("ADMIN");
+
+                    auth.requestMatchers(HttpMethod.GET, "/utilisateurs").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.GET, "/utilisateurs/{id}").authenticated();
+                    auth.requestMatchers(HttpMethod.PUT, "/utilisateurs/{id}").authenticated();
+                    auth.requestMatchers(HttpMethod.DELETE, "/utilisateurs/{id}").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/utilisateurs").hasRole("ADMIN");
+
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) // 👈 remettre

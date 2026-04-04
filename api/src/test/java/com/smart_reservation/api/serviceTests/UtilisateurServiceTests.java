@@ -233,7 +233,7 @@ class UtilisateurServiceTests {
 
         // WHEN
         ListeEquipementsResponseDto resultat =
-                utilisateurService.updateListeEquipements(1L, requestDto);
+                utilisateurService.updateListeEquipements(1L, 1L, requestDto);
 
         // THEN
         assertThat(resultat.nom).isEqualTo("Nouvelle liste");
@@ -251,7 +251,7 @@ class UtilisateurServiceTests {
 
         // WHEN / THEN
         assertThrows(RessourceIntrouvableException.class,
-                () -> utilisateurService.updateListeEquipements(1L, requestDto));
+                () -> utilisateurService.updateListeEquipements(1L,1L , requestDto));
     }
 
     // --- Tests deleteListeEquipements ---

@@ -4,7 +4,6 @@ import com.smart_reservation.api.dto.request.ListeEquipementsRequestDto;
 import com.smart_reservation.api.dto.request.UtilisateurRequestDto;
 import com.smart_reservation.api.dto.response.ListeEquipementsResponseDto;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
-import com.smart_reservation.api.dto.resume.UtilisateurResumeDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ public class UtilisateurController {
     private final UtilisateurService utilisateurService;
 
     @GetMapping
-    public Iterable<UtilisateurResumeDto> getUtilisateurs() {
+    public Iterable<UtilisateurResponseDto> getUtilisateurs() {
         return utilisateurService.getUtilisateurs();
     }
 
@@ -74,9 +73,10 @@ public class UtilisateurController {
 
     @PutMapping("/{idUtilisateur}/listeEquipement/{idListeEquipement}")
     public ResponseEntity<ListeEquipementsResponseDto> updateListeEquipement(
+            @PathVariable Long idUtilisateur,
             @PathVariable Long idListeEquipement,
             @Valid @RequestBody ListeEquipementsRequestDto listeEquipementsDto) {
-        return ResponseEntity.ok(utilisateurService.updateListeEquipements(idListeEquipement,listeEquipementsDto));
+        return ResponseEntity.ok(utilisateurService.updateListeEquipements(idUtilisateur, idListeEquipement,listeEquipementsDto));
     }
 
     @DeleteMapping("/{idUtilisateur}/listeEquipement/{idListeEquipement}")

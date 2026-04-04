@@ -40,7 +40,7 @@ public class Utilisateur {
     private String formation;
 
     @Column(name = "date_expiration")
-    private LocalDate dateExpiration;
+    private LocalDate dateExpiration = LocalDate.now().plusYears(5);
 
     @ManyToMany
     @JoinTable(
