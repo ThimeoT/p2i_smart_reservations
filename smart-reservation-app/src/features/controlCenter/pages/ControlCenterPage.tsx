@@ -1,14 +1,14 @@
-import { useNavigate } from "react-router"
+import UserList from '../components/UserList';
 
+export default function ControlCenter() {
+ 
 
-export default function ControlCenter()
-{
-  const navigate = useNavigate();
-  return(
+  return (
     <>
       <h1>Centre de Contrôle</h1>
-      <br/>
+      <br />
       <h2>Utilisateurs</h2>
+      <UserList/>
     </>
-  )
+  );
 }

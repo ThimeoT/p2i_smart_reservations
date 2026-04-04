@@ -1,19 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProfileForm from '../components/ProfileForm';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import type { User } from '../types/user.types';
 import { useNavigate } from 'react-router';
-
 
 export default function EditProfilePage() {
   const navigate = useNavigate();
   const {
     currentUser,
     loading: loadingUser,
-    error: errorUser, updateUser
+    error: errorUser,
+    updateUser,
   } = useCurrentUser();
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);
+  const [saved, setSaved] = useState(false);
+
+  useEffect(()=>{
+    if(saved) navigate("/profile"), {state : { saved : true}}
+  }, [saved])
 
   const handleSubmit = async (data: User) => {
     if (!currentUser) return;
@@ -22,6 +27,7 @@ export default function EditProfilePage() {
     try {
       await updateUser(data);
       navigate('/profile', { state: { saved: true } });
+      setSaved(true);
     } catch (error) {
       setSubmitError('Erreur lors de la mise à jour du profil' + { error });
     } finally {

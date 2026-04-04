@@ -1,4 +1,4 @@
-import {  createBrowserRouter } from 'react-router';
+import { createBrowserRouter } from 'react-router';
 import PageEquipement from '../../features/equipments/pages/PageEquipement';
 import PageCentreDeControle from '../../features/controlCenter/pages/ControlCenterPage';
 import AuthPage from '../../features/auth/pages/AuthPage';
@@ -9,28 +9,38 @@ import EditProfilePage from '../../features/users/pages/EditProfilePage';
 import FallbackRedirect from './FallbackRedirect';
 import NotFoundPage from '../views/NotFoundPage';
 import ProtectedRoute from './ProtectedRoute';
+import ErrorPage from '../views/ErrorPage';
+import AdminRoute from './AdminRoute';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <FallbackRedirect />, 
+    element: <FallbackRedirect />,
   },
   {
     path: '/login',
     element: <AuthPage />,
   },
   {
+    path: '/404',
+    element: <NotFoundPage />,
+  },
+  {
     element: <ProtectedRoute />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <RootLayout />,
         children: [
-          { path: '/admin',        element: <PageCentreDeControle /> },
-          { path: '/equipements',  element: <PageEquipement /> },
-          { path: '/home',         element: <HomePage /> },
-          { path: '/profile',      element: <ProfilePage /> },
+          { path: '/equipements', element: <PageEquipement /> },
+          { path: '/home', element: <HomePage /> },
+          { path: '/profile', element: <ProfilePage /> },
           { path: '/profile/edit', element: <EditProfilePage /> },
-          { path: '*',                 element: <NotFoundPage /> },
+          {
+            element: <AdminRoute />,
+            children: [{ path: '/admin', element: <PageCentreDeControle /> }],
+          },
+          { path: '*', element: <NotFoundPage /> },
         ],
       },
     ],
