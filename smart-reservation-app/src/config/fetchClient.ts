@@ -1,5 +1,22 @@
 import env from './env';
 
+let _accessToken: string | null = null;
+
+export const setFetchClientToken = (token: string | null) => {
+  _accessToken = token;
+};
+
+export class ApiError extends Error {
+  status: number;
+  body: unknown;
+
+  constructor(status: number, statusText: string, body: unknown) {
+    super(`HTTP ${status} ${statusText}`);
+    this.status = status;
+    this.body = body;
+  }
+}
+
 function resolveUrl(path: string): string {
   if (/^https?:\/\//i.test(path)) {
     return path;
@@ -9,13 +26,7 @@ function resolveUrl(path: string): string {
 }
 
 async function handleResponse(response: Response) {
-  //logs j
-  console.debug('[handleResponse] status:', response.status)
-  console.debug('[handleResponse] url:', response.url)        // ← url finale après redirect
-  console.debug('[handleResponse] ok:', response.ok)
-  const contentType = response.headers.get('Content-Type') || ''
-  console.debug('[handleResponse] contentType:', contentType)
-
+  const contentType = response.headers.get('Content-Type') || '';
 
   if (response.ok) {
     if (response.status === 204) return null;
@@ -32,26 +43,11 @@ async function handleResponse(response: Response) {
     payload = null;
   }
 
-  const error = new Error(`HTTP ${response.status} ${response.statusText}`);
-  (error as any).status = response.status;
-  (error as any).body = payload;
-  throw error;
+  throw new ApiError(response.status, response.statusText, payload);
 }
-
-function getCookie(name: string): string | null {
-  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
-  return match ? decodeURIComponent(match[2]) : null
-}
-
-
 
 const defaultHeaders: Record<string, string> = {
   Accept: 'application/json',
-};
-
-const defaultOptions: RequestInit = {
-  credentials: 'include',
-  headers: defaultHeaders,
 };
 
 const fetchClient = {
@@ -61,17 +57,20 @@ const fetchClient = {
     body?: BodyInit | null,
     options?: RequestInit,
   ) => {
-
-    const xsrfToken = getCookie('XSRF-TOKEN');
-
-    const headers = {
+    console.log('[fetchClient] _accessToken:', _accessToken); // 👈
+    console.log('[fetchClient] headers:', {
       ...defaultHeaders,
       ...(options?.headers as Record<string, string> | undefined),
-      ...(xsrfToken ? { 'X-XSRF-TOKEN': xsrfToken } : {}),
+      ...(_accessToken ? { Authorization: `Bearer ${_accessToken}` } : {}),
+    });
+    const headers: Record<string, string> = {
+      ...defaultHeaders,
+      ...(options?.headers as Record<string, string> | undefined),
+      ...(_accessToken ? { Authorization: `Bearer ${_accessToken}` } : {}),
     };
 
     const init: RequestInit = {
-      ...defaultOptions,
+      credentials: 'include',
       ...options,
       method,
       headers,
@@ -90,8 +89,28 @@ const fetchClient = {
     return this.request('POST', path, body, options);
   },
 
+  postJson<T>(path: string, body: T, options?: RequestInit) {
+    return this.request('POST', path, JSON.stringify(body), {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options?.headers as Record<string, string> | undefined),
+      },
+    });
+  },
+
   put(path: string, body?: BodyInit | null, options?: RequestInit) {
     return this.request('PUT', path, body, options);
+  },
+
+  putJson<T>(path: string, body: T, options?: RequestInit) {
+    return this.request('PUT', path, JSON.stringify(body), {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options?.headers as Record<string, string> | undefined),
+      },
+    });
   },
 
   delete(path: string, options?: RequestInit) {

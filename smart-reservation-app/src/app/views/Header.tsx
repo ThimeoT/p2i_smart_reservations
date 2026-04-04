@@ -11,9 +11,11 @@ export default function Header() {
     navigate('/login')
   }
 
+
+
   return (
     <header>
-      <img height="48px" src ={logoSmartReservations} onClick={()=>navigate("/app/home")}/>
+      <img height="48px" src ={logoSmartReservations} onClick={()=>navigate("/home")}/>
       <span>{user?.mail}</span>
       <button onClick={handleLogout}>Déconnexion</button>
     </header>

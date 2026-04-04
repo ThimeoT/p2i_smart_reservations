@@ -1,7 +1,11 @@
-import { useInitializeApp } from '../hooks/useInitializeApp'
-import AppRoutes from './AppRoutes'
+import { RouterProvider } from 'react-router';
+import { router } from '../router/AppRoutes';
+import { AuthProvider } from '../../features/auth/context/AuthProvider';
 
 export default function App() {
-  useInitializeApp()
-  return <AppRoutes />
+  return (
+  <AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>
+  )
 }
