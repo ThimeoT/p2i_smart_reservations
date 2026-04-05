@@ -1,7 +1,7 @@
+import AddUserForm from '../components/AddUserForm';
 import UserList from '../components/UserList';
 
 export default function ControlCenter() {
- 
 
   return (
     <>
@@ -9,6 +9,8 @@ export default function ControlCenter() {
       <br />
       <h2>Utilisateurs</h2>
       <UserList/>
+      <button onClick={()=> <AddUserForm/>}></button>
+      <h2></h2>
     </>
   );
 }
