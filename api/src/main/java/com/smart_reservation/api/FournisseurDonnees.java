@@ -16,6 +16,7 @@ public class FournisseurDonnees implements CommandLineRunner {
 
     private final UtilisateurRepository utilisateurRepository;
     private final EquipementRepository equipementRepository;
+    private final ExemplaireRepository exemplaireRepository;
     private final LabelRepository labelRepository;
     private final ReservationRepository reservationRepository;
     private final ListeEquipementsRepository listeEquipementsRepository;
@@ -151,6 +152,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireMilleCentQuatreVingtSprintUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         milleCentQuatreVingtSprint.addExemplaire(exemplaireMilleCentQuatreVingtSprintUn);
         equipementRepository.save(milleCentQuatreVingtSprint);
+        exemplaireRepository.save(exemplaireMilleCentQuatreVingtSprintUn);
 
         // --- 1080 Quantum ---
         Equipement milleCentQuatreVingtQuantum = new Equipement();
@@ -166,6 +168,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireMilleCentQuatreVingtQuantumUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         milleCentQuatreVingtQuantum.addExemplaire(exemplaireMilleCentQuatreVingtQuantumUn);
         equipementRepository.save(milleCentQuatreVingtQuantum);
+        exemplaireRepository.save(exemplaireMilleCentQuatreVingtQuantumUn);
 
         // --- Ceinture renforcée 1080 ---
         Equipement ceintureRenforcee = new Equipement();
@@ -179,12 +182,15 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireCeintureRenforceeUn.setNomSerie("CEINTURE-1080-001");
         exemplaireCeintureRenforceeUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         ceintureRenforcee.addExemplaire(exemplaireCeintureRenforceeUn);
+        exemplaireRepository.save(exemplaireCeintureRenforceeUn);
 
         Exemplaire exemplaireCeintureRenforceeDeux = new Exemplaire();
         exemplaireCeintureRenforceeDeux.setNomSerie("CEINTURE-1080-002");
         exemplaireCeintureRenforceeDeux.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         ceintureRenforcee.addExemplaire(exemplaireCeintureRenforceeDeux);
-        equipementRepository.save(ceintureRenforcee);
+        exemplaireRepository.save(exemplaireCeintureRenforceeDeux);
+
+
 
         // --- Delsys Trigger Module ---
         Equipement delsysTriggerModule = new Equipement();
@@ -200,6 +206,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireDelsysTriggerModuleUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         delsysTriggerModule.addExemplaire(exemplaireDelsysTriggerModuleUn);
         equipementRepository.save(delsysTriggerModule);
+        exemplaireRepository.save(exemplaireCeintureRenforceeDeux);
 
         // --- Kit EMG Sensor ---
         Equipement kitEmgSensor = new Equipement();
@@ -220,6 +227,8 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireKitEmgSensorDeux.setStatutDisponibilite(StatutDisponibilite.EMPRUNTE);
         kitEmgSensor.addExemplaire(exemplaireKitEmgSensorDeux);
         equipementRepository.save(kitEmgSensor);
+        exemplaireRepository.save(exemplaireKitEmgSensorUn);
+        exemplaireRepository.save(exemplaireKitEmgSensorDeux);
 
         // --- K-Push ---
         Equipement kPush = new Equipement();
@@ -234,6 +243,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireKPushUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         kPush.addExemplaire(exemplaireKPushUn);
         equipementRepository.save(kPush);
+        exemplaireRepository.save(exemplaireKPushUn);
 
         // --- K-Power ---
         Equipement kPower = new Equipement();
@@ -248,6 +258,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireKPowerUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         kPower.addExemplaire(exemplaireKPowerUn);
         equipementRepository.save(kPower);
+        exemplaireRepository.save(exemplaireKPowerUn);
 
         // --- K-Pull ---
         Equipement kPull = new Equipement();
@@ -262,6 +273,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireKPullUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         kPull.addExemplaire(exemplaireKPullUn);
         equipementRepository.save(kPull);
+        exemplaireRepository.save(exemplaireKPullUn);
 
         // --- Kit Plateforme de Force ---
         Equipement kitPlateformeDeForce = new Equipement();
@@ -281,6 +293,8 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireKitPlateformeDeForceDeux.setStatutDisponibilite(StatutDisponibilite.MAINTENANCE);
         kitPlateformeDeForce.addExemplaire(exemplaireKitPlateformeDeForceDeux);
         equipementRepository.save(kitPlateformeDeForce);
+        exemplaireRepository.save(exemplaireKitPlateformeDeForceUn);
+        exemplaireRepository.save(exemplaireKitPlateformeDeForceDeux);
 
         // --- Meta Quest ---
         Equipement metaQuest = new Equipement();
@@ -305,6 +319,9 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireMetaQuestTrois.setStatutDisponibilite(StatutDisponibilite.EMPRUNTE);
         metaQuest.addExemplaire(exemplaireMetaQuestTrois);
         equipementRepository.save(metaQuest);
+        exemplaireRepository.save(exemplaireMetaQuestUn);
+        exemplaireRepository.save(exemplaireMetaQuestDeux);
+        exemplaireRepository.save(exemplaireMetaQuestTrois);
 
         // --- OPTOJUMP ---
         Equipement optojump = new Equipement();
@@ -320,6 +337,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireOptojumpUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         optojump.addExemplaire(exemplaireOptojumpUn);
         equipementRepository.save(optojump);
+        exemplaireRepository.save(exemplaireOptojumpUn);
 
         // --- Hololens 2 ---
         Equipement hololensDeux = new Equipement();
@@ -334,7 +352,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireHololensDeuxUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         hololensDeux.addExemplaire(exemplaireHololensDeuxUn);
         equipementRepository.save(hololensDeux);
-
+        exemplaireRepository.save(exemplaireHololensDeuxUn);
         // --- Metamax ---
         Equipement metamax = new Equipement();
         metamax.setNom("Metamax");
@@ -348,6 +366,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireMetamaxUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         metamax.addExemplaire(exemplaireMetamaxUn);
         equipementRepository.save(metamax);
+        exemplaireRepository.save(exemplaireMetamaxUn);
 
         // --- Fond Vert ---
         Equipement fondVert = new Equipement();
@@ -362,6 +381,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireFondVertUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         fondVert.addExemplaire(exemplaireFondVertUn);
         equipementRepository.save(fondVert);
+        exemplaireRepository.save(exemplaireFondVertUn);
 
         // --- Trépied Fond Vert ---
         Equipement trepiedFondVert = new Equipement();
@@ -381,6 +401,9 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireTrepiedFondVertDeux.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         trepiedFondVert.addExemplaire(exemplaireTrepiedFondVertDeux);
         equipementRepository.save(trepiedFondVert);
+        exemplaireRepository.save(exemplaireTrepiedFondVertUn);
+        exemplaireRepository.save(exemplaireTrepiedFondVertDeux);
+
 
         // --- Caméra sur Trépied ---
         Equipement cameraSurTrepied = new Equipement();
@@ -399,6 +422,8 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireCameraSurTrepiedDeux.setStatutDisponibilite(StatutDisponibilite.EMPRUNTE);
         cameraSurTrepied.addExemplaire(exemplaireCameraSurTrepiedDeux);
         equipementRepository.save(cameraSurTrepied);
+        exemplaireRepository.save(exemplaireCameraSurTrepiedUn);
+        exemplaireRepository.save(exemplaireCameraSurTrepiedDeux);
 
         // --- Camera Sync Unit ---
         Equipement cameraSyncUnit = new Equipement();
@@ -413,6 +438,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireCameraSyncUnitUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         cameraSyncUnit.addExemplaire(exemplaireCameraSyncUnitUn);
         equipementRepository.save(cameraSyncUnit);
+        exemplaireRepository.save(exemplaireCameraSyncUnitUn);
 
         // --- Razer ---
         Equipement razer = new Equipement();
@@ -426,6 +452,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireRazerUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         razer.addExemplaire(exemplaireRazerUn);
         equipementRepository.save(razer);
+        exemplaireRepository.save(exemplaireRazerUn);
 
         // --- TOBII Pro Glasses ---
         Equipement tobiiProGlasses = new Equipement();
@@ -441,6 +468,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireTobiiProGlassesUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         tobiiProGlasses.addExemplaire(exemplaireTobiiProGlassesUn);
         equipementRepository.save(tobiiProGlasses);
+        exemplaireRepository.save(exemplaireTobiiProGlassesUn);
 
         // --- Kit de Synchronisation QTM ---
         Equipement kitSynchronisationQtm = new Equipement();
@@ -456,6 +484,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireKitSynchronisationQtmUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         kitSynchronisationQtm.addExemplaire(exemplaireKitSynchronisationQtmUn);
         equipementRepository.save(kitSynchronisationQtm);
+        exemplaireRepository.save(exemplaireKitSynchronisationQtmUn);
 
         // --- Tracker ---
         Equipement tracker = new Equipement();
@@ -480,6 +509,9 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireTrackerTrois.setStatutDisponibilite(StatutDisponibilite.HORS_SERVICE);
         tracker.addExemplaire(exemplaireTrackerTrois);
         equipementRepository.save(tracker);
+        exemplaireRepository.save(exemplaireTrackerUn);
+        exemplaireRepository.save(exemplaireTrackerDeux);
+        exemplaireRepository.save(exemplaireTrackerTrois);
 
         // --- Chronomètre ---
         Equipement chronometre = new Equipement();
@@ -498,6 +530,8 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireChronometreDeux.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         chronometre.addExemplaire(exemplaireChronometreDeux);
         equipementRepository.save(chronometre);
+        exemplaireRepository.save(exemplaireChronometreUn);
+        exemplaireRepository.save(exemplaireChronometreDeux);
 
         // --- Porte Émetteur Réflecteur ---
         Equipement porteEmetteurReflecteur = new Equipement();
@@ -517,6 +551,8 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplairePorteEmetteurReflecteurDeux.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         porteEmetteurReflecteur.addExemplaire(exemplairePorteEmetteurReflecteurDeux);
         equipementRepository.save(porteEmetteurReflecteur);
+        exemplaireRepository.save(exemplairePorteEmetteurReflecteurUn);
+        exemplaireRepository.save(exemplairePorteEmetteurReflecteurDeux);
 
         // --- Trépied ---
         Equipement trepied = new Equipement();
@@ -540,6 +576,9 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireTrepiedTrois.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         trepied.addExemplaire(exemplaireTrepiedTrois);
         equipementRepository.save(trepied);
+        exemplaireRepository.save(exemplaireTrepiedUn);
+        exemplaireRepository.save(exemplaireTrepiedDeux);
+        exemplaireRepository.save(exemplaireTrepiedTrois);
 
         // --- SEM ---
         Equipement sem = new Equipement();
@@ -554,6 +593,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireSemUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         sem.addExemplaire(exemplaireSemUn);
         equipementRepository.save(sem);
+        exemplaireRepository.save(exemplaireSemUn);
 
         // =====================
         // RELATIONS EQUIPEMENTS
