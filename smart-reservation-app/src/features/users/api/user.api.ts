@@ -24,3 +24,13 @@ export const updateUserApi = async (user: User): Promise<User> => {
     dateExpiration: new Date(updated.dateExpiration),
   };
 };
+
+export const resetPasswordApi = async (id: number): Promise<void> => {
+  await fetchClient.post(`/utilisateurs/${id}/reinitialiser-mot-de-passe`)
+}
+
+export const deleteUserApi = async (id: number): Promise<void> => {
+  await fetchClient.delete(`/utilisateurs/${id}`)
+}
+
+

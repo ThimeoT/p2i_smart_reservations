@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ProfileForm from '../components/ProfileForm';
-import { useCurrentUser } from '../hooks/useCurrentUser';
+import { useUser } from '../hooks/useUser';
 import type { User } from '../types/user.types';
 import { useNavigate } from 'react-router';
 
@@ -11,7 +11,7 @@ export default function EditProfilePage() {
     loading: loadingUser,
     error: errorUser,
     updateUser,
-  } = useCurrentUser();
+  } = useUser();
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);
   const [saved, setSaved] = useState(false);
