@@ -8,7 +8,7 @@ public enum StatutEmprunt {
 
     private final String code;
 
-    private StatutEmprunt(String code) {
+    StatutEmprunt(String code) {
         this.code = code;
     }
 

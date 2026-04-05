@@ -8,7 +8,7 @@ public enum StatutReservation {
 
     private final String code;
 
-    private StatutReservation(String code) {
+    StatutReservation(String code) {
         this.code = code;
     }
 

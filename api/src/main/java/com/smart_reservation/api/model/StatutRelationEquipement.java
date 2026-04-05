@@ -7,7 +7,7 @@ public enum StatutRelationEquipement {
 
     private final String code;
 
-    private StatutRelationEquipement(String code) {
+    StatutRelationEquipement(String code) {
         this.code = code;
     }
 

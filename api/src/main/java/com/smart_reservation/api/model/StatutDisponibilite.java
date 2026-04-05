@@ -8,13 +8,11 @@ public enum StatutDisponibilite {
 
     private final String code;
 
-    private StatutDisponibilite(String code) {
+    StatutDisponibilite(String code) {
         this.code = code;
     }
 
     public String getCode() {
         return code;
     }
-
-
 }
