@@ -4,14 +4,26 @@ export interface LoginCredentials {
 }
 
 export interface AuthUser {
+  id: number;
   mail: string;
   role: 'ADMIN' | 'USER';
-  id: number;
+  statut: 'INVITE' | 'ACTIF' | 'EXPIRE' | 'DESACTIVE';
 }
 
-export interface AuthTokenResponse {
-  token: string;
-  mail: string;
-  role: 'ADMIN' | 'USER';
+export interface InitialisationFormData {
   id: number;
+  nouveauMotDePasse: string;
+  nom: string;
+  prenom: string;
+  formation?: string; // optionnel
+}
+
+export interface InvitationRequest {
+  mail: string
+  role: string
+}
+
+export interface InvitationResponse {
+  mail: string
+  motDePasseTemporaire: string
 }

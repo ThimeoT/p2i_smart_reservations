@@ -32,6 +32,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         // UTILISATEURS
         // =====================
 
+        // Admin — ACTIF
         Utilisateur administrateur = new Utilisateur();
         administrateur.setMail("admin@test.com");
         administrateur.setMotDePasseHash(passwordEncoder.encode("admin"));
@@ -40,8 +41,10 @@ public class FournisseurDonnees implements CommandLineRunner {
         administrateur.setPrenom("Alice");
         administrateur.setFormation("Master Informatique");
         administrateur.setDateExpiration(LocalDate.now().plusYears(5));
+        administrateur.setStatutUtilisateur(StatutUtilisateur.ACTIF);
         utilisateurRepository.save(administrateur);
 
+        // User actif — ACTIF
         Utilisateur premierUtilisateur = new Utilisateur();
         premierUtilisateur.setMail("user@test.com");
         premierUtilisateur.setNom("Martin");
@@ -50,8 +53,10 @@ public class FournisseurDonnees implements CommandLineRunner {
         premierUtilisateur.setRole("USER");
         premierUtilisateur.setFormation("Master Sciences du Sport");
         premierUtilisateur.setDateExpiration(LocalDate.now().plusYears(2));
+        premierUtilisateur.setStatutUtilisateur(StatutUtilisateur.ACTIF);
         utilisateurRepository.save(premierUtilisateur);
 
+        // User actif — ACTIF
         Utilisateur deuxiemeUtilisateur = new Utilisateur();
         deuxiemeUtilisateur.setMail("claire@test.com");
         deuxiemeUtilisateur.setNom("Bernard");
@@ -60,8 +65,10 @@ public class FournisseurDonnees implements CommandLineRunner {
         deuxiemeUtilisateur.setRole("USER");
         deuxiemeUtilisateur.setFormation("Master Biomécanique");
         deuxiemeUtilisateur.setDateExpiration(LocalDate.now().plusMonths(6));
+        deuxiemeUtilisateur.setStatutUtilisateur(StatutUtilisateur.ACTIF);
         utilisateurRepository.save(deuxiemeUtilisateur);
 
+        // User expiré — date dans le passé → EXPIRE
         Utilisateur troisiemeUtilisateur = new Utilisateur();
         troisiemeUtilisateur.setMail("david@test.com");
         troisiemeUtilisateur.setNom("Petit");
@@ -70,8 +77,10 @@ public class FournisseurDonnees implements CommandLineRunner {
         troisiemeUtilisateur.setRole("USER");
         troisiemeUtilisateur.setFormation("Licence STAPS");
         troisiemeUtilisateur.setDateExpiration(LocalDate.now().minusMonths(1));
+        troisiemeUtilisateur.setStatutUtilisateur(StatutUtilisateur.EXPIRE);
         utilisateurRepository.save(troisiemeUtilisateur);
 
+        // User actif — ACTIF
         Utilisateur quatriemeUtilisateur = new Utilisateur();
         quatriemeUtilisateur.setMail("emma@test.com");
         quatriemeUtilisateur.setNom("Leclerc");
@@ -80,7 +89,16 @@ public class FournisseurDonnees implements CommandLineRunner {
         quatriemeUtilisateur.setRole("USER");
         quatriemeUtilisateur.setFormation("Master Neurosciences");
         quatriemeUtilisateur.setDateExpiration(LocalDate.now().plusYears(1));
+        quatriemeUtilisateur.setStatutUtilisateur(StatutUtilisateur.ACTIF);
         utilisateurRepository.save(quatriemeUtilisateur);
+
+        // User invité — pour tester le flux d'initialisation
+        Utilisateur utilisateurInvite = new Utilisateur();
+        utilisateurInvite.setMail("invite@test.com");
+        utilisateurInvite.setMotDePasseHash(passwordEncoder.encode("invite123"));
+        utilisateurInvite.setRole("USER");
+        utilisateurInvite.setStatutUtilisateur(StatutUtilisateur.INVITE);
+        utilisateurRepository.save(utilisateurInvite);
 
         // =====================
         // LABELS
@@ -189,7 +207,6 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireCeintureRenforceeDeux.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         ceintureRenforcee.addExemplaire(exemplaireCeintureRenforceeDeux);
         exemplaireRepository.save(exemplaireCeintureRenforceeDeux);
-
 
 
         // --- Delsys Trigger Module ---

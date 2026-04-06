@@ -1,19 +1,18 @@
 package com.smart_reservation.api.controller;
 
 import com.smart_reservation.api.configuration.JwtService;
+import com.smart_reservation.api.dto.request.InitialisationRequestDto;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
 
 import com.smart_reservation.api.service.UtilisateurService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 import java.util.Objects;
@@ -48,13 +47,25 @@ public class AuthentificationController {
                     "token", token,
                     "mail", request.mail(),
                     "role", role,
-                    "id", utilisateur.id
+                    "id", utilisateur.id,
+                    "statut",  utilisateur.statutUtilisateur
                     ));
 
         } catch (BadCredentialsException exception) {
             return ResponseEntity.status(401).build();
         }
     }
+
+    @PostMapping("utilisateurs/{id}/initialisation")
+    public ResponseEntity<?> initialiser(
+            @PathVariable Long id,
+            @Valid @RequestBody InitialisationRequestDto dto,
+            Authentication authentication
+    ) {
+        utilisateurService.initialiseUtilisateur(id, dto, authentication);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/user/current")
     public ResponseEntity<?> getCurrentUser(Authentication authentication) {
         UtilisateurResponseDto utilisateur = utilisateurService.getUtilisateurByMail(authentication.getName());

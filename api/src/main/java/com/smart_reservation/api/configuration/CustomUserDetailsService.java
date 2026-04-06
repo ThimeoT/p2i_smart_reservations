@@ -1,9 +1,11 @@
 package com.smart_reservation.api.configuration;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
+import com.smart_reservation.api.model.StatutUtilisateur;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,13 +23,25 @@ import com.smart_reservation.api.repository.UtilisateurRepository;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UtilisateurRepository dbUserRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
     @Override
     public UserDetails loadUserByUsername(@Email String mail) throws UsernameNotFoundException {
-        Utilisateur user = dbUserRepository.findByMail(mail).orElseThrow(()-> new RessourceIntrouvableException("Utilisateur","le mail",mail));
+        Utilisateur user = utilisateurRepository.findByMail(mail).orElseThrow(() -> new RessourceIntrouvableException("Utilisateur", "le mail", mail));
 
-        return new User(user.getMail(), user.getMotDePasseHash(), getGrantedAuthorities(user.getRole()));
+        if (user.getDateExpiration() != null
+                && user.getDateExpiration().isBefore(LocalDate.now())
+                && user.getStatutUtilisateur() == StatutUtilisateur.ACTIF) {
+            user.setStatutUtilisateur(StatutUtilisateur.EXPIRE);
+            utilisateurRepository.save(user);
+        }
+
+        return new User(user.getMail(), user.getMotDePasseHash()
+                ,user.getStatutUtilisateur() == StatutUtilisateur.ACTIF || user.getStatutUtilisateur() == StatutUtilisateur.INVITE,
+                true,
+                true,
+                user.getStatutUtilisateur() != StatutUtilisateur.DESACTIVE,
+                getGrantedAuthorities(user.getRole()));
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(String role) {

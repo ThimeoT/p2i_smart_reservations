@@ -1,7 +1,9 @@
 package com.smart_reservation.api.controller;
 
+import com.smart_reservation.api.dto.request.InvitationRequestDto;
 import com.smart_reservation.api.dto.request.ListeEquipementsRequestDto;
 import com.smart_reservation.api.dto.request.UtilisateurRequestDto;
+import com.smart_reservation.api.dto.response.InvitationResponseDto;
 import com.smart_reservation.api.dto.response.ListeEquipementsResponseDto;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
 import jakarta.validation.Valid;
@@ -35,6 +37,14 @@ public class UtilisateurController {
             @Valid @RequestBody UtilisateurRequestDto utilisateurDto) {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(utilisateurService.saveUtilisateur(utilisateurDto));
+    }
+
+    @PostMapping("/invitation")
+    public ResponseEntity<InvitationResponseDto> inviteUtilisateur(
+            @Valid @RequestBody InvitationRequestDto dto
+    ) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(utilisateurService.inviteUtilisateur(dto));
     }
 
     @PutMapping("/{id}")

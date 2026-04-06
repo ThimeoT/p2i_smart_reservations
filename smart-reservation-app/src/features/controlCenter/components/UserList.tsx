@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 type SortField = 'nom' | 'dateExpiration';
 type SortOrder = 'ascendant' | 'descendant';
 type RoleFilter = 'ALL' | 'USER' | 'ADMIN';
+type StatusFilter = 'ALL' | 'INVITE' | 'ACTIF' | 'EXPIRE' | 'DESACTIVE';
 
 export default function UserList() {
   const { users, loading, error } = useAllUsers();
@@ -12,26 +13,38 @@ export default function UserList() {
   const [sortField, setSortField] = useState<SortField>('nom');
   const [sortOrder, setSortOrder] = useState<SortOrder>('ascendant');
   const [roleFilter, setRoleFilter] = useState<RoleFilter>('ALL');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('ALL');
 
   const filteredUsers = useMemo(() => {
     return users
       .filter((user) => {
-        const matchSearch = `${user.nom} ${user.prenom}`
+        const nom = user.nom ?? '';
+        const prenom = user.prenom ?? '';
+        const matchSearch = `${nom} ${prenom}`
           .toLowerCase()
           .includes(search.toLowerCase());
         const matchRole = roleFilter === 'ALL' || user.role === roleFilter;
-        return matchSearch && matchRole;
+        const matchStatus = statusFilter === 'ALL' || user.statutUtilisateur === statusFilter;
+        return matchSearch && matchRole && matchStatus;
       })
       .sort((a, b) => {
         const modifier = sortOrder === 'ascendant' ? 1 : -1;
         if (sortField === 'nom') {
+          if (!a.nom && !b.nom) return 0;
+          if (!a.nom) return 1;
+          if (!b.nom) return -1;
           return a.nom.localeCompare(b.nom) * modifier;
         }
+
+        if (!a.dateExpiration && !b.dateExpiration) return 0;
+        if (!a.dateExpiration) return 1;
+        if (!b.dateExpiration) return -1;
+
         return (
           (a.dateExpiration.getTime() - b.dateExpiration.getTime()) * modifier
         );
       });
-  }, [users, search, sortField, sortOrder, roleFilter]);
+  }, [users, search, sortField, sortOrder, roleFilter, statusFilter]);
 
   if (loading) return <p>Chargement des utilisateurs en cours</p>;
   if (error)
@@ -57,6 +70,17 @@ export default function UserList() {
         <option value="ALL">Tous les rôles</option>
         <option value="USER">Utilisateurs</option>
         <option value="ADMIN">Administrateurs</option>
+      </select>
+
+      <select
+        value={statusFilter}
+        onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
+      >
+        <option value="ALL">Tous les états</option>
+        <option value="ACTIF">Actifs</option>
+        <option value="INVITE">Invités</option>
+        <option value="EXPIRE">Expirés</option>
+        <option value="DESACTIVE">Désactivés</option>
       </select>
       <select
         value={`${sortField},${sortOrder}`}

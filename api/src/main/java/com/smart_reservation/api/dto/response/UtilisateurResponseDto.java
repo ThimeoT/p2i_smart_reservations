@@ -1,4 +1,5 @@
 package com.smart_reservation.api.dto.response;
+import com.smart_reservation.api.model.StatutUtilisateur;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -18,6 +19,10 @@ public class UtilisateurResponseDto {
 
     public String role;
 
+    public StatutUtilisateur statutUtilisateur;
+
     public LocalDate dateExpiration;
+
+
 
 }

@@ -1,9 +1,7 @@
-import { useNavigate, useParams } from "react-router";
-import { useUser } from "../hooks/useUser";
-import { useLocation } from "react-router";
-import NotFoundPage from "../../../app/views/NotFoundPage";
-import { useAuth } from "../../auth/hooks/useAuth";
-import { deleteUserApi, resetPasswordApi } from "../api/user.api";
+import { useNavigate, useParams } from 'react-router';
+import { useUser } from '../hooks/useUser';
+import { useLocation } from 'react-router';
+import { useAuth } from '../../auth/hooks/useAuth';
 
 interface ProfilePageProps {
   isAdminView?: boolean;
@@ -13,22 +11,18 @@ export default function ProfilePage({ isAdminView = false }: ProfilePageProps) {
   const location = useLocation();
   const { id } = useParams();
   const { user: connectedUser } = useAuth();
+  const navigate = useNavigate();
   const saved: boolean = location.state?.saved === true;
 
   const targetId = isAdminView && id ? Number(id) : connectedUser?.id;
-  const { currentUser, loading, error } = useUser(targetId);
-
-  const navigate = useNavigate();
+  const { currentUser, loading, error, deleteUser, resetPassword } =
+    useUser(targetId);
 
   if (loading) return <p>Chargement...</p>;
   if (error) return <p>Erreur</p>;
   if (!currentUser) return null;
 
   const isOwnProfile = currentUser.id === connectedUser?.id;
-
-  const handleDeleteAccount = ()=>{
-    await deleteUserApi
-  }
 
   return (
     <>
@@ -42,15 +36,17 @@ export default function ProfilePage({ isAdminView = false }: ProfilePageProps) {
       <p>
         Date d'expiration : {currentUser.dateExpiration.toLocaleDateString()}
       </p>
-      <button onClick={() => navigate("/profile/edit")}>
+
+      <button onClick={() => navigate('/profile/edit')}>
         Editer le profil
       </button>
+
       {isAdminView && !isOwnProfile && (
         <>
-          <button onClick={() => handleDeleteAccount(currentUser.id)}>
+          <button onClick={() => deleteUser()}>
             Supprimer le compte
           </button>
-          <button onClick={() => handleResetPassword(currentUser.id)}>
+          <button onClick={() => resetPassword()}>
             Réinitialiser le mot de passe
           </button>
         </>

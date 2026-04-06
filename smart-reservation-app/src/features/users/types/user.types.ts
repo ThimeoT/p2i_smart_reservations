@@ -5,5 +5,6 @@ export interface User {
   mail: string;
   formation: string;
   dateExpiration: Date;
-  role : string
+  role: string;
+  statutUtilisateur: string;
 }

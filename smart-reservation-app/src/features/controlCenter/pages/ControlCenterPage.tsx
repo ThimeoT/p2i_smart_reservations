@@ -1,7 +1,9 @@
-import AddUserForm from '../components/AddUserForm';
+import { useState } from 'react';
+import InviteUserForm from '../../users/components/IinviteUserForm';
 import UserList from '../components/UserList';
 
 export default function ControlCenter() {
+  const [showAddUserForm, setShowAddUserForm] = useState(true);
 
   return (
     <>
@@ -10,8 +12,10 @@ export default function ControlCenter() {
       
       <h2>Utilisateurs</h2>
       <UserList/>
-      <button onClick={()=> <AddUserForm/>}></button>
-      <h2></h2>
+      <button onClick={()=> setShowAddUserForm(true)}></button>
+      {
+        showAddUserForm &&  <InviteUserForm onClose={() => setShowAddUserForm(false)} />
+      }
     </>
   );
 }

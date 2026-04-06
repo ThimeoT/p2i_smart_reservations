@@ -36,15 +36,15 @@ export function useUser( targetId?:number) {
   }
 
   const deleteUser = async () => {
-  if(!user) return;
-  await deleteUserApi(user.id);
+  if(!currentUser) return;
+  await deleteUserApi(currentUser.id);
   navigate('/admin');
 };
 
 const resetPassword = async () => {
-    if(!user) return;
-  await resetPasswordApi(user.id);
+    if(!currentUser) return;
+  await resetPasswordApi(currentUser.id);
 };
 
-  return { currentUser, loading, error, updateUser, handleDeleteAccount: deleteUser, resetPassword };
+  return { currentUser, loading, error, updateUser, deleteUser, resetPassword };
 }

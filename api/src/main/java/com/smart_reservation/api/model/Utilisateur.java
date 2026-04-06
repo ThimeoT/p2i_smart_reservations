@@ -33,6 +33,9 @@ public class Utilisateur {
     @Column(name = "mot_de_passe_hash")
     private String motDePasseHash;
 
+    @Column(name = "statut_utilisateur")
+    private StatutUtilisateur statutUtilisateur=StatutUtilisateur.INVITE;
+
     @Column
     private String role;
 

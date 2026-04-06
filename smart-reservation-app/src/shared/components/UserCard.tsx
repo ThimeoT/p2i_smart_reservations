@@ -1,4 +1,4 @@
-import type { User } from "../../features/users/types/user.types";
+import type { User } from '../../features/users/types/user.types';
 
 interface UserCardProps {
   user: User;
@@ -6,12 +6,12 @@ interface UserCardProps {
 
 export default function UserCard({ user }: UserCardProps) {
   return (
-    <>
+    <div>
       <h3>
         {user.nom} {user.prenom}
       </h3>
-      <p>{user.mail}</p> <p>{user.dateExpiration.toISOString()
-        .slice(0, 10)}</p>
-    </>
+      <p>{user.mail}</p> <p>{user.dateExpiration.toISOString().slice(0, 10)}</p>
+      <p>Statut : {user.statutUtilisateur.toLowerCase()}</p>
+    </div>
   );
 }

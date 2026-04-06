@@ -1,26 +1,19 @@
 import { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import { setFetchClientToken } from '../../../config/fetchClient';
+import tokenManager from '../../../config/tokenManager';
 import type { AuthUser } from '../types/auth.types';
 import { getMeApi } from '../api/auth.api';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(
-    localStorage.getItem('accessToken'),
+    tokenManager.get(),
   );
-  const [isLoading, setLoading] = useState(
-    !!localStorage.getItem('accessToken'),
-  );
+  const [isLoading, setLoading] = useState(!!tokenManager.get());
 
   const persistToken = (token: string | null) => {
+    tokenManager.set(token);
     setAccessToken(token);
-    if (token) {
-      localStorage.setItem('accessToken', token);
-    } else {
-      localStorage.removeItem('accessToken');
-    }
-    setFetchClientToken(token);
   };
 
   const logout = () => {
@@ -29,13 +22,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    console.log('[AuthProvider] token dans localStorage:', token);
+    const token = tokenManager.get();
     if (!token) {
       setLoading(false);
       return;
     }
-    setFetchClientToken(token);
     getMeApi()
       .then((user) => {
         console.log('[AuthProvider] user rehydraté:', user);

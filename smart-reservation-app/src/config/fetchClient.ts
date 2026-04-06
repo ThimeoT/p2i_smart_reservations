@@ -1,10 +1,5 @@
 import env from './env';
-
-let _accessToken: string | null = null;
-
-export const setFetchClientToken = (token: string | null) => {
-  _accessToken = token;
-};
+import tokenManager from './tokenManager';
 
 export class ApiError extends Error {
   status: number;
@@ -57,16 +52,17 @@ const fetchClient = {
     body?: BodyInit | null,
     options?: RequestInit,
   ) => {
-    console.log('[fetchClient] _accessToken:', _accessToken); // 👈
+    const token = tokenManager.get();
+    console.log('[fetchClient] token:', token); // 👈
     console.log('[fetchClient] headers:', {
       ...defaultHeaders,
       ...(options?.headers as Record<string, string> | undefined),
-      ...(_accessToken ? { Authorization: `Bearer ${_accessToken}` } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     });
     const headers: Record<string, string> = {
       ...defaultHeaders,
       ...(options?.headers as Record<string, string> | undefined),
-      ...(_accessToken ? { Authorization: `Bearer ${_accessToken}` } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     };
 
     const init: RequestInit = {

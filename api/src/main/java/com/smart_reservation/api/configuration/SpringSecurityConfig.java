@@ -35,19 +35,33 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll();
                     auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/logout").permitAll();
                     auth.requestMatchers("/user/current").authenticated();
                     auth.requestMatchers("/user").hasRole("USER");
                     auth.requestMatchers("/admin").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/initialisation").authenticated();
 
                     auth.requestMatchers(HttpMethod.GET, "/utilisateurs").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/utilisateurs/{id}").authenticated();
                     auth.requestMatchers(HttpMethod.PUT, "/utilisateurs/{id}").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/utilisateurs/{id}/initialisation").authenticated();
                     auth.requestMatchers(HttpMethod.DELETE, "/utilisateurs/{id}").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.POST, "/utilisateurs").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/utilisateurs/invitation").hasRole("ADMIN");
+
+                    auth.requestMatchers(HttpMethod.GET, "/equipements").authenticated();
+                    auth.requestMatchers(HttpMethod.GET, "/equipements/{id}").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/equipements").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.PUT, "/equipements/{id}").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.DELETE, "/equipements/{id}").hasRole("ADMIN");
+
+
+
+
 
                     auth.anyRequest().authenticated();
                 })
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) // 👈 remettre
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 
     }
