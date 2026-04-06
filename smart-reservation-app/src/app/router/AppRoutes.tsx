@@ -13,6 +13,7 @@ import ErrorPage from '../views/ErrorPage';
 import AdminRoute from './AdminRoute';
 import InviteRoute from './InviteRoute';
 import InitialisationPage from '../../features/auth/pages/InitialisationPage';
+import PageCatalogue from '../../features/equipments/pages/PageCatalogue';
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +40,8 @@ export const router = createBrowserRouter([
       {
         element: <RootLayout />,
         children: [
-          { path: '/equipements', element: <PageEquipement /> },
+          { path: '/equipements', element: <PageCatalogue /> },
+          { path: '/equipements/:id', element: <PageEquipement /> },
           { path: '/home', element: <HomePage /> },
           { path: '/profile', element: <ProfilePage /> },
           { path: '/profile/edit', element: <EditProfilePage /> },
