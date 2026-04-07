@@ -10,10 +10,6 @@ interface userFormProps {
   currentUser: User;
 }
 
-export interface UserFormType extends Omit<User, 'dateExpiration'> {
-  dateExpiration: string;
-}
-
 export default function ProfileForm({
   onSubmit,
   error,

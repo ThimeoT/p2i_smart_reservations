@@ -7,11 +7,12 @@ interface CarteEquipementProps {
 
 export default function CarteEquipement({equipement}:CarteEquipementProps) {
   const navigate = useNavigate();
+  const goToPageEquipement = ()=> navigate(`/equipements/${equipement.id}`);
   return (
-    <div>
+    <div onClick={()=>goToPageEquipement()}>
       <h4>{equipement?.nom}</h4>
       <p> {equipement.labels.map((label) => `${label.nom} `)}</p>
-      <button onClick={() => navigate(`/equipements/${equipement.id}`)}>
+      <button onClick={() => goToPageEquipement}>
         Voir détail
       </button>
     </div>

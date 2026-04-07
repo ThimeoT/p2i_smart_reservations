@@ -8,3 +8,5 @@ export interface User {
   role: string;
   statutUtilisateur: string;
 }
+
+export type UserRole = "USER" | "ADMIN";
