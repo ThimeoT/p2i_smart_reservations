@@ -32,7 +32,7 @@ export const createEquipementApi = async (
   equipementRequest: EquipementRequest,
 ): Promise<Equipement> => {
   const equipement = await fetchClient.postJson(
-    '/equipement',
+    '/equipements',
     equipementRequest,
   );
   return equipement;

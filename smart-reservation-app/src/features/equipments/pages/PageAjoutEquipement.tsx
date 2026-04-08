@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import type { EquipementRequest } from "../types/equipment.types";
 import { createEquipementApi } from "../api/equipment.api";
-import FormulaireCreationEquipement from "../components/FormulaireCreationEquipement";
+import FormulaireCreationEquipement from "../components/FormulaireEquipement";
 
 export default function PageAjoutEquipement() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function PageAjoutEquipement() {
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);
   const [saved, setSaved] = useState(false);
   useEffect(() => {
-    if (saved) (navigate("/equipements"), { state: { saved: true } });
+    if (saved) navigate("/equipements", { state: { saved: true } });
   }, [saved]);
 
   const handleSubmit = async(data:EquipementRequest)=>

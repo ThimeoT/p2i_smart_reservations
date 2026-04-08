@@ -13,7 +13,7 @@ export default function EquipmentPage() {
 
   return (
     <>
-      <img src={photoEquipement} height={200}/>
+      <img src={equipement.urlImage ?? photoEquipement} height={200}/>
       <h1>{equipement.nom}</h1>
       <h3>Description</h3>
       <p>{equipement.description}</p>
@@ -21,6 +21,7 @@ export default function EquipmentPage() {
       {equipement.exemplaires.map(exemplaire => <p>{exemplaire.nomSerie}</p>)}
       <h3>Labels</h3>
       {equipement.labels.map(label => <p>{label.nom}</p>)}
+      <button>Modifier l'équipement</button>
     </>
   );
 }

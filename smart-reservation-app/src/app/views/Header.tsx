@@ -18,6 +18,7 @@ export default function Header() {
       <img height="48px" src ={logoSmartReservations} onClick={()=>navigate("/home")}/>
       <span>{user?.mail}</span>
       <button onClick={handleLogout}>Déconnexion</button>
+      <button onClick={()=>navigate(-1)}>Retour</button>
     </header>
   )
 }

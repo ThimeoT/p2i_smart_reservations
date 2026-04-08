@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router';
 import type { EquipementResume } from '../types/equipment.types';
+import imageEquipement from "../../../assets/1080 1.png"
 
 interface CarteEquipementProps {
   equipement : EquipementResume
@@ -10,6 +11,7 @@ export default function CarteEquipement({equipement}:CarteEquipementProps) {
   const goToPageEquipement = ()=> navigate(`/equipements/${equipement.id}`);
   return (
     <div onClick={()=>goToPageEquipement()}>
+      <img src={imageEquipement} height ="25px" />
       <h4>{equipement?.nom}</h4>
       <p> {equipement.labels.map((label) => `${label.nom} `)}</p>
       <button onClick={() => goToPageEquipement}>
