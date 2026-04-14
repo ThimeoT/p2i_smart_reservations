@@ -6,22 +6,23 @@ import {
   type FieldErrors,
   type UseFormRegister,
 } from 'react-hook-form';
-import type {
-  Equipement,
-  EquipementRequest,
-  StatutRelationEquipement,
-} from '../types/equipment.types';
+import type { Equipement, EquipementRequest } from '../types/equipment.types';
+import type { StatutRelationEquipement } from '../types/relationEquipement.types';
 import { useUnsavedChangesBlocker } from '../../../shared/hooks/useUnsavedChangesBlocker';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import useLabels from '../../label/hooks/useLabels';
 import useAllEquipements from '../hooks/useAllEquipements';
+import { Combobox } from '../../../shared/components/form/Combobox';
 
 interface LienRessource {
   valeur: string;
 }
 
-interface EquipementFormValues extends Omit<EquipementRequest, 'liensRessources'> {
+interface EquipementFormValues extends Omit<
+  EquipementRequest,
+  'liensRessources'
+> {
   liensRessources: LienRessource[];
 }
 
@@ -39,25 +40,13 @@ function SectionLabels({
         control={control}
         name="labelsId"
         render={({ field }) => (
-          <div>
-            {labels.map((label) => (
-              <button
-                key={label.id}
-                type="button"
-                style={{ backgroundColor: label.color }}
-                onClick={() =>
-                  field.onChange(
-                    field.value.includes(label.id)
-                      ? field.value.filter((id: number) => id !== label.id)
-                      : [...field.value, label.id],
-                  )
-                }
-                aria-pressed={field.value.includes(label.id)}
-              >
-                {label.nom}
-              </button>
-            ))}
-          </div>
+          <Combobox
+            options={labels}
+            value={field.value}
+            onChange={field.onChange}
+            placeholder="Ajouter un label..."
+            renderTag={(opt) => <span>{opt.nom}</span>}
+          />
         )}
       />
     </fieldset>
@@ -96,7 +85,7 @@ function SectionLiens({
           </button>
         </div>
       ))}
-      <button type="button" onClick={() => append({valeur:''})}>
+      <button type="button" onClick={() => append({ valeur: '' })}>
         + Ajouter un lien
       </button>
     </fieldset>
@@ -163,24 +152,24 @@ function SectionRelations({
                 {equipements
                   .filter((e) => e.id !== equipementCourantId)
                   .map((e) => {
-                    const value = field.value??[]
-                    return(
-                    
-                    <label key={e.id}>
-                      <input
-                        type="checkbox"
-                        checked={value.includes(e.id)}
-                        onChange={() =>
-                          field.onChange(
-                            value.includes(e.id)
-                              ? value.filter((id) => id !== e.id)
-                              : [...value, e.id],
-                          )
-                        }
-                      />
-                      {e.nom}
-                    </label>)
-            })}
+                    const value = field.value ?? [];
+                    return (
+                      <label key={e.id}>
+                        <input
+                          type="checkbox"
+                          checked={value.includes(e.id)}
+                          onChange={() =>
+                            field.onChange(
+                              value.includes(e.id)
+                                ? value.filter((id) => id !== e.id)
+                                : [...value, e.id],
+                            )
+                          }
+                        />
+                        {e.nom}
+                      </label>
+                    );
+                  })}
               </div>
             )}
           />
@@ -252,11 +241,13 @@ export default function FormulaireCreationEquipement({
         description: equipement.description,
         urlImage: equipement.urlImage,
         labelsId: equipement.labels.map((label) => label.id),
-        liensRessources: equipement.liensRessources.map((valeur) => ({ valeur })),
+        liensRessources: equipement.liensRessources.map((valeur) => ({
+          valeur,
+        })),
         relationsEquipement: equipement.relationsEquipement.map((r) => ({
           id: r.id,
           statutRelationEquipement: r.statutRelationEquipement,
-          equipementsCibleId: r.equipementsCibleId,
+          equipementsCible: r.equipementsCible,
           commentaire: r.commentaire,
         })),
       });
@@ -330,5 +321,5 @@ export default function FormulaireCreationEquipement({
         </button>
       </form>
     </>
-  );  
+  );
 }

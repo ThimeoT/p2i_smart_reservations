@@ -1,5 +1,6 @@
 import type { Exemplaire } from '../../exemplaires/types/exemplaire.types';
 import type { Label } from '../../label/types/label.types';
+import type { RelationEquipementRequest, RelationEquipement } from './relationEquipement.types';
 
 export interface EquipementRequest {
   nom: string;
@@ -18,7 +19,7 @@ export interface Equipement {
   labels: Label[];
   exemplaires: Exemplaire[];
   liensRessources: string[];
-  relationsEquipement: RelationEquipementRequest[];
+  relationsEquipement: RelationEquipement[];
 }
 
 export interface EquipementResume {
@@ -28,11 +29,4 @@ export interface EquipementResume {
   labels: Label[];
 }
 
-export interface RelationEquipementRequest {
-  id?:number;
-  statutRelationEquipement: StatutRelationEquipement;
-  equipementsCibleId: number[]; // ne doit pas être vide
-  commentaire: string;
-}
 
-export type StatutRelationEquipement = 'COMPATIBLE' | 'RECOMMANDE' | 'REQUIS';
