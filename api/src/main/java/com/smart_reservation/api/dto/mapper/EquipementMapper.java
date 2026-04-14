@@ -24,6 +24,7 @@ public interface EquipementMapper {
     @Named("toResumeDto")
     EquipementResumeDto toResumeDto(Equipement equipement);
 
+    @Named("toResumeDtoIterable")
     @IterableMapping(qualifiedByName = "toResumeDto")
     Iterable<EquipementResumeDto> toResumeDtoIterable(Iterable<Equipement> equipements);
 

@@ -1,5 +1,6 @@
 package com.smart_reservation.api.controllerTests;
 
+import com.smart_reservation.api.configuration.JwtService;
 import com.smart_reservation.api.controller.UtilisateurController;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
@@ -31,6 +32,9 @@ public class UtilisateurControllerTests {
 
     @MockitoBean
     private UtilisateurService utilisateurService;
+
+    @MockitoBean
+    private JwtService jwtService;
 
     private UtilisateurResponseDto buildResponseDto(Long id, String nom) {
         UtilisateurResponseDto dto = new UtilisateurResponseDto();

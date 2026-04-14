@@ -6,7 +6,7 @@ import com.smart_reservation.api.model.RelationEquipement;
 import jdk.jfr.Name;
 import org.mapstruct.*;
 
-@Mapper
+@Mapper(uses = EquipementMapper.class )
 public interface RelationEquipementMapper {
 
     @Mapping(target = "id", ignore = true)
@@ -16,7 +16,6 @@ public interface RelationEquipementMapper {
 
     @Named("toDto")
     @Mapping(target = "equipementSourceId", source = "equipementSource.id")
-    @Mapping(target = "equipementsCibleIds", expression = "java(relationEquipement.getEquipementsCible().stream().map(e -> e.getId()).collect(java.util.stream.Collectors.toList()))")
     RelationEquipementResponseDto toDto(RelationEquipement relationEquipement);
 
     @IterableMapping(qualifiedByName = "toDto")

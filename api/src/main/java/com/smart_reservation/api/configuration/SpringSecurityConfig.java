@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,8 +32,10 @@ public class SpringSecurityConfig {
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/h2/**").permitAll();
                     auth.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll();
                     auth.requestMatchers("/login").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/logout").permitAll();
@@ -54,6 +57,7 @@ public class SpringSecurityConfig {
                     auth.requestMatchers(HttpMethod.POST, "/equipements").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.PUT, "/equipements/{id}").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.DELETE, "/equipements/{id}").hasRole("ADMIN");
+                    auth.requestMatchers("/error").permitAll();
 
 
 

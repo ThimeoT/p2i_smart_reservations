@@ -12,6 +12,7 @@ import com.smart_reservation.api.model.Utilisateur;
 import com.smart_reservation.api.repository.EquipementRepository;
 import com.smart_reservation.api.repository.ListeEquipementsRepository;
 import com.smart_reservation.api.repository.UtilisateurRepository;
+import com.smart_reservation.api.service.EquipementService;
 import com.smart_reservation.api.service.UtilisateurService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class UtilisateurServiceTests {
     private ListeEquipementsRepository listeEquipementsRepository;
 
     @Mock
-    private EquipementRepository equipementRepository;
+    private EquipementService equipementService;
 
     @Mock
     private UtilisateurMapper utilisateurMapper;
@@ -181,8 +182,8 @@ class UtilisateurServiceTests {
         responseDto.nom = "Nouvelle liste";
 
         when(utilisateurRepository.findById(1L)).thenReturn(Optional.of(utilisateur1));
-        when(equipementRepository.findById(1L)).thenReturn(Optional.of(equipement1));
-        when(equipementRepository.findById(2L)).thenReturn(Optional.of(equipement2));
+        when(equipementService.getEquipementsEntities(List.of(1L, 2L)))
+                .thenReturn(List.of(equipement1, equipement2));
         when(listeEquipementsMapper.toEntity(requestDto)).thenReturn(new ListeEquipements());
         when(listeEquipementsMapper.toDto(any())).thenReturn(responseDto);
 
@@ -206,8 +207,8 @@ class UtilisateurServiceTests {
                 .thenReturn(Optional.of(utilisateur1)); // ← manquait
         when(listeEquipementsMapper.toEntity(any()))
                 .thenReturn(new ListeEquipements());    // ← manquait
-        when(equipementRepository.findById(99L))
-                .thenReturn(Optional.empty());
+        when(equipementService.getEquipementsEntities(List.of(99L)))
+                .thenThrow(new RessourceIntrouvableException("Equipement", 99L));
 
         // WHEN / THEN
         assertThrows(RessourceIntrouvableException.class,
@@ -227,8 +228,8 @@ class UtilisateurServiceTests {
         responseDto.nom = "Nouvelle liste";
 
         when(listeEquipementsRepository.findById(1L)).thenReturn(Optional.of(liste1));
-        when(equipementRepository.findById(1L)).thenReturn(Optional.of(equipement1));
-        when(equipementRepository.findById(2L)).thenReturn(Optional.of(equipement2));
+        when(equipementService.getEquipementsEntities(List.of(1L, 2L)))
+                .thenReturn(List.of(equipement1, equipement2));
         when(listeEquipementsMapper.toDto(any())).thenReturn(responseDto);
 
         // WHEN
@@ -246,7 +247,8 @@ class UtilisateurServiceTests {
         ListeEquipementsRequestDto requestDto = new ListeEquipementsRequestDto();
         requestDto.nom = "Nouvelle liste";
         requestDto.equipementsId = List.of(99L); // ID inexistant
-        when(equipementRepository.findById(99L)).thenReturn(Optional.empty());
+        when(equipementService.getEquipementsEntities(List.of(99L)))
+                .thenThrow(new RessourceIntrouvableException("Equipement", 99L));
         when(listeEquipementsRepository.findById(1L)).thenReturn(Optional.of(liste1));
 
         // WHEN / THEN
