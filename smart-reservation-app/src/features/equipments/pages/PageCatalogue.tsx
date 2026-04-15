@@ -8,6 +8,9 @@ export default function PageCatalogue() {
   return (
     <div>
       <h1>Catalogue</h1>
+      <div className="bg-red-500 text-white p-4 text-center">
+        Tailwind fonctionne ✅
+      </div>
       {isAdmin && (
         <div>
           <h3>Besoin d'ajouter un nouvel équipement ?</h3>

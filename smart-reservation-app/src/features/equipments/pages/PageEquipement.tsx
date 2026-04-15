@@ -1,18 +1,17 @@
-import { Navigate, useParams } from 'react-router';
-import { useEquipement } from '../hooks/useEquipement';
-import photoEquipement from '../../../assets/image kit xsens awinda.png';
-import CarteRelationEquipement from '../components/CarteRelationEquipement';
+import { useEquipement } from "../hooks/useEquipement";
+import photoEquipement from "../../../assets/image kit xsens awinda.png";
+import CarteRelationEquipement from "../components/CarteRelationEquipement";
+import { useParams } from "react-router";
+import CarteErreur from "../../../shared/components/CarteErreur";
 
-export default function EquipmentPage() {
+export default function PageEquipement() {
   const { id } = useParams();
-  const equipementId = id ? Number(id) : undefined;
-  if (!equipementId) return <Navigate to="equipements" />;
-  const { equipement, loading, error } = useEquipement(equipementId);
-  if (loading) return <p>Chargement...</p>;
-  if (error) return <p>Erreur</p>;
+  const { equipement, isLoading, error } = useEquipement(parseInt(id??""));
+  if (isLoading) return <p>Chargement...</p>;
+  if (error) return <CarteErreur error={error}/>;
   if (!equipement) return null;
 
-  console.log('Equipement', equipement);
+  console.log("Equipement", equipement);
   return (
     <>
       <img src={equipement.urlImage ?? photoEquipement} height={200} />
@@ -29,21 +28,25 @@ export default function EquipmentPage() {
       ))}
       <h3>Equipements Requis</h3>
       {equipement.relationsEquipement
-        .filter((relation) => relation.statutRelationEquipement === 'REQUIS')
+        .filter((relation) => relation.statutRelationEquipement === "REQUIS")
         .map((relation, id) => {
-          <CarteRelationEquipement key={id} relation={relation} />;
+          return <CarteRelationEquipement key={id} relation={relation} />;
         })}
       <h3>Equipements Recommandés</h3>
       {equipement.relationsEquipement
-        .filter((relation) => relation.statutRelationEquipement === 'RECOMMANDE')
+        .filter(
+          (relation) => relation.statutRelationEquipement === "RECOMMANDE",
+        )
         .map((relation, id) => {
-          <CarteRelationEquipement key={id} relation={relation} />;
+          return <CarteRelationEquipement key={id} relation={relation} />;
         })}
       <h3>Equipements Compatibles</h3>
       {equipement.relationsEquipement
-        .filter((relation) => relation.statutRelationEquipement === 'COMPATIBLE')
+        .filter(
+          (relation) => relation.statutRelationEquipement === "COMPATIBLE",
+        )
         .map((relation, id) => {
-          <CarteRelationEquipement key={id} relation={relation} />;
+          return <CarteRelationEquipement key={id} relation={relation} />;
         })}
       <button>Modifier l'équipement</button>
     </>

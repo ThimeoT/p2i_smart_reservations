@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router'
 import { useAuth } from '../../features/auth/hooks/useAuth'
+import ContenuPage from '../views/ContenuPage'
 
 export default function InviteRoute() {
   const { user } = useAuth()
@@ -8,5 +9,9 @@ export default function InviteRoute() {
 
   if (user.statut === 'ACTIF') return <Navigate to="/home" replace />
 
-  return <Outlet />
+  return (
+    <ContenuPage>
+      <Outlet />
+    </ContenuPage>
+  )
 }

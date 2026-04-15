@@ -1,38 +1,33 @@
 import { useNavigate } from "react-router";
-import type { Equipement, EquipementRequest } from "../types/equipment.types";
-import { useEffect, useState } from "react";
-import { deleteEquipementApi, getEquipementByIdApi, updateEquipementApi } from "../api/equipment.api";
+import type { EquipementRequest } from "../types/equipment.types";
+import {
+  deleteEquipementApi,
+  getEquipementByIdApi,
+  updateEquipementApi,
+} from "../api/equipment.api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export function useEquipement( id:number) {
+export function useEquipement(id: number) {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  
 
-  const navigate=  useNavigate();
+  const { data: equipement, isLoading, error } = useQuery({
+    queryKey: ["equipement", id],
+    queryFn: () => getEquipementByIdApi(id),
+  });
 
-  const [equipement, setEquipement] = useState<Equipement | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const { mutate: updateEquipement } = useMutation({
+    mutationFn: (data: EquipementRequest) => updateEquipementApi(id, data),
+    onSuccess: (updated) => {
+      queryClient.setQueryData(["equipement", id], updated);
+    },
+  });
 
+  const { mutate: deleteEquipement } = useMutation({
+    mutationFn: () => deleteEquipementApi(id),
+    onSuccess: () => navigate("/admin"),
+  });
 
-  useEffect(() => {
-    if(!id) return;
-    setLoading(true);
-    getEquipementByIdApi(id)
-      .then(setEquipement)
-      .catch(setError)
-      .finally(() => setLoading(false));
-  }, [id]);
-
-  const updateEquipement = async (data: EquipementRequest) => {
-    if(!equipement) return;
-    const updatedEquipement = await updateEquipementApi( equipement.id, data );
-    setEquipement(updatedEquipement);
-    return updatedEquipement;
-  }
-
-  const deleteEquipement = async () => {
-    if(!equipement) return;
-  await deleteEquipementApi(equipement.id);
-  navigate('/admin');
-};
-
-  return { equipement, loading, error, updateEquipement, deleteEquipement };
+  return { equipement, isLoading, error, updateEquipement, deleteEquipement };
 }

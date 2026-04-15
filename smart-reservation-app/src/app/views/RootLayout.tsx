@@ -1,13 +1,14 @@
 import { Outlet } from 'react-router'
 import Header from './Header'
+import ContenuPage from './ContenuPage'
 
 export default function RootLayout() {
   return (
     <div>
       <Header />
-      <main>
+      <ContenuPage>
         <Outlet />
-      </main>
+      </ContenuPage>
     </div>
   )
 }

@@ -1,21 +1,32 @@
-import { useNavigate } from 'react-router';
-import type { EquipementResume } from '../types/equipment.types';
-import imageEquipement from "../../../assets/1080 1.png"
+import { useNavigate } from "react-router";
+import type { EquipementResume } from "../types/equipment.types";
+import imageEquipement from "../../../assets/1080 1.png";
 
 interface CarteEquipementProps {
-  equipement : EquipementResume
+  equipement: EquipementResume;
 }
 
-export default function CarteEquipement({equipement}:CarteEquipementProps) {
+export default function CarteEquipement({ equipement }: CarteEquipementProps) {
   const navigate = useNavigate();
-  const goToPageEquipement = ()=> navigate(`/equipements/${equipement.id}`);
+  const goToPageEquipement = () => navigate(`/equipements/${equipement.id}`);
   return (
-    <div onClick={()=>goToPageEquipement()}>
-      <img src={imageEquipement} height ="25px" />
-      <h4>{equipement?.nom}</h4>
-      <p> {equipement.labels.map((label) => `${label.nom} `)}</p>
-      <button onClick={() => goToPageEquipement}>
-        Voir détail
+    <div
+      className="w-96 h-46 p-4 border-2 border-solid rounded-lg flex items-center gap-4 relative"
+      onClick={() => goToPageEquipement()}
+    >
+      <img
+        className="w-16 h-16 object-contain"
+        src={imageEquipement}
+        height="25px"
+      />
+      <div className="flex flex-col gap-1">
+        <div className="font-semibold">{equipement?.nom}</div>
+        <div className="text-sm text-gray-500">
+          {equipement.labels.map((label) => `${label.nom} `)}
+        </div>
+      </div>
+      <button className="absolute bottom-4 right-4 text-lg font-bold" onClick={() => goToPageEquipement}>
+        {">"}
       </button>
     </div>
   );

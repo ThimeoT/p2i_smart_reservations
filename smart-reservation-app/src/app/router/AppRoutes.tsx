@@ -9,12 +9,13 @@ import EditProfilePage from "../../features/users/pages/EditProfilePage";
 import FallbackRedirect from "./FallbackRedirect";
 import NotFoundPage from "../views/NotFoundPage";
 import ProtectedRoute from "./ProtectedRoute";
-import ErrorPage from "../views/ErrorPage";
+import ErrorPage from "../views/RouteErrorPage";
 import AdminRoute from "./AdminRoute";
 import InviteRoute from "./InviteRoute";
 import InitialisationPage from "../../features/auth/pages/InitialisationPage";
 import PageCatalogue from "../../features/equipments/pages/PageCatalogue";
 import PageAjoutEquipement from "../../features/equipments/pages/PageAjoutEquipement";
+import PageTest from "../views/PageTest";
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ export const router = createBrowserRouter([
         element: <RootLayout />,
         children: [
           { path: "/equipements", element: <PageCatalogue /> },
-          { path: "/equipements/:id", element: <PageEquipement /> },
+          { path: "/equipements/:id", element: <PageEquipement />, errorElement: <NotFoundPage /> },
           { path: "/home", element: <HomePage /> },
           { path: "/profile", element: <ProfilePage /> },
           { path: "/profile/edit", element: <EditProfilePage /> },
@@ -50,8 +51,9 @@ export const router = createBrowserRouter([
             element: <AdminRoute />,
             children: [
               { path: "/admin", element: <PageCentreDeControle /> },
-              { path: "/users/:id", element: <ProfilePage isAdminView /> },
-              { path: "/users/:id/edit", element: <EditProfilePage /> },
+              { path: "/users/:id", element: <ProfilePage isAdminView />, errorElement: <NotFoundPage/> },
+              { path: "/users/:id/edit", element: <EditProfilePage /> , errorElement: <NotFoundPage/> },
+              { path: "/test", element:<PageTest /> },
               {
                 path: "/equipements/ajouter-equipement",
                 element: <PageAjoutEquipement />,

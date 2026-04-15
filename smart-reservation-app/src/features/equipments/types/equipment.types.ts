@@ -8,7 +8,7 @@ export interface EquipementRequest {
   urlImage: string; // sensé être une URL valide
   labelsId: number[];
   liensRessources: string[]; //  URL à valider aussi
-  relationsEquipement?: RelationEquipementRequest[];
+  relationsEquipement: RelationEquipementRequest[];
 }
 
 export interface Equipement {

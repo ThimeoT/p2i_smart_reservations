@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router';
 import { useAuth } from '../../features/auth/hooks/useAuth';
+import ContenuPage from '../views/ContenuPage';
 
 export default function ProtectedRoute() {
   const { user, isLoading } = useAuth();
@@ -11,5 +12,9 @@ export default function ProtectedRoute() {
 
   if (user.statut === 'INVITE') return <Navigate to="/initialisation" replace />
 
-  return <Outlet />;
+  return (
+    <ContenuPage>
+      <Outlet />
+    </ContenuPage>
+  );
 }

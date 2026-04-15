@@ -13,7 +13,7 @@ export default function CarteRelationEquipement({relation} : CarteRelationEquipe
       <div className="flex-col">
         {relation.equipementsCible.map((equipement,index) =><CarteEquipement key={index} equipement={equipement}/>)}
       </div>
-      <div className="flex-inital">{relation.statutRelationEquipement}</div>
+      <div className="flex-inital">{relation.commentaire}</div>
     </div>
   )
 }

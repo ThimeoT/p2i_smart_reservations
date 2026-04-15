@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+
+@theme {
+  /* ── Fonts ── */
+  --font-sans: "Epilogue", system-ui, sans-serif;
+  --font-display: "Montserrat", system-ui, sans-serif;
+
+  /* ── Couleurs ── */
+  --color-beige-1: #F6F1EF;
+  --color-jaune-1: #ca895f;
+  --color-mauve-1: #88527F;
+  --color-mauve-2: #9F87AF;
+  --color-taupe-1: #A17983;
+  --color-taupe-2: #906570;
+  --color-taupe-3: #725058;
+  --color-bleu-1: #3884AF;
+  --color-bleu-2: #59A2C2;
+  --color-bleu-fonce-1 : #283F5B;
+  --color-vert-1: #70A288;
+  --color-rouge-1: #D45555;
+
+  /* ── Font sizes ── */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-2xl: 32px;
+  --text-3xl: 48px;
+
+  /* ── Border radius ── */
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  --radius-pill: 999px;
+
+  /* ── Breakpoints ── */
+  --breakpoint-mobile: 390px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+}
+
+/* Dark mode */
+.dark {
+  --color-bg-page: #1C1C1C;
+  --color-bg-card: #2A2A2A;
+  --color-bg-header: #1C1C1C;
+  --color-content-primary: #F0EDE8;
+  --color-content-secondary: #A0A0A0;
+}
