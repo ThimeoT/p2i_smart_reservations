@@ -44,7 +44,7 @@ public class Equipement {
     private List<String> liensRessources = new ArrayList<>();
 
 
-    @OneToMany(mappedBy="equipementSource")
+    @OneToMany(mappedBy="equipementSource", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RelationEquipement> relationsEquipement = new ArrayList<>();
 
     public void addLabel(Label label) {

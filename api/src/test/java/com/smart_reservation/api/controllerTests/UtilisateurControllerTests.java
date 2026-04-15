@@ -1,5 +1,6 @@
 package com.smart_reservation.api.controllerTests;
 
+import com.smart_reservation.api.configuration.CustomUserDetailsService;
 import com.smart_reservation.api.configuration.JwtService;
 import com.smart_reservation.api.controller.UtilisateurController;
 import com.smart_reservation.api.dto.response.UtilisateurResponseDto;
@@ -7,7 +8,9 @@ import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import com.smart_reservation.api.service.UtilisateurService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,6 +35,12 @@ public class UtilisateurControllerTests {
 
     @MockitoBean
     private UtilisateurService utilisateurService;
+
+    @MockitoBean
+    private AuthenticationProvider authenticationProvider;
+
+    @MockitoBean
+    private CustomUserDetailsService customUserDetailsService;
 
     @MockitoBean
     private JwtService jwtService;
