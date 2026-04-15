@@ -1,11 +1,11 @@
-import type { EquipementResume } from "./equipment.types";
+import type { EquipementResume } from './equipement.types';
 
 export interface RelationEquipement {
   id: number;
-  statutRelationEquipement : StatutRelationEquipement;
+  statutRelationEquipement: StatutRelationEquipement;
   equipementSourceId: number;
   equipementsCible: EquipementResume[];
-  commentaire : string;
+  commentaire: string;
 }
 
 export interface RelationEquipementRequest {

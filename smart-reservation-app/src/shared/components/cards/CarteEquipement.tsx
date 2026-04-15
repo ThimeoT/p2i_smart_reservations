@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router";
-import type { EquipementResume } from "../types/equipment.types";
-import imageEquipement from "../../../assets/1080 1.png";
+import { useNavigate } from 'react-router';
+import type { EquipementResume } from '../../../features/equipments/types/equipement.types';
+import imageEquipement from '../../../assets/1080 1.png';
 
 interface CarteEquipementProps {
   equipement: EquipementResume;
@@ -11,7 +11,7 @@ export default function CarteEquipement({ equipement }: CarteEquipementProps) {
   const goToPageEquipement = () => navigate(`/equipements/${equipement.id}`);
   return (
     <div
-      className="w-96 h-46 p-4 border-2 border-solid rounded-lg flex items-center gap-4 relative"
+      className="w-87 p-4 border-2 border-solid border-taupe-1 rounded-lg flex items-center gap-4 relative"
       onClick={() => goToPageEquipement()}
     >
       <img
@@ -25,8 +25,11 @@ export default function CarteEquipement({ equipement }: CarteEquipementProps) {
           {equipement.labels.map((label) => `${label.nom} `)}
         </div>
       </div>
-      <button className="absolute bottom-4 right-4 text-lg font-bold" onClick={() => goToPageEquipement}>
-        {">"}
+      <button
+        className="absolute bottom-4 right-4 text-lg font-bold"
+        onClick={() => goToPageEquipement}
+      >
+        {'>'}
       </button>
     </div>
   );

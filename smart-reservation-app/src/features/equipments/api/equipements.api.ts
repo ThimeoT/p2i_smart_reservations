@@ -1,5 +1,9 @@
 import fetchClient from '../../../config/fetchClient';
-import type { Equipement, EquipementRequest, EquipementResume } from '../types/equipment.types';
+import type {
+  Equipement,
+  EquipementRequest,
+  EquipementResume,
+} from '../types/equipement.types';
 
 export const getEquipementByIdApi = async (id: number): Promise<Equipement> => {
   const user = await fetchClient.get(`/equipements/${id}`);

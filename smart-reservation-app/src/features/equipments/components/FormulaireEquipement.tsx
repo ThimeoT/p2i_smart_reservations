@@ -6,7 +6,7 @@ import {
   type FieldErrors,
   type UseFormRegister,
 } from 'react-hook-form';
-import type { Equipement, EquipementRequest } from '../types/equipment.types';
+import type { Equipement, EquipementRequest } from '../types/equipement.types';
 import type { StatutRelationEquipement } from '../types/relationEquipement.types';
 import { useUnsavedChangesBlocker } from '../../../shared/hooks/useUnsavedChangesBlocker';
 import { useNavigate } from 'react-router';

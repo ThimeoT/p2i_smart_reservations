@@ -59,7 +59,7 @@ export default function InviteUserForm({ onClose }: { onClose: () => void }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Inviter un utilisateur</h2>
+      <h2>Ajouter un utilisateur</h2>
 
       <input
         type="email"

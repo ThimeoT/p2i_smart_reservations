@@ -1,10 +1,10 @@
-import { Outlet } from "react-router";
-import ContenuPage from "./ContenuPage";
+import { Outlet } from 'react-router';
+import FondEcran from './FondEcran';
 
 export default function AuthLayout() {
   return (
-    <ContenuPage>
+    <FondEcran>
       <Outlet />
-    </ContenuPage>
+    </FondEcran>
   );
 }

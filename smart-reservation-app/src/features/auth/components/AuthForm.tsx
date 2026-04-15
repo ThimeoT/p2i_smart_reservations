@@ -1,7 +1,8 @@
-import { useForm } from "react-hook-form";
-import type { LoginCredentials } from "../types/auth.types";
-import Input from "../../../shared/components/form/Input";
-import FormLayout from "../../../shared/components/form/FormLayout";
+import { useForm } from 'react-hook-form';
+import type { LoginCredentials } from '../types/auth.types';
+import Input from '../../../shared/components/form/Input';
+import FormLayout from '../../../shared/components/form/FormLayout';
+import Bouton from '../../../shared/components/Bouton';
 
 interface AuthFormProps {
   onSubmit: (data: LoginCredentials) => Promise<void>;
@@ -14,34 +15,40 @@ export default function AuthForm({ onSubmit, error, loading }: AuthFormProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginCredentials>();
+  } = useForm<LoginCredentials>({
+    defaultValues: {
+      mail: 'admin@test.com',
+      password: 'admin',
+    },
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormLayout>
-        <input className="border-3 border-solid rounded-md border-taupe-1 p-1"
+        <input
+          className="border-3 border-solid rounded-md border-taupe-1 p-1"
           type="email"
           placeholder="Adresse e-mail"
-          {...register("mail", { required: "E-mail requis" })}
+          {...register('mail', { required: 'E-mail requis' })}
         />
-      {errors.mail && <p>{errors.mail.message}</p>}
+        {errors.mail && <p>{errors.mail.message}</p>}
 
         <Input
           type="password"
           placeholder="Mot de passe"
-          {...register("password", { required: "Mot de passe requis" })}
+          {...register('password', { required: 'Mot de passe requis' })}
         />
 
-      {errors.password && <p>{errors.password.message}</p>}
+        {errors.password && <p>{errors.password.message}</p>}
 
-      {errors.root && <p>{errors.root.message}</p>}
+        {errors.root && <p>{errors.root.message}</p>}
 
-      {error && <p>{error}</p>}
-
-      <button type="submit" disabled={loading}>
-        {loading ? "Connexion…" : "Se connecter"}
-      </button>
-
+        {error && <p>{error}</p>}
+        <Bouton
+          text={loading ? 'Connexion' : 'Se connecter'}
+          disabled={loading}
+          type="submit"
+        />
       </FormLayout>
     </form>
   );

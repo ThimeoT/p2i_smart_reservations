@@ -2,7 +2,7 @@ import { useEquipement } from "../hooks/useEquipement";
 import photoEquipement from "../../../assets/image kit xsens awinda.png";
 import CarteRelationEquipement from "../components/CarteRelationEquipement";
 import { useParams } from "react-router";
-import CarteErreur from "../../../shared/components/CarteErreur";
+import CarteErreur from "../../../shared/components/cards/CarteErreur";
 
 export default function PageEquipement() {
   const { id } = useParams();

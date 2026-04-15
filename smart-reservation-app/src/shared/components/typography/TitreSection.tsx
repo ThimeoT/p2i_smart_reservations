@@ -1,5 +1,5 @@
 export default function TitreDeSection({ titre }: { titre: string }) {
   return (
-    <h1 className="font-display text-xl md:text-2xl font-bold">{titre}</h1>
+    <h1 className="font-display text-xl md:text-2xl font-bold py-8">{titre}</h1>
   );
 }

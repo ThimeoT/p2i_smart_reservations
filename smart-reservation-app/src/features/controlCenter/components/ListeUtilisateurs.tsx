@@ -7,7 +7,7 @@ type SortOrder = 'ascendant' | 'descendant';
 type RoleFilter = 'ALL' | 'USER' | 'ADMIN';
 type StatusFilter = 'ALL' | 'INVITE' | 'ACTIF' | 'EXPIRE' | 'DESACTIVE';
 
-export default function UserList() {
+export default function ListeUtilisateurs() {
   const { users, loading, error } = useAllUsers();
   const [search, setSearch] = useState<string>('');
   const [sortField, setSortField] = useState<SortField>('nom');
@@ -24,7 +24,8 @@ export default function UserList() {
           .toLowerCase()
           .includes(search.toLowerCase());
         const matchRole = roleFilter === 'ALL' || user.role === roleFilter;
-        const matchStatus = statusFilter === 'ALL' || user.statutUtilisateur === statusFilter;
+        const matchStatus =
+          statusFilter === 'ALL' || user.statutUtilisateur === statusFilter;
         return matchSearch && matchRole && matchStatus;
       })
       .sort((a, b) => {

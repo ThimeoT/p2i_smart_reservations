@@ -17,56 +17,56 @@ import PageCatalogue from "../../features/equipments/pages/PageCatalogue";
 import PageAjoutEquipement from "../../features/equipments/pages/PageAjoutEquipement";
 import PageTest from "../views/PageTest";
 
-export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <FallbackRedirect />,
-  },
-  {
-    path: "/login",
-    element: <AuthPage />,
-  },
-  {
-    path: "/404",
-    element: <NotFoundPage />,
-  },
-  {
-    // route pour les comptes invités, token requis mais pas statut ACTIF
-    element: <InviteRoute />,
-    children: [{ path: "/initialisation", element: <InitialisationPage /> }],
-  },
-  {
-    element: <ProtectedRoute />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        element: <RootLayout />,
-        children: [
-          { path: "/equipements", element: <PageCatalogue /> },
-          { path: "/equipements/:id", element: <PageEquipement />, errorElement: <NotFoundPage /> },
-          { path: "/home", element: <HomePage /> },
-          { path: "/profile", element: <ProfilePage /> },
-          { path: "/profile/edit", element: <EditProfilePage /> },
-          {
-            element: <AdminRoute />,
-            children: [
-              { path: "/admin", element: <PageCentreDeControle /> },
-              { path: "/users/:id", element: <ProfilePage isAdminView />, errorElement: <NotFoundPage/> },
-              { path: "/users/:id/edit", element: <EditProfilePage /> , errorElement: <NotFoundPage/> },
-              { path: "/test", element:<PageTest /> },
-              {
-                path: "/equipements/ajouter-equipement",
-                element: <PageAjoutEquipement />,
-              },
-            ],
-          },
-          { path: "*", element: <NotFoundPage /> },
-        ],
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: <FallbackRedirect />,
-  },
-]);
+  export const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <FallbackRedirect />,
+    },
+    {
+      path: "/login",
+      element: <AuthPage />,
+    },
+    {
+      path: "/404",
+      element: <NotFoundPage />,
+    },
+    {
+      // route pour les comptes invités, token requis mais pas statut ACTIF
+      element: <InviteRoute />,
+      children: [{ path: "/initialisation", element: <InitialisationPage /> }],
+    },
+    {
+      element: <ProtectedRoute />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          element: <RootLayout />,
+          children: [
+            { path: "/equipements", element: <PageCatalogue /> },
+            { path: "/equipements/:id", element: <PageEquipement />, errorElement: <NotFoundPage /> },
+            { path: "/home", element: <HomePage /> },
+            { path: "/profile", element: <ProfilePage /> },
+            { path: "/profile/edit", element: <EditProfilePage /> },
+            {
+              element: <AdminRoute />,
+              children: [
+                { path: "/admin", element: <PageCentreDeControle /> },
+                { path: "/users/:id", element: <ProfilePage isAdminView />, errorElement: <NotFoundPage/> },
+                { path: "/users/:id/edit", element: <EditProfilePage /> , errorElement: <NotFoundPage/> },
+                { path: "/test", element:<PageTest /> },
+                {
+                  path: "/equipements/ajouter-equipement",
+                  element: <PageAjoutEquipement />,
+                },
+              ],
+            },
+            { path: "*", element: <NotFoundPage /> },
+          ],
+        },
+      ],
+    },
+    {
+      path: "*",
+      element: <FallbackRedirect />,
+    },
+  ]);

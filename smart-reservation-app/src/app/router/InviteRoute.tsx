@@ -1,17 +1,17 @@
-import { Navigate, Outlet } from 'react-router'
-import { useAuth } from '../../features/auth/hooks/useAuth'
-import ContenuPage from '../views/ContenuPage'
+import { Navigate, Outlet } from 'react-router';
+import { useAuth } from '../../features/auth/hooks/useAuth';
+import FondEcran from '../views/FondEcran';
 
 export default function InviteRoute() {
-  const { user } = useAuth()
+  const { user } = useAuth();
 
-  if (!user) return <Navigate to="/login" replace />
+  if (!user) return <Navigate to="/login" replace />;
 
-  if (user.statut === 'ACTIF') return <Navigate to="/home" replace />
+  if (user.statut === 'ACTIF') return <Navigate to="/home" replace />;
 
   return (
-    <ContenuPage>
+    <FondEcran>
       <Outlet />
-    </ContenuPage>
-  )
+    </FondEcran>
+  );
 }

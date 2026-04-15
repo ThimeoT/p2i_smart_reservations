@@ -1,4 +1,4 @@
-import type { Equipement } from "../../equipments/types/equipment.types";
+import type { Equipement } from '../../equipments/types/equipement.types';
 
 export interface Exemplaire {
   id: number;
@@ -8,10 +8,14 @@ export interface Exemplaire {
 }
 
 export interface ExemplaireRequest {
-  id:number;
-  equipementId: number; 
-  statutDisponibilite : StatutDisponibilite;
+  id: number;
+  equipementId: number;
+  statutDisponibilite: StatutDisponibilite;
   nomSerie: number;
 }
 
-export type StatutDisponibilite = "DISPONIBLE" | "EMPRUNTE" | "MAINTENANCE" | "HORS_SERVICE";
+export type StatutDisponibilite =
+  | 'DISPONIBLE'
+  | 'EMPRUNTE'
+  | 'MAINTENANCE'
+  | 'HORS_SERVICE';

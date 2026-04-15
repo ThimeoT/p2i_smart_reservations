@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
-import type { EquipementRequest } from "../types/equipment.types";
-import { createEquipementApi } from "../api/equipment.api";
-import FormulaireCreationEquipement from "../components/FormulaireEquipement";
+import { useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
+import type { EquipementRequest } from '../types/equipement.types';
+import { createEquipementApi } from '../api/equipements.api';
+import FormulaireCreationEquipement from '../components/FormulaireEquipement';
 
 export default function PageAjoutEquipement() {
   const navigate = useNavigate();
@@ -10,27 +10,30 @@ export default function PageAjoutEquipement() {
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);
   const [saved, setSaved] = useState(false);
   useEffect(() => {
-    if (saved) navigate("/equipements", { state: { saved: true } });
+    if (saved) navigate('/equipements', { state: { saved: true } });
   }, [saved]);
 
-  const handleSubmit = async(data:EquipementRequest)=>
-  {
+  const handleSubmit = async (data: EquipementRequest) => {
     setSubmitLoading(true);
     setSubmitError(undefined);
     try {
       await createEquipementApi(data);
       setSaved(true);
-    } catch(error){
-      setSubmitError("Erreur lors de la création de l'équipement" + { error })
-    } finally{
+    } catch (error) {
+      setSubmitError("Erreur lors de la création de l'équipement" + { error });
+    } finally {
       setSubmitLoading(false);
     }
-  }
+  };
 
-  return(
+  return (
     <div>
       <h1>Ajouter un équipement</h1>
-    <FormulaireCreationEquipement onSubmit={handleSubmit} loading={submitLoading} error={submitError} />
+      <FormulaireCreationEquipement
+        onSubmit={handleSubmit}
+        loading={submitLoading}
+        error={submitError}
+      />
     </div>
-  )
+  );
 }
