@@ -15,8 +15,7 @@ public class GestionnaireExceptions {
 
     @ExceptionHandler(EmpruntTermineAvantDebutSessionException.class)
     public ResponseEntity<String> handleEmpruntRetourAvantDebutSession(
-            EmpruntTermineAvantDebutSessionException exception
-    ) {
+            EmpruntTermineAvantDebutSessionException exception) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(exception.getMessage());
     }
 
@@ -26,13 +25,13 @@ public class GestionnaireExceptions {
     }
 
     @ExceptionHandler(RessourceDejaUtiliseeException.class)
-    public ResponseEntity<String> hangleRessourceDejaUtilisee(RessourceDejaUtiliseeException exception)
-    {
+    public ResponseEntity<String> hangleRessourceDejaUtilisee(RessourceDejaUtiliseeException exception) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(exception.getMessage());
     }
 
     @ExceptionHandler(QuantiteExemplaireIndisponibleException.class)
-    public ResponseEntity<String> handleQuantiteExemplaireIndisponible(QuantiteExemplaireIndisponibleException exception) {
+    public ResponseEntity<String> handleQuantiteExemplaireIndisponible(
+            QuantiteExemplaireIndisponibleException exception) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(exception.getMessage());
     }
 
@@ -40,4 +39,19 @@ public class GestionnaireExceptions {
     public ResponseEntity<String> handleAccesRefuse(AccesRefuseException exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationErrors(
+            org.springframework.web.bind.MethodArgumentNotValidException exception) {
+        String erreurs = exception.getBindingResult().getFieldErrors().stream()
+                .map(e -> e.getField() + " : " + e.getDefaultMessage())
+                .collect(java.util.stream.Collectors.joining(", "));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erreurs);
+    }
+
 }
