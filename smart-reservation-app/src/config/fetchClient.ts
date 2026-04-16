@@ -109,6 +109,16 @@ const fetchClient = {
     });
   },
 
+  patchJson<T>(path: string, body: T, options?: RequestInit) {
+  return this.request('PATCH', path, JSON.stringify(body), {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options?.headers as Record<string, string> | undefined),
+    },
+  });
+},
+
   delete(path: string, options?: RequestInit) {
     return this.request('DELETE', path, null, options);
   },
