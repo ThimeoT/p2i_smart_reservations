@@ -1,5 +1,6 @@
 package com.smart_reservation.api.controller;
 
+import com.smart_reservation.api.dto.request.ActionReservationRequestDto;
 import com.smart_reservation.api.dto.request.ReservationRequestDto;
 import com.smart_reservation.api.dto.response.ReservationResponseDto;
 import com.smart_reservation.api.dto.resume.ReservationResumeDto;
@@ -38,13 +39,13 @@ public class ReservationController {
     }
 
     @PatchMapping("/{id}/valider")
-    public ResponseEntity<ReservationResponseDto> validerReservation(@PathVariable Long id, @Valid @RequestBody Long utilisateurId,@Valid @RequestBody String message){
-        return ResponseEntity.ok(reservationService.validerReservation(id, utilisateurId, message));
+    public ResponseEntity<ReservationResponseDto> validerReservation(@PathVariable Long id, @Valid @RequestBody ActionReservationRequestDto actionReservation){
+        return ResponseEntity.ok(reservationService.validerReservation(id, actionReservation.utilisateurId, actionReservation.message));
     }
 
     @PatchMapping("/{id}/refuser")
-    public ResponseEntity<ReservationResponseDto> refuserReservation(@PathVariable Long id,@RequestBody Long utilisateurId, @RequestBody String message){
-        return ResponseEntity.ok(reservationService.refuserReservation(id, utilisateurId, message));
+    public ResponseEntity<ReservationResponseDto> refuserReservation(@PathVariable Long id, @Valid @RequestBody ActionReservationRequestDto actionReservation){
+        return ResponseEntity.ok(reservationService.refuserReservation(id, actionReservation.utilisateurId, actionReservation.message));
     }
 
     @DeleteMapping("/{id}")

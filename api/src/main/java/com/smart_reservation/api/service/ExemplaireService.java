@@ -62,8 +62,8 @@ public class ExemplaireService {
 
     @Transactional
     public ExemplaireResponseDto updateExemplaire(Long exemplaireId, ExemplaireRequestDto exemplaireRequestDto) {
-        Exemplaire exemplaire = exemplaireRepository.findById(exemplaireRequestDto.id)
-                .orElseThrow(() -> new RessourceIntrouvableException("Exemplaire", exemplaireRequestDto.id));
+        Exemplaire exemplaire = exemplaireRepository.findById(exemplaireId)
+                .orElseThrow(() -> new RessourceIntrouvableException("Exemplaire", exemplaireId));
         exemplaireMapper.updateToEntity(exemplaireRequestDto, exemplaire);
         return exemplaireMapper.toDto(
                 exemplaireRepository.save(exemplaire));
@@ -97,11 +97,11 @@ public class ExemplaireService {
     public List<Exemplaire> getExemplairesDisponibles(Long equipementId,
                                                       LocalDateTime dateDebut,
                                                       LocalDateTime dateFin,Integer quantite) {
-        List<Exemplaire> exemplaires =  exemplaireRepository.findExemplairesDisponibles(equipementId, dateDebut, dateFin);
-        if(exemplaires.size()<quantite){
+        List<Exemplaire> exemplaires = exemplaireRepository.findExemplairesDisponibles(equipementId, dateDebut, dateFin);
+        if (exemplaires.size() < quantite) {
             throw new QuantiteExemplaireIndisponibleException(equipementService.getEquipement(equipementId).nom, quantite, exemplaires.size());
         }
-        return(exemplaires);
+        return (exemplaires);
     }
 
 }

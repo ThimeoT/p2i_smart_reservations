@@ -1,7 +1,10 @@
 package com.smart_reservation.api.controller;
 
 import com.smart_reservation.api.dto.request.ExemplaireRequestDto;
+import com.smart_reservation.api.dto.request.PeriodeRequestDto;
+import com.smart_reservation.api.dto.response.EmpruntResponseDto;
 import com.smart_reservation.api.dto.response.ExemplaireResponseDto;
+import com.smart_reservation.api.service.EmpruntService;
 import com.smart_reservation.api.service.ExemplaireService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ExemplaireController {
 
     private final ExemplaireService exemplaireService;
+    private final EmpruntService empruntService;
 
     @GetMapping
     public ResponseEntity<Iterable<ExemplaireResponseDto>> getExemplaires()
@@ -25,6 +29,11 @@ public class ExemplaireController {
     public ResponseEntity<ExemplaireResponseDto> getExemplaire(@PathVariable Long id)
     {
         return  ResponseEntity.ok(exemplaireService.getExemplaire(id));
+    }
+
+    @GetMapping("/{id}/emprunts")ResponseEntity<Iterable<EmpruntResponseDto>> getEmpruntsByPeriode(@PathVariable Long exemplaireId,
+       @RequestBody PeriodeRequestDto periodeDto){
+        return ResponseEntity.ok(empruntService.getEmpruntsByExemplaireAndDateDebutAndDateFin(exemplaireId,periodeDto.debut,periodeDto.fin));
     }
 
     @PutMapping("/{id}")

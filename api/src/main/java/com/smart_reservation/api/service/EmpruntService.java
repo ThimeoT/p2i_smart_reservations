@@ -1,7 +1,6 @@
 package com.smart_reservation.api.service;
 
 import com.smart_reservation.api.dto.mapper.EmpruntMapper;
-import com.smart_reservation.api.dto.request.SessionRequestDto;
 import com.smart_reservation.api.dto.response.EmpruntResponseDto;
 import com.smart_reservation.api.exception.EmpruntTermineAvantDebutSessionException;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
@@ -20,7 +19,7 @@ public class EmpruntService {
     private final EmpruntRepository empruntRepository;
     private final EmpruntMapper empruntMapper;
     private final ExemplaireService exemplaireService;
-    private final UtilisateurService utilisateurService;
+    private final EquipementService equipementService;
 
     public Boolean existsById(Long id)
     {
@@ -37,15 +36,28 @@ public class EmpruntService {
     }
 
     @Transactional
-    public Iterable<Emprunt> getEmpruntsByExemplaireId(Long exemplaireId)
-    {
-        return empruntRepository.findAllByExemplaire_Id(exemplaireId);
-    }
-
-    @Transactional
     public Iterable<Emprunt> getEmpruntsByDateDebutAndDateFin(LocalDateTime dateDebut, LocalDateTime dateFin)
     {
         return empruntRepository.findAllBySession_DebutAfterAndSession_FinBefore(dateDebut,dateFin);
+    }
+
+    public Iterable<EmpruntResponseDto> getEmpruntsByEquipementAndDateDebutAndDateFin(Long equipementId, LocalDateTime debut, LocalDateTime fin)
+    {
+        equipementService.getEquipement(equipementId);
+        return empruntMapper.toDtoIterable(empruntRepository
+                .findAllByExemplaire_Equipement_IdAndSession_DebutLessThanAndSession_FinGreaterThan(
+                        equipementId, fin, debut
+                ));
+    }
+
+    @Transactional
+    public Iterable<EmpruntResponseDto> getEmpruntsByExemplaireAndDateDebutAndDateFin(Long exemplaireId, LocalDateTime debut, LocalDateTime fin)
+    {
+        exemplaireService.getExemplaire(exemplaireId);
+        return empruntMapper.toDtoIterable(empruntRepository
+                .findAllByExemplaire_IdAndSession_DebutLessThanAndSession_FinGreaterThan(
+                        exemplaireId, fin, debut
+                ));
     }
 
     @Transactional

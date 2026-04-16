@@ -1,9 +1,12 @@
 package com.smart_reservation.api.controller;
 
 import com.smart_reservation.api.dto.request.EquipementRequestDto;
+import com.smart_reservation.api.dto.request.PeriodeRequestDto;
+import com.smart_reservation.api.dto.response.EmpruntResponseDto;
 import com.smart_reservation.api.dto.response.EquipementResponseDto;
 import com.smart_reservation.api.dto.response.ExemplaireResponseDto;
 import com.smart_reservation.api.dto.resume.EquipementResumeDto;
+import com.smart_reservation.api.service.EmpruntService;
 import com.smart_reservation.api.service.EquipementService;
 import com.smart_reservation.api.service.ExemplaireService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ public class EquipementController {
 
     private final EquipementService equipementService;
     private final ExemplaireService exemplaireService;
+    private final EmpruntService empruntService;
 
 
     @GetMapping
@@ -47,23 +51,6 @@ public class EquipementController {
         return ResponseEntity.noContent().build();
     }
 
-    // -- relations // pour l'instant pas utile car on modifie tout depuis l'équipement
-
-    // TODO : GET equipements/{id}/relations
-
-    // TODO : GET /equipements/{id}/relations/{id}
-
-    // TODO : PUT equipements/{id}/relations/{id}
-
-    // TODO : POST equipements/{id}/relations
-
-    // TODO : DELETE equipements/{id}/relations/{id}
-
-    // -- labels --
-
-    // TODO : GET equipements/{id}/labels
-
-    // TODO : PUT equipements/{id}/labels
     @PatchMapping("/{equipementId}/labels/{labelId}/add")
     public ResponseEntity<EquipementResponseDto> addLabel(@PathVariable Long labelId, @PathVariable Long equipementId) {
         return ResponseEntity.ok(equipementService.addLabelFromEquipement(labelId, equipementId));
@@ -75,27 +62,15 @@ public class EquipementController {
         return ResponseEntity.ok(equipementService.removeLabelFromEquipement(labelId, equipementId));
     }
 
-    // TODO : POST equipements/{id}/labels
-
-    // TODO : DELETE equipements/{id}/labels/{id}
-
-
-
-    // -- exemplaires --
-
-    // TODO : GET equipements/{id}/exemplaires
     @GetMapping("/{id}/exemplaires")
     public ResponseEntity<Iterable<ExemplaireResponseDto>> getExemplairesFromEquipement(@PathVariable Long id) {
         return ResponseEntity.ok(exemplaireService.getExemplairesFromEquipement(id));
     }
 
-    // TODO :
-
-    // TODO :
-
-    // TODO :
-
-    // TODO :
+    @GetMapping("/{id}/emprunts")
+    public ResponseEntity<Iterable<EmpruntResponseDto>> getEmpruntsFromEquipement(@PathVariable Long id, @RequestBody PeriodeRequestDto periodeDto) {
+        return ResponseEntity.ok(empruntService.getEmpruntsByEquipementAndDateDebutAndDateFin(id,periodeDto.debut, periodeDto.fin));
+    }
 
 }
 
