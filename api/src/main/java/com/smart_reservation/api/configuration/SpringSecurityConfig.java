@@ -1,6 +1,7 @@
 package com.smart_reservation.api.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,16 +28,22 @@ public class SpringSecurityConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtFilter jwtFilter;
+
+    @Value("${spring.h2.console.enabled:false}")
+    private boolean h2ConsoleEnabled;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/h2/**").permitAll();
-                    auth.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll();
+                    if (h2ConsoleEnabled) {
+                        auth.requestMatchers("/h2/**").permitAll();
+                    }
+                    auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers("/login").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/logout").permitAll();
                     auth.requestMatchers("/user/current").authenticated();
@@ -59,26 +66,21 @@ public class SpringSecurityConfig {
                     auth.requestMatchers(HttpMethod.DELETE, "/equipements/{id}").hasRole("ADMIN");
 
                     auth.requestMatchers(HttpMethod.GET, "/exemplaires").hasRole("ADMIN");
-                    auth.requestMatchers(HttpMethod.POST, "/equipements").hasRole("ADMIN");
-                    auth.requestMatchers(HttpMethod.PUT, "/equipements/{id}").hasRole("ADMIN");
-                    auth.requestMatchers(HttpMethod.DELETE, "/equipements/{id}").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/exemplaires").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.PUT, "/exemplaires/{id}").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.DELETE, "/exemplaires/{id}").hasRole("ADMIN");
                     auth.requestMatchers("/error").permitAll();
-
-
-
-
 
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:8080"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
