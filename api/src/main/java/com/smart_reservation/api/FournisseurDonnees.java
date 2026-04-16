@@ -223,7 +223,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         exemplaireDelsysTriggerModuleUn.setStatutDisponibilite(StatutDisponibilite.DISPONIBLE);
         delsysTriggerModule.addExemplaire(exemplaireDelsysTriggerModuleUn);
         equipementRepository.save(delsysTriggerModule);
-        exemplaireRepository.save(exemplaireCeintureRenforceeDeux);
+        exemplaireRepository.save(exemplaireDelsysTriggerModuleUn);
 
         // --- Kit EMG Sensor ---
         Equipement kitEmgSensor = new Equipement();
@@ -833,7 +833,7 @@ public class FournisseurDonnees implements CommandLineRunner {
         reservationAnnulee.setUtilisateur(premierUtilisateur);
         reservationAnnulee.setTitre("Capture mouvement Hololens");
         reservationAnnulee.setDescription("Protocole expérimental de capture de mouvement avec Hololens 2 annulé faute de participants");
-        reservationAnnulee.setStatut(StatutReservation.REFUSEE);
+        reservationAnnulee.setStatut(StatutReservation.SUPPRIMEE);
 
         Session sessionAnnulee = new Session();
         sessionAnnulee.setDebut(LocalDateTime.now().minusDays(7));
@@ -931,7 +931,7 @@ public class FournisseurDonnees implements CommandLineRunner {
 
         reservationRepository.save(reservationMotricite);
 
-        // Réservation en attente — premierUtilisateur (emprunt en retard potentiel)
+        // Réservation en attente — premierUtilisateur
         Reservation reservationOptique = new Reservation();
         reservationOptique.setUtilisateur(premierUtilisateur);
         reservationOptique.setTitre("Calibration système optique QTM");
@@ -985,21 +985,21 @@ public class FournisseurDonnees implements CommandLineRunner {
         Emprunt empruntMetaQuestVR = new Emprunt();
         empruntMetaQuestVR.setExemplaire(exemplaireMetaQuestUn);
         empruntMetaQuestVR.setDateRetourPrevue(LocalDateTime.now().minusDays(20).plusHours(4));
-        empruntMetaQuestVR.setDateRetourReelle(LocalDateTime.now().minusDays(20).plusHours(6)); // retard 2h
+        empruntMetaQuestVR.setDateRetourReelle(LocalDateTime.now().minusDays(20).plusHours(6));
         empruntMetaQuestVR.setStatut(StatutEmprunt.TERMINE);
         sessionVR.addEmprunt(empruntMetaQuestVR);
 
         Emprunt empruntTrackerVR = new Emprunt();
         empruntTrackerVR.setExemplaire(exemplaireTrackerUn);
         empruntTrackerVR.setDateRetourPrevue(LocalDateTime.now().minusDays(20).plusHours(4));
-        empruntTrackerVR.setDateRetourReelle(LocalDateTime.now().minusDays(20).plusHours(6)); // retard 2h
+        empruntTrackerVR.setDateRetourReelle(LocalDateTime.now().minusDays(20).plusHours(6));
         empruntTrackerVR.setStatut(StatutEmprunt.TERMINE);
         sessionVR.addEmprunt(empruntTrackerVR);
 
         Emprunt empruntTrackerDeuxVR = new Emprunt();
         empruntTrackerDeuxVR.setExemplaire(exemplaireTrackerDeux);
         empruntTrackerDeuxVR.setDateRetourPrevue(LocalDateTime.now().minusDays(20).plusHours(4));
-        empruntTrackerDeuxVR.setDateRetourReelle(LocalDateTime.now().minusDays(20).plusHours(6)); // retard 2h
+        empruntTrackerDeuxVR.setDateRetourReelle(LocalDateTime.now().minusDays(20).plusHours(6));
         empruntTrackerDeuxVR.setStatut(StatutEmprunt.TERMINE);
         sessionVR.addEmprunt(empruntTrackerDeuxVR);
 
