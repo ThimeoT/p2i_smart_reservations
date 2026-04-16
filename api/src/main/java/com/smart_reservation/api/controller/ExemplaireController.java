@@ -31,9 +31,10 @@ public class ExemplaireController {
         return  ResponseEntity.ok(exemplaireService.getExemplaire(id));
     }
 
-    @GetMapping("/{id}/emprunts")ResponseEntity<Iterable<EmpruntResponseDto>> getEmpruntsByPeriode(@PathVariable Long exemplaireId,
+    @GetMapping("/{id}/emprunts")
+    public ResponseEntity<Iterable<EmpruntResponseDto>> getEmpruntsByPeriode(@PathVariable Long id,
        @RequestBody PeriodeRequestDto periodeDto){
-        return ResponseEntity.ok(empruntService.getEmpruntsByExemplaireAndDateDebutAndDateFin(exemplaireId,periodeDto.debut,periodeDto.fin));
+        return ResponseEntity.ok(empruntService.getEmpruntsByExemplaireAndDateDebutAndDateFin(id,periodeDto.debut,periodeDto.fin));
     }
 
     @PutMapping("/{id}")

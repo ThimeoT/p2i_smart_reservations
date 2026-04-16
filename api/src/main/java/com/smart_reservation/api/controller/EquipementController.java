@@ -40,12 +40,12 @@ public class EquipementController {
         return ResponseEntity.status(HttpStatus.CREATED).body(equipementService.createEquipement(equipementRequestDto));
     }
 
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     public ResponseEntity<EquipementResponseDto>  updateEquipement(@RequestBody EquipementRequestDto equipementRequestDto,@PathVariable Long id) {
         return ResponseEntity.ok(equipementService.updateEquipement(equipementRequestDto,id));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEquipement(@PathVariable Long id) {
         equipementService.deleteEquipement(id);
         return ResponseEntity.noContent().build();
