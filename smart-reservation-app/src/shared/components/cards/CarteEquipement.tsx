@@ -11,7 +11,7 @@ export default function CarteEquipement({ equipement }: CarteEquipementProps) {
   const goToPageEquipement = () => navigate(`/equipements/${equipement.id}`);
   return (
     <div
-      className="w-87 p-4 border-2 border-solid border-taupe-1 rounded-lg flex items-center gap-4 relative"
+      className="cursor-pointer w-sm p-4 border-2 border-solid border-taupe-1 rounded-lg flex items-center gap-4 relative "
       onClick={() => goToPageEquipement()}
     >
       <img

@@ -10,9 +10,8 @@ export default function CarteRelationEquipement({
 }: CarteRelationEquipementProps) {
   console.log('relation', relation);
   return (
-    <div className="flex gap-4">
-      <div className="flex-inital">{relation.statutRelationEquipement}</div>
-      <div className="flex-col">
+    <div className="flex flex-col items-center gap-4 p-2 w-min rounded-2xl border-2 border-taupe-1">
+      <div className="flex-col gap-4 ">
         {relation.equipementsCible.map((equipement, index) => (
           <CarteEquipement key={index} equipement={equipement} />
         ))}

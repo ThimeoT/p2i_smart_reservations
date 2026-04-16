@@ -13,7 +13,7 @@ const getButtonClasses = (
 ) => {
   if (style === undefined) style = 'filled';
   if (color === undefined) color = 'primary';
-  const baseClasses = "max-w-128 font-display px-6 py-4 rounded-lg shadow-md font-semibold text-xs md:text-sm text-center tracking-widest hover:shadow-lg disabled:bg-gray-50 transition-shadow";
+  const baseClasses = "max-w-128 font-display px-6 py-4 rounded-lg shadow-md font-semibold text-xs md:text-sm text-center tracking-widest hover:shadow-lg disabled:bg-gray-50 transition-shadow hover:cursor-pointer";
 
   const styleClasses = {
     outline: 'border-2 bg-transparent',

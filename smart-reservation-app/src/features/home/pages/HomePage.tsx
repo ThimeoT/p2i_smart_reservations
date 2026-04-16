@@ -10,7 +10,7 @@ export default function HomePage() {
   const isAdmin = useIsAdmin();
   const { currentUser } = useUser();
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4">
       <TitreDePage titre="Accueil" />
       <section>
         <h3>Salut {currentUser?.prenom} 👋</h3>

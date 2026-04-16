@@ -16,6 +16,7 @@ import InitialisationPage from "../../features/auth/pages/InitialisationPage";
 import PageCatalogue from "../../features/equipments/pages/PageCatalogue";
 import PageAjoutEquipement from "../../features/equipments/pages/PageAjoutEquipement";
 import PageTest from "../views/PageTest";
+import PageExemplaire from "../../features/exemplaires/pages/PageExemplaire";
 
   export const router = createBrowserRouter([
     {
@@ -44,6 +45,8 @@ import PageTest from "../views/PageTest";
           children: [
             { path: "/equipements", element: <PageCatalogue /> },
             { path: "/equipements/:id", element: <PageEquipement />, errorElement: <NotFoundPage /> },
+            { path: "/exemplaires/:id", element: <PageExemplaire />, errorElement: <NotFoundPage /> },
+
             { path: "/home", element: <HomePage /> },
             { path: "/profile", element: <ProfilePage /> },
             { path: "/profile/edit", element: <EditProfilePage /> },
