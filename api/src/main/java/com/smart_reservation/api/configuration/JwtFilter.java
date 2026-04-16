@@ -28,12 +28,11 @@ public class JwtFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
 
-        System.out.println("[JwtFilter] >>> requête reçue: " + request.getRequestURI()
-                + " | method: " + request.getMethod());
+        //System.out.println("[JwtFilter] >>> requête reçue: " + request.getRequestURI()+ " | method: " + request.getMethod());
 
         final String authHeader = request.getHeader("Authorization");
-        System.out.println("[JwtFilter] path: " + request.getRequestURI());
-        System.out.println("[JwtFilter] authHeader: " + authHeader);
+        // System.out.println("[JwtFilter] path: " + request.getRequestURI());
+        // System.out.println("[JwtFilter] authHeader: " + authHeader);
 
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -42,15 +41,15 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         final String token = authHeader.substring(7); // Retire Bearer car inutile avec JWT
-        System.out.println("[JwtFilter] token: " + token);
-        System.out.println("[JwtFilter] isTokenValid: " + jwtService.isTokenValid(token));
+        // System.out.println("[JwtFilter] token: " + token);
+        // System.out.println("[JwtFilter] isTokenValid: " + jwtService.isTokenValid(token));
 
         if (jwtService.isTokenValid(token)) {
             String mail = jwtService.extractMail(token);
-            System.out.println("[JwtFilter] mail extrait: " + mail);
+            // System.out.println("[JwtFilter] mail extrait: " + mail);
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(mail);
-            System.out.println("[JwtFilter] authorities: " + userDetails.getAuthorities());
+            // System.out.println("[JwtFilter] authorities: " + userDetails.getAuthorities());
 
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities()
