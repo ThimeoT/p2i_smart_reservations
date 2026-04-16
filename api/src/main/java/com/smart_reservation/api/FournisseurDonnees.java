@@ -828,12 +828,239 @@ public class FournisseurDonnees implements CommandLineRunner {
 
         reservationRepository.save(reservationEyeTracking);
 
+        // Réservation annulée — premierUtilisateur
+        Reservation reservationAnnulee = new Reservation();
+        reservationAnnulee.setUtilisateur(premierUtilisateur);
+        reservationAnnulee.setTitre("Capture mouvement Hololens");
+        reservationAnnulee.setDescription("Protocole expérimental de capture de mouvement avec Hololens 2 annulé faute de participants");
+        reservationAnnulee.setStatut(StatutReservation.REFUSEE);
+
+        Session sessionAnnulee = new Session();
+        sessionAnnulee.setDebut(LocalDateTime.now().minusDays(7));
+        sessionAnnulee.setFin(LocalDateTime.now().minusDays(7).plusHours(2));
+
+        Emprunt empruntHololensAnnule = new Emprunt();
+        empruntHololensAnnule.setExemplaire(exemplaireHololensDeuxUn);
+        empruntHololensAnnule.setDateRetourPrevue(LocalDateTime.now().minusDays(7).plusHours(2));
+        empruntHololensAnnule.setStatut(StatutEmprunt.ANNULE);
+        sessionAnnulee.addEmprunt(empruntHololensAnnule);
+
+        reservationAnnulee.addSession(sessionAnnulee);
+
+        HistoriqueReservation historiqueCreationAnnulee = new HistoriqueReservation();
+        historiqueCreationAnnulee.setUtilisateur(premierUtilisateur);
+        historiqueCreationAnnulee.setDate(LocalDateTime.now().minusDays(10));
+        historiqueCreationAnnulee.setAction(StatutActionReservation.CREATION);
+        historiqueCreationAnnulee.setCommentaire("Expérimentation Hololens pour étude de réhabilitation");
+        reservationAnnulee.addHistorique(historiqueCreationAnnulee);
+
+        HistoriqueReservation historiqueValidationAnnulee = new HistoriqueReservation();
+        historiqueValidationAnnulee.setUtilisateur(administrateur);
+        historiqueValidationAnnulee.setDate(LocalDateTime.now().minusDays(9));
+        historiqueValidationAnnulee.setAction(StatutActionReservation.VALIDATION);
+        historiqueValidationAnnulee.setCommentaire("Validée — matériel réservé");
+        reservationAnnulee.addHistorique(historiqueValidationAnnulee);
+
+        HistoriqueReservation historiqueAnnulation = new HistoriqueReservation();
+        historiqueAnnulation.setUtilisateur(premierUtilisateur);
+        historiqueAnnulation.setDate(LocalDateTime.now().minusDays(8));
+        historiqueAnnulation.setAction(StatutActionReservation.SUPPRESSION);
+        historiqueAnnulation.setCommentaire("Annulée par l'utilisateur — manque de participants recrutés");
+        reservationAnnulee.addHistorique(historiqueAnnulation);
+
+        reservationRepository.save(reservationAnnulee);
+
+        // Réservation validée multi-sessions — quatriemeUtilisateur
+        Reservation reservationMotricite = new Reservation();
+        reservationMotricite.setUtilisateur(quatriemeUtilisateur);
+        reservationMotricite.setTitre("Étude motricité fine M1 Neurosciences");
+        reservationMotricite.setDescription("Protocole en deux temps : capture EMG + vidéo J1, analyse des données J2");
+        reservationMotricite.setStatut(StatutReservation.VALIDEE);
+
+        // Session 1 — capture
+        Session sessionMotriciteCapture = new Session();
+        sessionMotriciteCapture.setDebut(LocalDateTime.now().plusDays(3));
+        sessionMotriciteCapture.setFin(LocalDateTime.now().plusDays(3).plusHours(3));
+
+        Emprunt empruntEmgMotricite = new Emprunt();
+        empruntEmgMotricite.setExemplaire(exemplaireKitEmgSensorUn);
+        empruntEmgMotricite.setDateRetourPrevue(LocalDateTime.now().plusDays(3).plusHours(3));
+        empruntEmgMotricite.setStatut(StatutEmprunt.PLANIFIE);
+        sessionMotriciteCapture.addEmprunt(empruntEmgMotricite);
+
+        Emprunt empruntCameraMotricite = new Emprunt();
+        empruntCameraMotricite.setExemplaire(exemplaireCameraSurTrepiedUn);
+        empruntCameraMotricite.setDateRetourPrevue(LocalDateTime.now().plusDays(3).plusHours(3));
+        empruntCameraMotricite.setStatut(StatutEmprunt.PLANIFIE);
+        sessionMotriciteCapture.addEmprunt(empruntCameraMotricite);
+
+        Emprunt empruntDelsysMotricite = new Emprunt();
+        empruntDelsysMotricite.setExemplaire(exemplaireDelsysTriggerModuleUn);
+        empruntDelsysMotricite.setDateRetourPrevue(LocalDateTime.now().plusDays(3).plusHours(3));
+        empruntDelsysMotricite.setStatut(StatutEmprunt.PLANIFIE);
+        sessionMotriciteCapture.addEmprunt(empruntDelsysMotricite);
+
+        reservationMotricite.addSession(sessionMotriciteCapture);
+
+        // Session 2 — analyse
+        Session sessionMotriciteAnalyse = new Session();
+        sessionMotriciteAnalyse.setDebut(LocalDateTime.now().plusDays(4));
+        sessionMotriciteAnalyse.setFin(LocalDateTime.now().plusDays(4).plusHours(2));
+
+        Emprunt empruntRazerMotricite = new Emprunt();
+        empruntRazerMotricite.setExemplaire(exemplaireRazerUn);
+        empruntRazerMotricite.setDateRetourPrevue(LocalDateTime.now().plusDays(4).plusHours(2));
+        empruntRazerMotricite.setStatut(StatutEmprunt.PLANIFIE);
+        sessionMotriciteAnalyse.addEmprunt(empruntRazerMotricite);
+
+        reservationMotricite.addSession(sessionMotriciteAnalyse);
+
+        HistoriqueReservation historiqueCreationMotricite = new HistoriqueReservation();
+        historiqueCreationMotricite.setUtilisateur(quatriemeUtilisateur);
+        historiqueCreationMotricite.setDate(LocalDateTime.now().minusDays(4));
+        historiqueCreationMotricite.setAction(StatutActionReservation.CREATION);
+        historiqueCreationMotricite.setCommentaire("Étude sur la coordination motrice fine");
+        reservationMotricite.addHistorique(historiqueCreationMotricite);
+
+        HistoriqueReservation historiqueValidationMotricite = new HistoriqueReservation();
+        historiqueValidationMotricite.setUtilisateur(administrateur);
+        historiqueValidationMotricite.setDate(LocalDateTime.now().minusDays(3));
+        historiqueValidationMotricite.setAction(StatutActionReservation.VALIDATION);
+        historiqueValidationMotricite.setCommentaire("Validée — deux sessions accordées");
+        reservationMotricite.addHistorique(historiqueValidationMotricite);
+
+        reservationRepository.save(reservationMotricite);
+
+        // Réservation en attente — premierUtilisateur (emprunt en retard potentiel)
+        Reservation reservationOptique = new Reservation();
+        reservationOptique.setUtilisateur(premierUtilisateur);
+        reservationOptique.setTitre("Calibration système optique QTM");
+        reservationOptique.setDescription("Session de calibration et test du kit de synchronisation QTM avec OPTOJUMP et portes optiques");
+        reservationOptique.setStatut(StatutReservation.EN_ATTENTE);
+
+        Session sessionOptique = new Session();
+        sessionOptique.setDebut(LocalDateTime.now().plusDays(8));
+        sessionOptique.setFin(LocalDateTime.now().plusDays(8).plusHours(5));
+
+        Emprunt empruntQtm = new Emprunt();
+        empruntQtm.setExemplaire(exemplaireKitSynchronisationQtmUn);
+        empruntQtm.setDateRetourPrevue(LocalDateTime.now().plusDays(8).plusHours(5));
+        empruntQtm.setStatut(StatutEmprunt.PLANIFIE);
+        sessionOptique.addEmprunt(empruntQtm);
+
+        Emprunt empruntOptojumpOptique = new Emprunt();
+        empruntOptojumpOptique.setExemplaire(exemplaireOptojumpUn);
+        empruntOptojumpOptique.setDateRetourPrevue(LocalDateTime.now().plusDays(8).plusHours(5));
+        empruntOptojumpOptique.setStatut(StatutEmprunt.PLANIFIE);
+        sessionOptique.addEmprunt(empruntOptojumpOptique);
+
+        Emprunt empruntPorteOptique = new Emprunt();
+        empruntPorteOptique.setExemplaire(exemplairePorteEmetteurReflecteurUn);
+        empruntPorteOptique.setDateRetourPrevue(LocalDateTime.now().plusDays(8).plusHours(5));
+        empruntPorteOptique.setStatut(StatutEmprunt.PLANIFIE);
+        sessionOptique.addEmprunt(empruntPorteOptique);
+
+        reservationOptique.addSession(sessionOptique);
+
+        HistoriqueReservation historiqueCreationOptique = new HistoriqueReservation();
+        historiqueCreationOptique.setUtilisateur(premierUtilisateur);
+        historiqueCreationOptique.setDate(LocalDateTime.now().minusHours(2));
+        historiqueCreationOptique.setAction(StatutActionReservation.CREATION);
+        historiqueCreationOptique.setCommentaire("Session de calibration avant protocole de recherche");
+        reservationOptique.addHistorique(historiqueCreationOptique);
+
+        reservationRepository.save(reservationOptique);
+
+        // Réservation terminée avec retard — deuxiemeUtilisateur
+        Reservation reservationVR = new Reservation();
+        reservationVR.setUtilisateur(deuxiemeUtilisateur);
+        reservationVR.setTitre("Protocole rééducation en réalité virtuelle");
+        reservationVR.setDescription("Expérimentation de rééducation du genou avec Meta Quest et suivi de mouvements par trackers inertiels");
+        reservationVR.setStatut(StatutReservation.VALIDEE);
+
+        Session sessionVR = new Session();
+        sessionVR.setDebut(LocalDateTime.now().minusDays(20));
+        sessionVR.setFin(LocalDateTime.now().minusDays(20).plusHours(4));
+
+        Emprunt empruntMetaQuestVR = new Emprunt();
+        empruntMetaQuestVR.setExemplaire(exemplaireMetaQuestUn);
+        empruntMetaQuestVR.setDateRetourPrevue(LocalDateTime.now().minusDays(20).plusHours(4));
+        empruntMetaQuestVR.setDateRetourReelle(LocalDateTime.now().minusDays(20).plusHours(6)); // retard 2h
+        empruntMetaQuestVR.setStatut(StatutEmprunt.TERMINE);
+        sessionVR.addEmprunt(empruntMetaQuestVR);
+
+        Emprunt empruntTrackerVR = new Emprunt();
+        empruntTrackerVR.setExemplaire(exemplaireTrackerUn);
+        empruntTrackerVR.setDateRetourPrevue(LocalDateTime.now().minusDays(20).plusHours(4));
+        empruntTrackerVR.setDateRetourReelle(LocalDateTime.now().minusDays(20).plusHours(6)); // retard 2h
+        empruntTrackerVR.setStatut(StatutEmprunt.TERMINE);
+        sessionVR.addEmprunt(empruntTrackerVR);
+
+        Emprunt empruntTrackerDeuxVR = new Emprunt();
+        empruntTrackerDeuxVR.setExemplaire(exemplaireTrackerDeux);
+        empruntTrackerDeuxVR.setDateRetourPrevue(LocalDateTime.now().minusDays(20).plusHours(4));
+        empruntTrackerDeuxVR.setDateRetourReelle(LocalDateTime.now().minusDays(20).plusHours(6)); // retard 2h
+        empruntTrackerDeuxVR.setStatut(StatutEmprunt.TERMINE);
+        sessionVR.addEmprunt(empruntTrackerDeuxVR);
+
+        reservationVR.addSession(sessionVR);
+
+        HistoriqueReservation historiqueCreationVR = new HistoriqueReservation();
+        historiqueCreationVR.setUtilisateur(deuxiemeUtilisateur);
+        historiqueCreationVR.setDate(LocalDateTime.now().minusDays(25));
+        historiqueCreationVR.setAction(StatutActionReservation.CREATION);
+        historiqueCreationVR.setCommentaire("Protocole rééducation post-opératoire genou");
+        reservationVR.addHistorique(historiqueCreationVR);
+
+        HistoriqueReservation historiqueValidationVR = new HistoriqueReservation();
+        historiqueValidationVR.setUtilisateur(administrateur);
+        historiqueValidationVR.setDate(LocalDateTime.now().minusDays(23));
+        historiqueValidationVR.setAction(StatutActionReservation.VALIDATION);
+        historiqueValidationVR.setCommentaire("Validée — matériel VR disponible");
+        reservationVR.addHistorique(historiqueValidationVR);
+
+        reservationRepository.save(reservationVR);
+
+        // Réservation en attente — quatriemeUtilisateur (performance aérobie)
+        Reservation reservationAerobie = new Reservation();
+        reservationAerobie.setUtilisateur(quatriemeUtilisateur);
+        reservationAerobie.setTitre("Mesure VO2max effort maximal");
+        reservationAerobie.setDescription("Protocole d'évaluation de la capacité aérobie maximale avec Metamax et K-Power sur ergocycle");
+        reservationAerobie.setStatut(StatutReservation.EN_ATTENTE);
+
+        Session sessionAerobie = new Session();
+        sessionAerobie.setDebut(LocalDateTime.now().plusDays(12));
+        sessionAerobie.setFin(LocalDateTime.now().plusDays(12).plusHours(3));
+
+        Emprunt empruntMetamaxAerobie = new Emprunt();
+        empruntMetamaxAerobie.setExemplaire(exemplaireMetamaxUn);
+        empruntMetamaxAerobie.setDateRetourPrevue(LocalDateTime.now().plusDays(12).plusHours(3));
+        empruntMetamaxAerobie.setStatut(StatutEmprunt.PLANIFIE);
+        sessionAerobie.addEmprunt(empruntMetamaxAerobie);
+
+        Emprunt empruntKPowerAerobie = new Emprunt();
+        empruntKPowerAerobie.setExemplaire(exemplaireKPowerUn);
+        empruntKPowerAerobie.setDateRetourPrevue(LocalDateTime.now().plusDays(12).plusHours(3));
+        empruntKPowerAerobie.setStatut(StatutEmprunt.PLANIFIE);
+        sessionAerobie.addEmprunt(empruntKPowerAerobie);
+
+        reservationAerobie.addSession(sessionAerobie);
+
+        HistoriqueReservation historiqueCreationAerobie = new HistoriqueReservation();
+        historiqueCreationAerobie.setUtilisateur(quatriemeUtilisateur);
+        historiqueCreationAerobie.setDate(LocalDateTime.now().minusHours(12));
+        historiqueCreationAerobie.setAction(StatutActionReservation.CREATION);
+        historiqueCreationAerobie.setCommentaire("Test VO2max pour étude longitudinale sur la fatigue");
+        reservationAerobie.addHistorique(historiqueCreationAerobie);
+
+        reservationRepository.save(reservationAerobie);
+
         System.out.println("=== DATASET INITIALISÉ ===");
         System.out.println("✓ 5 utilisateurs (1 admin, 3 users actifs, 1 expiré)");
         System.out.println("✓ 22 équipements du laboratoire avec exemplaires");
         System.out.println("✓ 8 labels thématiques");
         System.out.println("✓ 5 relations entre équipements");
         System.out.println("✓ 3 listes d'équipements personnelles");
-        System.out.println("✓ 4 réservations couvrant tous les statuts");
+        System.out.println("✓ 9 réservations couvrant tous les statuts (validée, en attente, refusée, annulée, terminée avec retard, multi-sessions)");
     }
 }
