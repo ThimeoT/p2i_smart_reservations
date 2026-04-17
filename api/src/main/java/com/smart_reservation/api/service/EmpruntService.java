@@ -29,6 +29,7 @@ public class EmpruntService {
         }
         return true;
     }
+
     @Transactional
     public Iterable<Emprunt> getEmpruntsBySessionId(Long sessionId)
     {
@@ -41,6 +42,7 @@ public class EmpruntService {
         return empruntRepository.findAllBySession_DebutAfterAndSession_FinBefore(dateDebut,dateFin);
     }
 
+    @Transactional
     public Iterable<EmpruntResponseDto> getEmpruntsByEquipementAndDateDebutAndDateFin(Long equipementId, LocalDateTime debut, LocalDateTime fin)
     {
         equipementService.getEquipement(equipementId);

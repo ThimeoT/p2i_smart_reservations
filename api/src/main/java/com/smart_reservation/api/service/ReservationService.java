@@ -1,6 +1,6 @@
 package com.smart_reservation.api.service;
 
-import com.smart_reservation.api.dto.EquipementQuantiteDto;
+import com.smart_reservation.api.dto.QuantiteEquipementDto;
 import com.smart_reservation.api.dto.mapper.HistoriqueReservationMapper;
 import com.smart_reservation.api.dto.mapper.ReservationMapper;
 import com.smart_reservation.api.dto.mapper.SessionMapper;
@@ -90,9 +90,9 @@ public class ReservationService {
         return reservationMapper.toDto(reservationRepository.save(reservation));
     }
 
-    private void planifierEmprunts(Session session, List<EquipementQuantiteDto> eqDtos)
+    private void planifierEmprunts(Session session, List<QuantiteEquipementDto> eqDtos)
     {
-        for(EquipementQuantiteDto eqDto : eqDtos)
+        for(QuantiteEquipementDto eqDto : eqDtos)
         {
             List<Exemplaire> exemplairesDisponibles = exemplaireService.getExemplairesDisponibles(
                     eqDto.equipementId,
@@ -191,11 +191,11 @@ public class ReservationService {
 
     private Session ajouterSession(SessionRequestDto sessionDto) {
         Session session = sessionMapper.toEntity(sessionDto);
-        List<Equipement> equipements = sessionDto.equipementQuantiteDtos.stream()
+        List<Equipement> equipements = sessionDto.quantitesEquipements.stream()
                 .map(eq -> equipementService.getEquipementEntity(eq.equipementId))
                 .toList();
         equipementService.verifierRelationsEquipement(equipements);
-        planifierEmprunts(session, sessionDto.equipementQuantiteDtos);
+        planifierEmprunts(session, sessionDto.quantitesEquipements);
         return session;
     }
 

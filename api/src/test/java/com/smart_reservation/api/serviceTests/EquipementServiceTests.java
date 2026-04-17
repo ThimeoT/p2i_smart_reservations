@@ -1,4 +1,4 @@
-package com.smart_reservation.api.service;
+package com.smart_reservation.api.serviceTests;
 
 import com.smart_reservation.api.dto.mapper.EquipementMapper;
 import com.smart_reservation.api.dto.mapper.RelationEquipementMapper;
@@ -12,6 +12,8 @@ import com.smart_reservation.api.model.Equipement;
 import com.smart_reservation.api.model.StatutRelationEquipement;
 import com.smart_reservation.api.repository.EquipementRepository;
 import com.smart_reservation.api.repository.RelationEquipementRepository;
+import com.smart_reservation.api.service.EquipementService;
+import com.smart_reservation.api.service.LabelService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

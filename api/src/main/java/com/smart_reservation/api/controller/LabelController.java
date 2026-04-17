@@ -6,6 +6,7 @@ import com.smart_reservation.api.dto.response.LabelResponseDto;
 import com.smart_reservation.api.exception.RessourceIntrouvableException;
 import com.smart_reservation.api.repository.LabelRepository;
 import com.smart_reservation.api.service.LabelService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.helpers.LegacyAbstractLogger;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class LabelController {
     private final LabelService labelService;
     private final LabelMapper labelMapper;
-    // TODO : get
 
     @GetMapping
     public Iterable<LabelResponseDto> getLabels() {
@@ -30,18 +30,16 @@ public class LabelController {
         return ResponseEntity.ok(labelService.getLabel(id));
     }
 
-    // TODO : put
-
     @PutMapping("/{id}")
-    public ResponseEntity<LabelResponseDto> updateLabel(@RequestBody LabelRequestDto labelRequestDto) {
+    public ResponseEntity<LabelResponseDto> updateLabel(@Valid @RequestBody LabelRequestDto labelRequestDto) {
         return ResponseEntity.ok(labelService.updateLabel(labelRequestDto));
     }
-    // TODO : post
+
     @PostMapping
-    public ResponseEntity<LabelResponseDto> createLabel(@RequestBody LabelRequestDto labelRequestDto) {
+    public ResponseEntity<LabelResponseDto> createLabel(@Valid @RequestBody LabelRequestDto labelRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(labelService.createLabel(labelRequestDto));
     }
-    // TODO : delete
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLabel(@PathVariable Long id) {
         labelService.deleteLabelById(id);

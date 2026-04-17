@@ -9,6 +9,7 @@ import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 import com.smart_reservation.api.service.EmpruntService;
 import com.smart_reservation.api.service.EquipementService;
 import com.smart_reservation.api.service.ExemplaireService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,12 +37,12 @@ public class EquipementController {
     }
 
     @PostMapping
-    public ResponseEntity<EquipementResponseDto> createEquipement(@RequestBody EquipementRequestDto equipementRequestDto) {
+    public ResponseEntity<EquipementResponseDto> createEquipement(@Valid @RequestBody EquipementRequestDto equipementRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(equipementService.createEquipement(equipementRequestDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EquipementResponseDto>  updateEquipement(@RequestBody EquipementRequestDto equipementRequestDto,@PathVariable Long id) {
+    public ResponseEntity<EquipementResponseDto>  updateEquipement(@Valid @RequestBody EquipementRequestDto equipementRequestDto, @PathVariable Long id) {
         return ResponseEntity.ok(equipementService.updateEquipement(equipementRequestDto,id));
     }
 
@@ -68,7 +69,7 @@ public class EquipementController {
     }
 
     @GetMapping("/{id}/emprunts")
-    public ResponseEntity<Iterable<EmpruntResponseDto>> getEmpruntsFromEquipement(@PathVariable Long id, @RequestBody PeriodeRequestDto periodeDto) {
+    public ResponseEntity<Iterable<EmpruntResponseDto>> getEmpruntsFromEquipement(@PathVariable Long id, @Valid @RequestBody PeriodeRequestDto periodeDto) {
         return ResponseEntity.ok(empruntService.getEmpruntsByEquipementAndDateDebutAndDateFin(id,periodeDto.debut, periodeDto.fin));
     }
 

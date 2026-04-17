@@ -28,7 +28,7 @@ public class AuthentificationController {
     record LoginRequest(String mail, String password) {}
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         try {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.mail(), request.password())

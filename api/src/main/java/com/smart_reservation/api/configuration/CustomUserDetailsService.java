@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         return new User(user.getMail(), user.getMotDePasseHash()
-                ,user.getStatutUtilisateur() == StatutUtilisateur.ACTIF || user.getStatutUtilisateur() == StatutUtilisateur.INVITE,
+                ,user.getStatutUtilisateur() == StatutUtilisateur.ACTIF,
                 true,
                 true,
                 user.getStatutUtilisateur() != StatutUtilisateur.DESACTIVE,

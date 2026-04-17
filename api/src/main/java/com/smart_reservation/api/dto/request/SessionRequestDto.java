@@ -1,7 +1,7 @@
 package com.smart_reservation.api.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.smart_reservation.api.dto.EquipementQuantiteDto;
+import com.smart_reservation.api.dto.QuantiteEquipementDto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,7 +13,7 @@ public class SessionRequestDto {
     public Long id;
 
     @NotEmpty(message = "une session doit comporter au moins un équipement à réserver")
-    public List<EquipementQuantiteDto> equipementQuantiteDtos;
+    public List<QuantiteEquipementDto> quantitesEquipements;
 
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
