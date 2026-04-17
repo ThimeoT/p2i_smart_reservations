@@ -69,8 +69,16 @@ public class SpringSecurityConfig {
                     auth.requestMatchers(HttpMethod.POST, "/exemplaires").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.PUT, "/exemplaires/{id}").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.DELETE, "/exemplaires/{id}").hasRole("ADMIN");
-                    auth.requestMatchers("/error").permitAll();
 
+                    auth.requestMatchers(HttpMethod.GET, "/reservations").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.GET, "/reservations/{id}").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/reservations").authenticated();
+                    auth.requestMatchers(HttpMethod.PUT, "/reservations/{id}").authenticated();
+                    auth.requestMatchers(HttpMethod.DELETE, "/reservations/{id}").authenticated();
+                    auth.requestMatchers(HttpMethod.PATCH, "/reservations/{id}/valider").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.PATCH, "/reservations/{id}/refuser").hasRole("ADMIN");
+
+                    auth.requestMatchers("/error").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
