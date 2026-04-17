@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 interface ComboboxOption {
   id: number;
@@ -25,6 +25,14 @@ export function Combobox({
   const [open, setOpen] = useState(false);
   const [activeIdx, setActiveIdx] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
+  const blurTimerRef = useRef<ReturnType<typeof setTimeout>| null>(null)
+
+  //pour annuler le timer si le composant disparait car non géré
+  useEffect(()=>{
+    return ()=> {
+      if(blurTimerRef.current) clearTimeout(blurTimerRef.current);
+    }
+  },[])
 
   const filtered = options.filter(
     (o) =>
@@ -41,7 +49,7 @@ export function Combobox({
 
   const remove = (id: number) => onChange(value.filter((v) => v !== id));
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown')
       setActiveIdx((i) => Math.min(i + 1, filtered.length - 1));
     else if (e.key === 'ArrowUp') setActiveIdx((i) => Math.max(i - 1, 0));
@@ -54,57 +62,37 @@ export function Combobox({
   };
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="relative">
       <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 6,
-          padding: '6px 8px',
-          border: '1px solid #ccc',
-          borderRadius: 6,
-          cursor: 'text',
-        }}
+        className="flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm transition focus-within:border-bleu-2"
         onClick={() => inputRef.current?.focus()}
       >
         {value.map((id) => {
           const opt = options.find((o) => o.id === id);
           if (!opt) return null;
-          return renderTag ? (
-            <span key={id}>
-              {renderTag(opt)}
-              <button type="button" onClick={() => remove(id)}>
-                ×
-              </button>
-            </span>
-          ) : (
+          return (
             <span
               key={id}
+              className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 4,
-                padding: '2px 8px',
-                background: '#e8e8e8',
-                borderRadius: 4,
-                fontSize: 13,
+                border: opt.color ? `1px solid ${opt.color}` : undefined,
               }}
             >
-              {opt.nom}
+              {renderTag ? renderTag(opt) : opt.nom}
               <button
                 type="button"
-                onClick={() => remove(id)}
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  cursor: 'pointer',
+                onClick={(event) => {
+                  event.stopPropagation();
+                  remove(id);
                 }}
+                className="rounded-full p-1 text-slate-500 transition hover:bg-slate-200 hover:text-slate-800"
               >
                 ×
               </button>
             </span>
           );
         })}
+
         <input
           ref={inputRef}
           value={query}
@@ -114,48 +102,22 @@ export function Combobox({
             setActiveIdx(-1);
           }}
           onFocus={() => setOpen(true)}
-          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          onBlur={() => blurTimerRef.current = setTimeout(() => setOpen(false), 150)}
           onKeyDown={handleKeyDown}
           placeholder={value.length === 0 ? placeholder : ''}
-          style={{
-            border: 'none',
-            outline: 'none',
-            fontSize: 14,
-            flex: 1,
-            minWidth: 120,
-            background: 'transparent',
-          }}
+          className="min-w-35 flex-1 bg-transparent text-sm outline-none"
         />
       </div>
 
       {open && filtered.length > 0 && (
-        <ul
-          style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            zIndex: 10,
-            background: '#fff',
-            border: '1px solid #ccc',
-            borderRadius: 6,
-            listStyle: 'none',
-            margin: '4px 0 0',
-            padding: 0,
-            maxHeight: 220,
-            overflowY: 'auto',
-          }}
-        >
+        <ul className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
           {filtered.map((opt, i) => (
             <li
               key={opt.id}
               onMouseDown={() => select(opt.id)}
-              style={{
-                padding: '8px 12px',
-                fontSize: 14,
-                cursor: 'pointer',
-                background: i === activeIdx ? '#f0f0f0' : 'transparent',
-              }}
+              className={`cursor-pointer px-4 py-2 text-sm text-slate-900 transition hover:bg-slate-100 ${
+                i === activeIdx ? 'bg-slate-100 font-medium' : ''
+              }`}
             >
               {opt.nom}
             </li>
