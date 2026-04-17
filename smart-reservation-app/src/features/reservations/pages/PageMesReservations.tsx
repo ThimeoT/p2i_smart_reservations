@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import TitreDePage from '../../../shared/components/typography/TitreDePage';
+import TitreDePage from '../../../shared/components/typography/TitlePage';
 import Bouton from '../../../shared/components/Bouton';
 import CarteReservation from '../../../shared/components/cards/CarteReservation';
 import { useAllReservations } from '../hooks/useAllReservations';
@@ -18,15 +18,20 @@ export default function PageMesReservations() {
   const { reservations, isLoading, error } = useAllReservations();
   const [filtre, setFiltre] = useState<StatutReservation | 'TOUTES'>('TOUTES');
 
-  const reservationsFiltrees = filtre === 'TOUTES'
-    ? reservations
-    : reservations.filter((r) => r.statut === filtre);
+  const reservationsFiltrees =
+    filtre === 'TOUTES'
+      ? reservations
+      : reservations.filter((r) => r.statut === filtre);
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <TitreDePage titre="Réservations" />
-        <Bouton size="small" text="Nouvelle réservation" onClick={() => navigate('/reservations/creer')} />
+        <Bouton
+          size="small"
+          text="Nouvelle réservation"
+          onClick={() => navigate('/reservations/creer')}
+        />
       </div>
 
       <div className="flex gap-2 flex-wrap">
@@ -46,7 +51,9 @@ export default function PageMesReservations() {
       </div>
 
       {isLoading && <p className="text-sm text-slate-400">Chargement…</p>}
-      {error && <p className="text-sm text-red-600">Erreur lors du chargement.</p>}
+      {error && (
+        <p className="text-sm text-red-600">Erreur lors du chargement.</p>
+      )}
 
       <div className="space-y-3">
         {reservationsFiltrees.map((r) => (

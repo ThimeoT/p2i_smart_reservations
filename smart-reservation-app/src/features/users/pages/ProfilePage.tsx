@@ -2,6 +2,9 @@ import { useNavigate, useParams } from 'react-router';
 import { useUser } from '../hooks/useUser';
 import { useLocation } from 'react-router';
 import { useAuth } from '../../auth/hooks/useAuth';
+import Bouton from '../../../shared/components/Bouton';
+import TitreDePage from '../../../shared/components/typography/TitlePage';
+import TitreDeSection from '../../../shared/components/typography/TitleSection';
 
 interface ProfilePageProps {
   isAdminView?: boolean;
@@ -27,8 +30,10 @@ export default function ProfilePage({ isAdminView = false }: ProfilePageProps) {
   return (
     <>
       {saved && <p>Modifications Enregistrées !</p>}
-      <h1>Profil</h1>
-      <p>
+      <TitreDePage titre="Mon Profil" />
+
+      <TitreDeSection titre="Nom" />
+      <p className="">
         Nom Prénom : {currentUser.nom} {currentUser.prenom}
       </p>
       <p>Mail : {currentUser.mail}</p>
@@ -43,12 +48,21 @@ export default function ProfilePage({ isAdminView = false }: ProfilePageProps) {
 
       {isAdminView && !isOwnProfile && (
         <>
-          <button onClick={() => deleteUser()}>
-            Supprimer le compte
-          </button>
-          <button onClick={() => resetPassword()}>
-            Réinitialiser le mot de passe
-          </button>
+          <Bouton
+            color="danger"
+            onClick={() => deleteUser()}
+            text="Supprimer le compte"
+          />
+          <Bouton
+            color="danger"
+            onClick={() => resetPassword()}
+            text="Réinitialiser le mot de passe"
+          />
+          <Bouton
+            color="danger"
+            onClick={() => {}}
+            text="Changer la date d'expiration du compte"
+          />
         </>
       )}
     </>

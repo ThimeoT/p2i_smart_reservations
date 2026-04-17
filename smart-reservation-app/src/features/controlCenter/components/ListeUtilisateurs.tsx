@@ -1,6 +1,6 @@
 import { useAllUsers } from '../../users/hooks/useAllUsers';
-import UserCard from '../../../shared/components/UserCard';
 import { useMemo, useState } from 'react';
+import CarteUtilisateur from '../../../shared/components/cards/CarteUtilisateur';
 
 type SortField = 'nom' | 'dateExpiration';
 type SortOrder = 'ascendant' | 'descendant';
@@ -100,12 +100,15 @@ export default function ListeUtilisateurs() {
           Date d'expiration la plus ancienne
         </option>
       </select>
-
-      {filteredUsers.length === 0 ? (
-        <p>Aucun utilisateur trouvé</p>
-      ) : (
-        filteredUsers.map((user) => <UserCard key={user.id} user={user} />)
-      )}
+      <div className="flex flex-col py-6 gap-4">
+        {filteredUsers.length === 0 ? (
+          <p>Aucun utilisateur trouvé</p>
+        ) : (
+          filteredUsers.map((user) => (
+            <CarteUtilisateur key={user.id} utilisateur={user} />
+          ))
+        )}
+      </div>
     </>
   );
 }

@@ -3,8 +3,8 @@ import { useParams } from 'react-router';
 import { useReservation } from '../hooks/useReservation';
 import { useAuth } from '../../auth/hooks/useAuth';
 import CarteErreur from '../../../shared/components/cards/CarteErreur';
-import TitreDePage from '../../../shared/components/typography/TitreDePage';
-import TitreSection from '../../../shared/components/typography/TitreSection';
+import TitreDePage from '../../../shared/components/typography/TitlePage';
+import TitreSection from '../../../shared/components/typography/TitleSection';
 import Bouton from '../../../shared/components/Bouton';
 import Textarea from '../../../shared/components/form/Textarea';
 
@@ -22,8 +22,6 @@ const STATUT_COLORS: Record<string, string> = {
   SUPPRIMEE: 'bg-slate-100 text-slate-600',
 };
 
-
-
 function formatDate(d: string): string {
   return new Date(d).toLocaleString('fr-FR');
 }
@@ -31,8 +29,14 @@ function formatDate(d: string): string {
 export default function PageReservation() {
   const { id } = useParams();
   const { user } = useAuth();
-  const { reservation, isLoading, error, supprimerReservation, validerReservation, refuserReservation } =
-    useReservation(Number(id));
+  const {
+    reservation,
+    isLoading,
+    error,
+    supprimerReservation,
+    validerReservation,
+    refuserReservation,
+  } = useReservation(Number(id));
   const [commentaire, setCommentaire] = useState('');
 
   if (isLoading) return <p>Chargement…</p>;
@@ -56,7 +60,9 @@ export default function PageReservation() {
     <div className="space-y-6">
       <div className="flex flex-col items-start justify-between">
         <TitreDePage titre={reservation.titre} />
-        <span className={`rounded-full px-3 py-1 text-sm font-medium ${STATUT_COLORS[reservation.statut] ?? 'bg-slate-100 text-slate-700'}`}>
+        <span
+          className={`rounded-full px-3 py-1 text-sm font-medium ${STATUT_COLORS[reservation.statut] ?? 'bg-slate-100 text-slate-700'}`}
+        >
           {STATUT_LABELS[reservation.statut] ?? reservation.statut}
         </span>
       </div>
@@ -64,14 +70,21 @@ export default function PageReservation() {
       <TitreSection titre="Sessions" />
       <div className="space-y-3">
         {reservation.sessions.map((session) => (
-          <div key={session.id} className="space-y-2 rounded-xl border border-slate-200 bg-white p-4">
+          <div
+            key={session.id}
+            className="space-y-2 rounded-xl border border-slate-200 bg-white p-4"
+          >
             <p className="text-sm text-slate-600">
-              Du <strong>{formatDate(session.debut)}</strong> au <strong>{formatDate(session.fin)}</strong>
+              Du <strong>{formatDate(session.debut)}</strong> au{' '}
+              <strong>{formatDate(session.fin)}</strong>
             </p>
             {session.emprunts.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {session.emprunts.map((emprunt) => (
-                  <span key={emprunt.id} className="rounded-full bg-bleu-1/10 px-3 py-1 text-xs text-bleu-2">
+                  <span
+                    key={emprunt.id}
+                    className="rounded-full bg-bleu-1/10 px-3 py-1 text-xs text-bleu-2"
+                  >
                     {emprunt.exemplaire.nomSerie}
                   </span>
                 ))}
@@ -92,7 +105,12 @@ export default function PageReservation() {
             />
             <div className="flex gap-3">
               <Bouton text="Valider" color="primary" onClick={handleValider} />
-              <Bouton text="Refuser" style="filled" color="danger" onClick={handleRefuser} />
+              <Bouton
+                text="Refuser"
+                style="filled"
+                color="danger"
+                onClick={handleRefuser}
+              />
             </div>
           </div>
         </>
@@ -103,12 +121,19 @@ export default function PageReservation() {
           <TitreSection titre="Historique" />
           <div className="space-y-2">
             {reservation.historiques.map((h) => (
-              <div key={h.id} className="rounded-lg border border-slate-100 bg-white p-3 text-sm text-slate-700">
+              <div
+                key={h.id}
+                className="rounded-lg border border-slate-100 bg-white p-3 text-sm text-slate-700"
+              >
                 <div className="flex items-center justify-between">
                   <span className="font-semibold">{h.action}</span>
-                  <span className="text-xs text-slate-400">{formatDate(h.date)}</span>
+                  <span className="text-xs text-slate-400">
+                    {formatDate(h.date)}
+                  </span>
                 </div>
-                {h.commentaire && <p className="mt-1 text-slate-500">{h.commentaire}</p>}
+                {h.commentaire && (
+                  <p className="mt-1 text-slate-500">{h.commentaire}</p>
+                )}
               </div>
             ))}
           </div>

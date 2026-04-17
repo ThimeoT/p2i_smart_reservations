@@ -3,8 +3,8 @@ import photoEquipement from '../../../assets/image kit xsens awinda.png';
 import CarteRelationEquipement from '../components/CarteRelationEquipement';
 import { useParams } from 'react-router';
 import CarteErreur from '../../../shared/components/cards/CarteErreur';
-import TitreDePage from '../../../shared/components/typography/TitreDePage';
-import TitreDeSection from '../../../shared/components/typography/TitreSection';
+import TitreDePage from '../../../shared/components/typography/TitlePage';
+import TitreDeSection from '../../../shared/components/typography/TitleSection';
 import CarteExemplaire from '../../../shared/components/cards/CarteExemplaire';
 
 export default function PageEquipement() {
@@ -22,12 +22,11 @@ export default function PageEquipement() {
       <TitreDeSection titre="Description" />
       <p>{equipement.description}</p>
       <TitreDeSection titre="Exemplaires" />
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-4">
         {equipement.exemplaires.map((exemplaire) => (
           <CarteExemplaire exemplaire={exemplaire} />
         ))}
       </div>
-
       <TitreDeSection titre="Labels" />
       {equipement.labels.map((label) => (
         <p>{label.nom}</p>

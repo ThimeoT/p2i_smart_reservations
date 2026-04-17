@@ -1,28 +1,31 @@
 import { useState } from 'react';
-import InviteUserForm from '../../users/components/IinviteUserForm';
+import FormulaireInvitationUtilisateur from '../../users/components/FormulaireInvitationUtilisateur';
 import ListeUtilisateurs from '../components/ListeUtilisateurs';
-import TitreDeSection from '../../../shared/components/typography/TitreSection';
+import TitreDeSection from '../../../shared/components/typography/TitleSection';
 import { useNavigate } from 'react-router';
 import Bouton from '../../../shared/components/Bouton';
 import ListeReservations from '../components/ListeReservations';
-import TitreDePage from '../../../shared/components/typography/TitreDePage';
+import TitreDePage from '../../../shared/components/typography/TitlePage';
 import ListeExemplaires from '../../equipments/components/ListeExemplaires';
 
-export default function ControlCenter() {
+export default function PageCentreDeControle() {
   const navigate = useNavigate();
   const [showAddUserForm, setShowAddUserForm] = useState(true);
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <TitreDePage titre="Centre de Contrôle" />
 
       <TitreDeSection titre="Utilisateurs" />
       <ListeUtilisateurs />
-      <button onClick={() => setShowAddUserForm(true)}>
-        Ajouter un utilisateur
-      </button>
+      <Bouton
+        onClick={() => setShowAddUserForm(true)}
+        text="Ajouter un utilisateur"
+      />
       {showAddUserForm && (
-        <InviteUserForm onClose={() => setShowAddUserForm(false)} />
+        <FormulaireInvitationUtilisateur
+          onClose={() => setShowAddUserForm(false)}
+        />
       )}
       <TitreDeSection titre="Équipements" />
       <Bouton
@@ -33,6 +36,6 @@ export default function ControlCenter() {
       <ListeExemplaires />
       <TitreDeSection titre="Réservations" />
       <ListeReservations />
-    </>
+    </div>
   );
 }

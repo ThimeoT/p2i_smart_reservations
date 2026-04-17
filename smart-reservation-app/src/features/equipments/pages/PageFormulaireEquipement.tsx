@@ -3,24 +3,25 @@ import { useEffect, useState } from 'react';
 import type { EquipementRequest } from '../types/equipement.types';
 import { createEquipementApi } from '../api/equipements.api';
 import FormulaireCreationEquipement from '../components/FormulaireEquipement';
+import TitreDePage from '../../../shared/components/typography/TitlePage';
 
-export default function PageAjoutEquipement() {
+export default function PagFormulaireEquipement() {
   const navigate = useNavigate();
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);
-  const [saved, setSaved] = useState(false);
-  useEffect(() => {
-    if (saved) navigate('/equipements', { state: { saved: true } });
-  }, [saved]);
 
   const handleSubmit = async (data: EquipementRequest) => {
     setSubmitLoading(true);
     setSubmitError(undefined);
     try {
       await createEquipementApi(data);
-      setSaved(true);
+      navigate('/equipements', { state: { saved: true } });
     } catch (error) {
-      setSubmitError("Erreur lors de la création de l'équipement" + { error });
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Erreur lors de la création de l'équipement",
+      );
     } finally {
       setSubmitLoading(false);
     }
@@ -28,7 +29,7 @@ export default function PageAjoutEquipement() {
 
   return (
     <div>
-      <h1>Ajouter un équipement</h1>
+      <TitreDePage titre="Ajouter un équipement" />
       <FormulaireCreationEquipement
         onSubmit={handleSubmit}
         loading={submitLoading}

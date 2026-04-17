@@ -7,10 +7,7 @@ import type {
 
 export const getEquipementByIdApi = async (id: number): Promise<Equipement> => {
   const user = await fetchClient.get(`/equipements/${id}`);
-  return {
-    ...user,
-    dateExpiration: new Date(user.dateExpiration),
-  };
+  return user;
 };
 
 export const getAllEquipementsApi = async (): Promise<EquipementResume[]> => {

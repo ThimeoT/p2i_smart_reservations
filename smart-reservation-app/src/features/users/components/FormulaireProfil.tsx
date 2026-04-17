@@ -3,19 +3,19 @@ import type { User } from '../types/user.types';
 import { useNavigate } from 'react-router';
 import { useUnsavedChangesBlocker } from '../../../shared/hooks/useUnsavedChangesBlocker';
 
-interface userFormProps {
+interface FormulaireProfilProps {
   onSubmit: (data: User) => Promise<void>;
   error?: string;
   loading?: boolean;
   currentUser: User;
 }
 
-export default function ProfileForm({
+export default function FormulaireProfil({
   onSubmit,
   error,
   loading,
   currentUser,
-}: userFormProps) {
+}: FormulaireProfilProps) {
   const navigate = useNavigate();
 
   const {
@@ -34,9 +34,9 @@ export default function ProfileForm({
     },
   });
 
-  const { isBlocked, confirm, cancel } = useUnsavedChangesBlocker(isDirty && !isSubmitSuccessful);
-
-
+  const { isBlocked, confirm, cancel } = useUnsavedChangesBlocker(
+    isDirty && !isSubmitSuccessful,
+  );
 
   return (
     <>

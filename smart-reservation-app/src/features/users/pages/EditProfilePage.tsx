@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ProfileForm from '../components/ProfileForm';
+import FormulaireProfil from '../components/FormulaireProfil';
 import { useUser } from '../hooks/useUser';
 import type { User } from '../types/user.types';
 import { useNavigate } from 'react-router';
@@ -16,9 +16,9 @@ export default function EditProfilePage() {
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);
   const [saved, setSaved] = useState(false);
 
-  useEffect(()=>{
-    if(saved) navigate("/profile"), {state : { saved : true}}
-  }, [saved])
+  useEffect(() => {
+    if (saved) (navigate('/profile'), { state: { saved: true } });
+  }, [saved]);
 
   const handleSubmit = async (data: User) => {
     if (!currentUser) return;
@@ -47,7 +47,7 @@ export default function EditProfilePage() {
   return (
     <>
       <h1>Modifier mon profil</h1>
-      <ProfileForm
+      <FormulaireProfil
         onSubmit={handleSubmit}
         loading={submitLoading}
         error={submitError}

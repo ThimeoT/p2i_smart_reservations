@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { createReservationApi } from '../api/reservations.api';
 import FormulaireReservation from '../components/FormulaireReservation';
-import TitreDePage from '../../../shared/components/typography/TitreDePage';
+import TitreDePage from '../../../shared/components/typography/TitlePage';
 import type { ReservationRequest } from '../types/reservation.types';
 
 export default function PageCreerReservation() {
@@ -26,7 +26,11 @@ export default function PageCreerReservation() {
   return (
     <div>
       <TitreDePage titre="Créer une réservation" />
-      <FormulaireReservation onSubmit={handleSubmit} loading={loading} error={error} />
+      <FormulaireReservation
+        onSubmit={handleSubmit}
+        loading={loading}
+        error={error}
+      />
     </div>
   );
 }

@@ -5,8 +5,14 @@ import type {
   InvitationResponse,
 } from '../../auth/types/auth.types';
 import { inviteUserApi } from '../../auth/api/auth.api';
+import Bouton from '../../../shared/components/Bouton';
+import Input from '../../../shared/components/form/Input';
 
-export default function InviteUserForm({ onClose }: { onClose: () => void }) {
+export default function FormulaireInvitationUtilisateur({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
   const {
     register,
     handleSubmit,
@@ -58,10 +64,11 @@ export default function InviteUserForm({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Ajouter un utilisateur</h2>
+    <div className="flex flex-col p-4 rounded-lg border-2 border-taupe-1">
+      <h2 className="text-xl font-semibold text-slate-900">Ajouter un utilisateur</h2>
+    <form className="flex gap-4 p-4" onSubmit={handleSubmit(onSubmit)}>
 
-      <input
+      <Input
         type="email"
         placeholder="Adresse mail"
         {...register('mail', { required: 'Mail requis' })}
@@ -75,12 +82,20 @@ export default function InviteUserForm({ onClose }: { onClose: () => void }) {
 
       {errors.root && <p>{errors.root.message}</p>}
 
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Création...' : "Créer l'invitation"}
-      </button>
-      <button type="button" onClick={onClose}>
-        Annuler
-      </button>
+      <Bouton
+        type="submit"
+        size="small"
+        disabled={isSubmitting}
+        text={isSubmitting ? 'Création...' : "Créer l'invitation"}
+      />
+      <Bouton
+        type="button"
+        color="danger"
+        size="small"
+        onClick={onClose}
+        text="annuler"
+      />
     </form>
+    </div>
   );
 }
