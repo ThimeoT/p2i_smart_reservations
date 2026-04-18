@@ -1,13 +1,12 @@
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router';
 import { BellIcon, Bars3Icon } from '@heroicons/react/24/outline';
-import logoSmartReservations from '../../assets/logo_smart_reservations.svg'
-import PageMenu from './PageMenu';
+import logoSmartReservations from '../../assets/logo_smart_reservations.svg';
+import MenuPage from './MenuPage';
 import { useState } from 'react';
 
 export default function Header() {
-  const navigate = useNavigate()
-    const [menuOuvert, setMenuOuvert] = useState(false);
-
+  const navigate = useNavigate();
+  const [menuOuvert, setMenuOuvert] = useState(false);
 
   return (
     <>
@@ -25,8 +24,7 @@ export default function Header() {
           />
         </div>
       </header>
-      <PageMenu ouvert={menuOuvert} onFermer={() => setMenuOuvert(false)} />
+      <MenuPage ouvert={menuOuvert} onFermer={() => setMenuOuvert(false)} />
     </>
-  )
+  );
 }
-

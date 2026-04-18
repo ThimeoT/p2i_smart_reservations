@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import UserInvitationForm from '../../users/components/InvitationForm';
-import ListeUtilisateurs from '../components/ListeUtilisateurs';
+import UserList from '../components/UserList';
 import SectionTitle from '../../../shared/components/typography/SectionTitle';
 import { useNavigate } from 'react-router';
-import Bouton from '../../../shared/components/Button';
-import ListeReservations from '../components/ListeReservations';
+import Button from '../../../shared/components/Button';
+import ReservationList from '../components/ReservationList';
 import PageTitle from '../../../shared/components/typography/PageTitle';
-import ListeExemplaires from '../../equipments/components/ListeExemplaires';
+import InstanceList from '../../equipments/components/InstanceList';
 
 export default function PageCentreDeControle() {
   const navigate = useNavigate();
@@ -14,11 +14,11 @@ export default function PageCentreDeControle() {
 
   return (
     <div className="flex flex-col gap-4">
-      <PageTitle titre="Centre de Contrôle" />
+      <PageTitle title="Centre de Contrôle" />
 
       <SectionTitle title="Utilisateurs" />
-      <ListeUtilisateurs />
-      <Bouton
+      <UserList />
+      <Button
         onClick={() => setShowAddUserForm(true)}
         text="Ajouter un utilisateur"
       />
@@ -26,14 +26,14 @@ export default function PageCentreDeControle() {
         <UserInvitationForm onClose={() => setShowAddUserForm(false)} />
       )}
       <SectionTitle title="Équipements" />
-      <Bouton
+      <Button
         text="Voir la liste des équipements"
         onClick={() => navigate('/equipements')}
       />
       <SectionTitle title="Exemplaires" />
-      <ListeExemplaires />
+      <InstanceList />
       <SectionTitle title="Réservations" />
-      <ListeReservations />
+      <ReservationList />
     </div>
   );
 }

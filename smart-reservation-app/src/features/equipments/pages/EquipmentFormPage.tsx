@@ -5,7 +5,7 @@ import { createEquipementApi } from '../api/equipements.api';
 import FormulaireCreationEquipement from '../components/FormulaireEquipement';
 import PageTitle from '../../../shared/components/typography/PageTitle';
 
-export default function PagFormulaireEquipement() {
+export default function EquipmentFormPage() {
   const navigate = useNavigate();
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);

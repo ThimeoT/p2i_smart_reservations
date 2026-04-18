@@ -5,7 +5,7 @@ import useAllEquipements from '../../equipments/hooks/useAllEquipements';
 import FormLayout from '../../../shared/components/form/FormLayout';
 import { Input } from '../../../shared/components/form/Input';
 import Textarea from '../../../shared/components/form/Textarea';
-import Bouton from '../../../shared/components/Button';
+import Button from '../../../shared/components/Button';
 import SectionSession, { type FormValues } from './SectionSession';
 import type { ReservationRequest } from '../types/reservation.types';
 
@@ -110,7 +110,7 @@ export default function FormulaireReservation({
             <span className="text-xl font-semibold text-slate-900">
               Sessions
             </span>
-            <Bouton
+            <Button
               type="button"
               style="filled"
               color="primary"
@@ -142,12 +142,12 @@ export default function FormulaireReservation({
         </div>
 
         <div className="flex gap-3">
-          <Bouton
+          <Button
             type="submit"
             text={loading ? 'Envoi…' : 'Soumettre la réservation'}
             disabled={loading}
           />
-          <Bouton
+          <Button
             type="button"
             style="outline"
             color="secondary"

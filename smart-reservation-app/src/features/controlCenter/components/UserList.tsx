@@ -1,13 +1,13 @@
 import { useAllUsers } from '../../users/hooks/useAllUsers';
 import { useMemo, useState } from 'react';
-import CarteUtilisateur from '../../../shared/components/cards/CarteUtilisateur';
+import UserCard from '../../../shared/components/cards/UserCard';
 
 type SortField = 'nom' | 'dateExpiration';
 type SortOrder = 'ascendant' | 'descendant';
 type RoleFilter = 'ALL' | 'USER' | 'ADMIN';
 type StatusFilter = 'ALL' | 'INVITE' | 'ACTIF' | 'EXPIRE' | 'DESACTIVE';
 
-export default function ListeUtilisateurs() {
+export default function UserList() {
   const { users, loading, error } = useAllUsers();
   const [search, setSearch] = useState<string>('');
   const [sortField, setSortField] = useState<SortField>('nom');
@@ -105,7 +105,7 @@ export default function ListeUtilisateurs() {
           <p>Aucun utilisateur trouvé</p>
         ) : (
           filteredUsers.map((user) => (
-            <CarteUtilisateur key={user.id} utilisateur={user} />
+            <UserCard key={user.id} utilisateur={user} />
           ))
         )}
       </div>

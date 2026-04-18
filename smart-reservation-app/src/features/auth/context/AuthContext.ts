@@ -9,6 +9,7 @@ export interface AuthContextType {
   isLoading: boolean;
   setLoading: (loading: boolean) => void;
   logout: () => void;
+  sessionExpired: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);

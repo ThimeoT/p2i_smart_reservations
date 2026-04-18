@@ -19,7 +19,7 @@ interface Props {
   reservation: ReservationResume;
 }
 
-export default function CarteReservation({ reservation }: Props) {
+export default function ReservationCard({ reservation }: Props) {
   const navigate = useNavigate();
 
   return (

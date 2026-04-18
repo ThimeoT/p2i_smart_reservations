@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import type { LoginCredentials } from '../types/auth.types';
 import Input from '../../../shared/components/form/Input';
 import FormLayout from '../../../shared/components/form/FormLayout';
-import Bouton from '../../../shared/components/Button';
+import Button from '../../../shared/components/Button';
 
 interface AuthFormProps {
   onSubmit: (data: LoginCredentials) => Promise<void>;
@@ -44,7 +44,7 @@ export default function AuthForm({ onSubmit, error, loading }: AuthFormProps) {
         {errors.root && <p>{errors.root.message}</p>}
 
         {error && <p>{error}</p>}
-        <Bouton
+        <Button
           text={loading ? 'Connexion' : 'Se connecter'}
           disabled={loading}
           type="submit"

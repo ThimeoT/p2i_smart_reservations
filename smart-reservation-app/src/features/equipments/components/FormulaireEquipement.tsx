@@ -17,7 +17,7 @@ import { Combobox } from '../../../shared/components/form/Combobox';
 import FormLayout from '../../../shared/components/form/FormLayout';
 import { Input } from '../../../shared/components/form/Input';
 import Textarea from '../../../shared/components/form/Textarea';
-import Bouton from '../../../shared/components/Button';
+import Button from '../../../shared/components/Button';
 
 interface LienRessource {
   valeur: string;
@@ -84,7 +84,7 @@ function SectionLiens({
         <span className="text-sm font-medium text-slate-900">
           Liens ressources
         </span>
-        <Bouton
+        <Button
           type="button"
           style="outline"
           color="secondary"
@@ -110,7 +110,7 @@ function SectionLiens({
               {errors.liensRessources[index]?.message}
             </p>
           )}
-          <Bouton
+          <Button
             type="button"
             style="outline"
             color="danger"
@@ -153,7 +153,7 @@ function SectionRelations({
         <span className="text-sm font-medium text-slate-900">
           Relations équipement
         </span>
-        <Bouton
+        <Button
           type="button"
           style="outline"
           color="secondary"
@@ -240,7 +240,7 @@ function SectionRelations({
           </div>
 
           <div className="flex justify-end">
-            <Bouton
+            <Button
               type="button"
               style="outline"
               color="danger"
@@ -341,14 +341,14 @@ export default function FormulaireCreationEquipement({
             même ?
           </p>
           <div className="mt-3 flex gap-2">
-            <Bouton
+            <Button
               type="button"
               text="Quitter"
               style="outline"
               color="danger"
               onClick={confirm}
             />
-            <Bouton
+            <Button
               type="button"
               text="Rester"
               style="filled"
@@ -418,12 +418,12 @@ export default function FormulaireCreationEquipement({
         />
 
         <div className="flex flex-wrap gap-3">
-          <Bouton
+          <Button
             type="submit"
             text={loading ? 'Enregistrement...' : 'Enregistrer'}
             disabled={loading}
           />
-          <Bouton
+          <Button
             type="button"
             style="outline"
             color="secondary"

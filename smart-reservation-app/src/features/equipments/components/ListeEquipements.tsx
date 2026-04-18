@@ -1,6 +1,6 @@
 import useAllEquipements from '../hooks/useAllEquipements';
 import type { EquipementResume } from '../types/equipement.types';
-import CarteEquipement from '../../../shared/components/cards/CarteEquipement';
+import EquipmentCard from '../../../shared/components/cards/EquipmentCard';
 
 export default function ListeEquipements() {
   const { equipements, loading, error } = useAllEquipements();
@@ -16,7 +16,7 @@ export default function ListeEquipements() {
   return (
     <div className="flex flex-wrap gap-4">
       {equipements.map((equipement: EquipementResume) => (
-        <CarteEquipement equipement={equipement} />
+        <EquipmentCard equipement={equipement} />
       ))}
     </div>
   );

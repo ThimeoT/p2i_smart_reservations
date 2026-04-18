@@ -19,9 +19,10 @@ interface Props {
   utilisateur: User;
 }
 
-export default function CarteUtilisateur({ utilisateur }: Props) {
+export default function UserCard({ utilisateur }: Props) {
   const navigate = useNavigate();
-  const initiales = `${utilisateur.prenom?.[0] ?? ''}${utilisateur.nom?.[0] ?? ''}`.toUpperCase();
+  const initiales =
+    `${utilisateur.prenom?.[0] ?? ''}${utilisateur.nom?.[0] ?? ''}`.toUpperCase();
 
   return (
     <div
@@ -33,13 +34,18 @@ export default function CarteUtilisateur({ utilisateur }: Props) {
         {initiales}
       </div>
       <div className="min-w-0 flex-1">
-        <p className="truncate font-semibold text-slate-900">{utilisateur.prenom} {utilisateur.nom}</p>
+        <p className="truncate font-semibold text-slate-900">
+          {utilisateur.prenom} {utilisateur.nom}
+        </p>
         <p className="truncate text-xs text-slate-400">{utilisateur.mail}</p>
       </div>
       <div className="flex shrink-0 flex-col items-end gap-1">
         <span className="text-xs text-slate-500">{utilisateur.role}</span>
-        <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUT_COLORS[utilisateur.statutUtilisateur] ?? 'bg-slate-100 text-slate-500'}`}>
-          {STATUT_LABELS[utilisateur.statutUtilisateur] ?? utilisateur.statutUtilisateur}
+        <span
+          className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUT_COLORS[utilisateur.statutUtilisateur] ?? 'bg-slate-100 text-slate-500'}`}
+        >
+          {STATUT_LABELS[utilisateur.statutUtilisateur] ??
+            utilisateur.statutUtilisateur}
         </span>
       </div>
     </div>

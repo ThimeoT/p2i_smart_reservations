@@ -1,89 +1,102 @@
 import { useNavigate } from 'react-router';
+import {
+  InformationCircleIcon,
+  QuestionMarkCircleIcon,
+} from '@heroicons/react/24/outline';
 import { useIsAdmin } from '../../auth/hooks/useIsAdmin';
 import { useUser } from '../../users/hooks/useUser';
+import useAllEquipements from '../../equipments/hooks/useAllEquipements';
 import PageTitle from '../../../shared/components/typography/PageTitle';
 import SectionTitle from '../../../shared/components/typography/SectionTitle';
-import Bouton from '../../../shared/components/Button';
-
-interface HomeSectionCardProps {
-  title: string;
-  description: string;
-  buttonText: string;
-  onClick: () => void;
-}
-
-function HomeSectionCard({
-  title,
-  description,
-  buttonText,
-  onClick,
-}: HomeSectionCardProps) {
-  return (
-    <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-center gap-4 border border-beige-1">
-      <h3 className="font-display font-bold text-lg text-bleu-fonce-1">
-        {title}
-      </h3>
-      <p className="text-sm text-taupe-2 flex-1">{description}</p>
-
-      <Bouton onClick={onClick} text={buttonText} />
-    </div>
-  );
-}
+import TextBody from '../../../shared/components/typography/TextBody';
+import Button from '../../../shared/components/Button';
+import EquipmentCard from '../../../shared/components/cards/EquipmentCard';
 
 export default function HomePage() {
   const navigate = useNavigate();
   const isAdmin = useIsAdmin();
   const { currentUser } = useUser();
+  const { equipements } = useAllEquipements();
+
   return (
-    <div className="flex flex-col gap-8 pb-12">
-      <PageTitle title="Accueil" />
-      <section className="px-8 flex flex-col gap-1">
-        <p className="text-base font-semibold font-display">
-          Bon retour parmi nous, {currentUser?.prenom} 👋
-        </p>
-        <p className="text-sm text-taupe-2">
-          Première visite ?{' '}
-          <span
-            className="text-bleu-2 underline cursor-pointer hover:text-bleu-1 transition-colors"
-            onClick={() => navigate('/tuto')}
-          >
-            Consultez le tutoriel
-          </span>
-        </p>
-      </section>
-      <section className="max-w-2xl mx-auto w-full">
-        <div className="flex flex-col gap-4">
-          {isAdmin && (
-            <HomeSectionCard
-              title="Centre de contrôle"
-              description="Gérez les utilisateurs, les équipements et les réservations de la plateforme."
-              buttonText="Accéder"
+    <div className="flex flex-col pb-12">
+      <PageTitle title={`Bienvenue ${currentUser?.prenom ?? ''} 👋`} />
+
+      {/* Notifications & tutoriel */}
+      <div className="flex flex-col gap-3 mb-2">
+        <button
+          className="flex items-start gap-3 text-left transition-opacity hover:opacity-70"
+          onClick={() => navigate('/notifications')}
+        >
+          <InformationCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-bleu-fonce-1" />
+          <TextBody color="taupe">
+            Vous avez des notifications non lues, cliquez ici pour les consulter
+            !
+          </TextBody>
+        </button>
+        <button
+          className="flex items-start gap-3 text-left transition-opacity hover:opacity-70"
+          onClick={() => navigate('/aide')}
+        >
+          <QuestionMarkCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-taupe-2" />
+          <TextBody color="taupe">
+            Nouveau sur la plateforme ? On vous explique tout juste ici !
+          </TextBody>
+        </button>
+      </div>
+
+      {/* Catalogue */}
+      <div className="flex items-center justify-between">
+        <SectionTitle title="Catalogue" />
+        <Button
+          text="Voir plus"
+          size="small"
+          onClick={() => navigate('/equipements')}
+        />
+      </div>
+      <div className="flex gap-4 overflow-x-auto pb-2 -mx-8 px-8">
+        {equipements.slice(0, 6).map((e) => (
+          <div key={e.id} className="shrink-0">
+            <EquipmentCard equipement={e} />
+          </div>
+        ))}
+      </div>
+
+      {/* Mes Réservations */}
+      <SectionTitle title="Mes Réservations" />
+      <TextBody color="taupe">
+        Vous n'avez aucune réservation de prévue pour le moment.
+      </TextBody>
+      <div className="mt-4">
+        <Button
+          text="Consulter mes réservations"
+          onClick={() => navigate('/reservations/mes-reservations')}
+        />
+      </div>
+
+      {/* Mon Profil */}
+      <SectionTitle title="Mon Profil" />
+      <TextBody color="taupe">
+        Consultez et modifiez vos informations personnelles.
+      </TextBody>
+      <div className="mt-4">
+        <Button text="Gérer mon profil" onClick={() => navigate('/profile')} />
+      </div>
+
+      {isAdmin && (
+        <>
+          <SectionTitle title="Centre de contrôle" />
+          <TextBody color="taupe">
+            Gérez les utilisateurs, équipements et réservations.
+          </TextBody>
+          <div className="mt-4">
+            <Button
+              text="Accéder au centre de contrôle"
               onClick={() => navigate('/admin')}
             />
-          )}
-
-          <HomeSectionCard
-            title="Catalogue"
-            description="Parcourez les équipements disponibles à la réservation."
-            buttonText="Voir le catalogue"
-            onClick={() => navigate('/equipements')}
-          />
-
-          <HomeSectionCard
-            title="Mon Profil"
-            description="Consultez et modifiez vos informations personnelles."
-            buttonText="Gérer mon profil"
-            onClick={() => navigate('/profile')}
-          />
-
-          <HomeSectionCard
-            title="Réservations"
-            description="Aucune réservation en cours. Créez-en une dès maintenant."
-            buttonText="Créer une réservation"
-            onClick={() => navigate('/reservations/creer')}
-          />
-        </div>
-      </section>
+          </div>
+        </>
+      )}
     </div>
   );
 }

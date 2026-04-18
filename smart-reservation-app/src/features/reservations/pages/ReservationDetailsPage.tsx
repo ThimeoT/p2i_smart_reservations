@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import { useReservation } from '../hooks/useReservation';
 import { useAuth } from '../../auth/hooks/useAuth';
-import ErrorCard from '../../../shared/components/cards/CarteErreur';
+import ErrorCard from '../../../shared/components/cards/ErrorCard';
 import PageTitle from '../../../shared/components/typography/PageTitle';
 import TitreSection from '../../../shared/components/typography/SectionTitle';
-import Bouton from '../../../shared/components/Button';
+import Button from '../../../shared/components/Button';
 import Textarea from '../../../shared/components/form/Textarea';
 
 const STATUT_LABELS: Record<string, string> = {
@@ -26,7 +26,7 @@ function formatDate(d: string): string {
   return new Date(d).toLocaleString('fr-FR');
 }
 
-export default function PageReservation() {
+export default function ReservationDetailsPage() {
   const { id } = useParams();
   const { user } = useAuth();
   const {
@@ -85,7 +85,7 @@ export default function PageReservation() {
                     key={emprunt.id}
                     className="rounded-full bg-bleu-1/10 px-3 py-1 text-xs text-bleu-2"
                   >
-                    {emprunt.exemplaire.nomSerie}
+                    {emprunt.instance.nomSerie}
                   </span>
                 ))}
               </div>
@@ -104,8 +104,8 @@ export default function PageReservation() {
               onChange={(e) => setComment(e.target.value)}
             />
             <div className="flex gap-3">
-              <Bouton text="Valider" color="primary" onClick={handleValider} />
-              <Bouton
+              <Button text="Valider" color="primary" onClick={handleValider} />
+              <Button
                 text="Refuser"
                 style="filled"
                 color="danger"
@@ -141,7 +141,7 @@ export default function PageReservation() {
       )}
 
       {reservation.statut !== 'SUPPRIMEE' && (
-        <Bouton
+        <Button
           style="filled"
           color="danger"
           text="Supprimer la réservation"

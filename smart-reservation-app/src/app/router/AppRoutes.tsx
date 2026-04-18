@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router';
-import PageEquipement from '../../features/equipments/pages/PageEquipement';
+import PageEquipement from '../../features/equipments/pages/EquipmentPage';
 import PageCentreDeControle from '../../features/controlCenter/pages/PageCentreDeControle';
-import PageAuthentification from '../../features/auth/pages/PageAuthentification';
+import AuthenticationPage from '../../features/auth/pages/AuthenticationPage';
 import RootLayout from '../views/RootLayout';
 import HomePage from '../../features/home/pages/HomePage';
 import ProfilePage from '../../features/users/pages/ProfilePage';
@@ -12,14 +12,14 @@ import ProtectedRoute from './ProtectedRoute';
 import ErrorPage from '../views/RouteErrorPage';
 import AdminRoute from './AdminRoute';
 import InviteRoute from './InviteRoute';
-import PageInitialisationCompte from '../../features/auth/pages/PageInitialisationCompte';
-import PageCatalogue from '../../features/equipments/pages/PageCatalogue';
-import PagFormulaireEquipement from '../../features/equipments/pages/PageFormulaireEquipement';
+import AccountInitialisationPage from '../../features/auth/pages/AccountInitialisationPage';
+import CatalogPage from '../../features/equipments/pages/CatalogPage';
+import EquipmentFormPage from '../../features/equipments/pages/EquipmentFormPage';
 import PageTest from '../views/PageTest';
-import PageExemplaire from '../../features/exemplaires/pages/PageExemplaire';
+import PageInstance from '../../features/instances/pages/PageInstance';
 import AddReservationPage from '../../features/reservations/pages/AddReservationPage';
-import PageReservation from '../../features/reservations/pages/PageReservation';
-import PageMesReservations from '../../features/reservations/pages/PageMesReservations';
+import ReservationDetailsPage from '../../features/reservations/pages/ReservationDetailsPage';
+import MyReservationsPage from '../../features/reservations/pages/MyReservationsPage';
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <PageAuthentification />,
+    element: <AuthenticationPage />,
   },
   {
     path: '/404',
@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
     // route pour les comptes invités, token requis mais pas statut ACTIF
     element: <InviteRoute />,
     children: [
-      { path: '/initialisation', element: <PageInitialisationCompte /> },
+      { path: '/initialisation', element: <AccountInitialisationPage /> },
     ],
   },
   {
@@ -48,25 +48,25 @@ export const router = createBrowserRouter([
       {
         element: <RootLayout />,
         children: [
-          { path: '/equipements', element: <PageCatalogue /> },
+          { path: '/equipements', element: <CatalogPage /> },
           {
             path: '/equipements/:id',
             element: <PageEquipement />,
             errorElement: <NotFoundPage />,
           },
           {
-            path: '/exemplaires/:id',
-            element: <PageExemplaire />,
+            path: '/instances/:id',
+            element: <PageInstance />,
             errorElement: <NotFoundPage />,
           },
           {
             path: '/reservations/mes-reservations',
-            element: <PageMesReservations />,
+            element: <MyReservationsPage />,
           },
           { path: '/reservations/creer', element: <AddReservationPage /> },
           {
             path: '/reservations/:id',
-            element: <PageReservation />,
+            element: <ReservationDetailsPage />,
             errorElement: <NotFoundPage />,
           },
 
@@ -90,7 +90,7 @@ export const router = createBrowserRouter([
               { path: '/test', element: <PageTest /> },
               {
                 path: '/equipements/ajouter-equipement',
-                element: <PagFormulaireEquipement />,
+                element: <EquipmentFormPage />,
               },
             ],
           },

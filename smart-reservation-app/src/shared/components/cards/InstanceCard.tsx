@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router';
 import type {
-  Exemplaire,
+  Instance,
   StatutDisponibilite,
-} from '../../../features/exemplaires/types/exemplaire.types';
+} from '../../../features/instances/types/instance.types';
 
 const getStatusColorClass = (statut: StatutDisponibilite) => {
   switch (statut) {
@@ -17,23 +17,23 @@ const getStatusColorClass = (statut: StatutDisponibilite) => {
   }
 };
 
-interface CarteExemplaireProps {
-  exemplaire: Exemplaire;
+interface InstanceCardProps {
+  instance: Instance;
 }
 
-export default function CarteExemplaire({ exemplaire }: CarteExemplaireProps) {
+export default function InstanceCard({ instance }: InstanceCardProps) {
   const navigate = useNavigate();
-  const gotoPageExemplaire = () => navigate(`/exemplaires/${exemplaire.id}`);
+  const gotoPageInstance = () => navigate(`/instances/${instance.id}`);
   return (
     <div
-      onClick={() => gotoPageExemplaire()}
+      onClick={() => gotoPageInstance()}
       className="w-64 flex flex-col justify-between p-4 rounded-md border-2 border-taupe-1 bg-transparent hover:cursor-pointer "
     >
-      <div className="font-semibold">{exemplaire.nomSerie}</div>
+      <div className="font-semibold">{instance.nomSerie}</div>
       <div
-        className={`text-gray-600 text-mx font-bold ${getStatusColorClass(exemplaire.statutDisponibilite)}`}
+        className={`text-gray-600 text-mx font-bold ${getStatusColorClass(instance.statutDisponibilite)}`}
       >
-        {exemplaire.statutDisponibilite}
+        {instance.statutDisponibilite}
       </div>
     </div>
   );

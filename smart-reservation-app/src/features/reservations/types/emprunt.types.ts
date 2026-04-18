@@ -1,10 +1,10 @@
-import type { Exemplaire } from "../../exemplaires/types/exemplaire.types";
+import type { Instance } from "../../instances/types/instance.types";
 import type { Session } from "./session.types";
 
 export interface Emprunt {
   id : number,
   session : Session,
-  exemplaire : Exemplaire,
+  instance : Instance,
   dateRetourPrevue : string,
   dateRetourReelle : string | undefined,
 }
@@ -13,6 +13,6 @@ export interface EmpruntRequest {
   id : number,
   sessionId : number,
   utilisateurId : number,
-  exemplaireId : number,
+  instanceId : number,
   dateRetourPrevue : string,
 }

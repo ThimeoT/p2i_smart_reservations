@@ -38,8 +38,14 @@ async function handleResponse(response: Response) {
     payload = null;
   }
 
+  if (response.status === 401 && tokenManager.get()) onUnauthorized?.();
   throw new ApiError(response.status, response.statusText, payload);
 }
+
+let onUnauthorized: (() => void) | null = null;
+export const registerOnUnauthorized = (cb: () => void) => {
+  onUnauthorized = cb;
+};
 
 const defaultHeaders: Record<string, string> = {
   Accept: 'application/json',

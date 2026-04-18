@@ -3,13 +3,13 @@ import { AuthContext } from './AuthContext';
 import tokenManager from '../../../config/tokenManager';
 import type { AuthUser } from '../types/auth.types';
 import { getMeApi } from '../api/auth.api';
+import { registerOnUnauthorized } from '../../../config/fetchClient';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(
-    tokenManager.get(),
-  );
+  const [accessToken, setAccessToken] = useState<string | null>(tokenManager.get());
   const [isLoading, setLoading] = useState(!!tokenManager.get());
+  const [sessionExpired, setSessionExpired] = useState(false);
 
   const persistToken = (token: string | null) => {
     tokenManager.set(token);
@@ -20,6 +20,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
     persistToken(null);
   };
+
+  useEffect(() => {
+    registerOnUnauthorized(() => {
+      logout();
+      setSessionExpired(true);
+    });
+  }, []);
 
   useEffect(() => {
     const token = tokenManager.get();
@@ -52,6 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         setLoading,
         logout,
+        sessionExpired,
       }}
     >
       {children}

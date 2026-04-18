@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import PageTitle from '../../../shared/components/typography/PageTitle';
-import Bouton from '../../../shared/components/Button';
-import CarteReservation from '../../../shared/components/cards/CarteReservation';
+import Button from '../../../shared/components/Button';
+import ReservationCard from '../../../shared/components/cards/ReservationCard';
 import { useAllReservations } from '../hooks/useAllReservations';
 import type { StatutReservation } from '../types/reservation.types';
 
@@ -13,7 +13,7 @@ const FILTRES: { label: string; value: StatutReservation | 'TOUTES' }[] = [
   { label: 'Refusées', value: 'REFUSEE' },
 ];
 
-export default function PageMesReservations() {
+export default function MyReservationsPage() {
   const navigate = useNavigate();
   const { reservations, isLoading, error } = useAllReservations();
   const [filtre, setFiltre] = useState<StatutReservation | 'TOUTES'>('TOUTES');
@@ -26,8 +26,8 @@ export default function PageMesReservations() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <PageTitle title="Réservations" />
-        <Bouton
+        <PageTitle title="Mes Réservations" />
+        <Button
           size="small"
           text="Nouvelle réservation"
           onClick={() => navigate('/reservations/creer')}
@@ -57,7 +57,7 @@ export default function PageMesReservations() {
 
       <div className="space-y-3">
         {reservationsFiltrees.map((r) => (
-          <CarteReservation key={r.id} reservation={r} />
+          <ReservationCard key={r.id} reservation={r} />
         ))}
         {!isLoading && reservationsFiltrees.length === 0 && (
           <p className="text-sm text-slate-400">Aucune réservation.</p>

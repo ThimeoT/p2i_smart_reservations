@@ -1,5 +1,5 @@
 import type { RelationEquipement } from '../types/relationEquipement.types';
-import CarteEquipement from '../../../shared/components/cards/CarteEquipement';
+import EquipmentCard from '../../../shared/components/cards/EquipmentCard';
 
 interface CarteRelationEquipementProps {
   relation: RelationEquipement;
@@ -13,7 +13,7 @@ export default function CarteRelationEquipement({
     <div className="flex flex-col items-center gap-4 p-2 w-min rounded-2xl border-2 border-taupe-1">
       <div className="flex-col gap-4 ">
         {relation.equipementsCible.map((equipement, index) => (
-          <CarteEquipement key={index} equipement={equipement} />
+          <EquipmentCard key={index} equipement={equipement} />
         ))}
       </div>
       <div className="flex-inital">{relation.commentaire}</div>

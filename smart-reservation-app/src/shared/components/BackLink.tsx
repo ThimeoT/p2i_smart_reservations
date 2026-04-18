@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useNavigationHistory } from '../../app/context/NavigationHistoryContext';
+import animatedLinkClass from '../stylesClass/animatedLinkClass';
 
 const ROUTE_LABELS: [RegExp, string][] = [
   [/^\/home$/, 'Accueil'],
   [/^\/equipements$/, 'Catalogue'],
   [/^\/equipements\/ajouter-equipement$/, 'Ajouter un équipement'],
   [/^\/equipements\/\d+$/, 'Équipement'],
-  [/^\/exemplaires\/\d+$/, 'Exemplaire'],
+  [/^\/instances\/\d+$/, 'Instance'],
   [/^\/reservations\/mes-reservations$/, 'Mes Réservations'],
   [/^\/reservations\/creer$/, 'Créer une réservation'],
   [/^\/reservations\/\d+$/, 'Réservation'],
@@ -32,8 +33,8 @@ export default function BackLink() {
 
   return (
     <button
-      onClick={() => navigate(-1)}
-      className="flex items-center gap-1 px-8 py-2 text-sm text-taupe-1 transition-opacity hover:opacity-70"
+      onClick={() => navigate(previousPath)}
+      className={`${animatedLinkClass} flex items-center gap-1 px-8 py-2  text-taupe-1 transition-opacity hover:opacity-70`}
     >
       <ChevronLeftIcon className="h-4 w-4" />
       Retour à la page {getPageLabel(previousPath)}

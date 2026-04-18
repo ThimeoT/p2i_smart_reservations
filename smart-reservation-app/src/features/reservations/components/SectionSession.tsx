@@ -6,7 +6,7 @@ import type {
 } from 'react-hook-form';
 import { useFieldArray } from 'react-hook-form';
 import { Input } from '../../../shared/components/form/Input';
-import Bouton from '../../../shared/components/Button';
+import Button from '../../../shared/components/Button';
 
 export interface SessionFormValues {
   debut: string;
@@ -59,7 +59,7 @@ export default function SectionSession({
           Session {sIdx + 1}
         </span>
         {canRemove && (
-          <Bouton
+          <Button
             type="button"
             style="filled"
             color="danger"
@@ -112,7 +112,7 @@ export default function SectionSession({
           <span className="text-xs font-medium text-slate-700">
             Équipements
           </span>
-          <Bouton
+          <Button
             type="button"
             style="filled"
             color="primary"

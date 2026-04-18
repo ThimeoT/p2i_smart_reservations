@@ -36,7 +36,8 @@ const getButtonClasses = (
       filled: 'bg-bleu-1 hover:bg-bleu-2 text-white',
     },
     secondary: {
-      outline: 'border-gris-2 text-gris-2 hover:bg-bleu-fonce-1 hover:text-white',
+      outline:
+        'border-gris-2 text-gris-2 hover:bg-bleu-fonce-1 hover:text-white',
       filled: 'bg-gris-2 text-white',
     },
     danger: {
@@ -48,7 +49,7 @@ const getButtonClasses = (
   return `${baseClasses} ${sizeClasses[size]} ${styleClasses[style]} ${colorClasses[color][style]}`;
 };
 
-export default function Bouton({
+export default function Button({
   text,
   type = 'button',
   style = 'filled',

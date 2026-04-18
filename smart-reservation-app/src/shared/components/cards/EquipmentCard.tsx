@@ -6,7 +6,7 @@ interface CarteEquipementProps {
   equipement: EquipementResume;
 }
 
-export default function CarteEquipement({ equipement }: CarteEquipementProps) {
+export default function EquipmentCard({ equipement }: CarteEquipementProps) {
   const navigate = useNavigate();
   const goToPageEquipement = () => navigate(`/equipements/${equipement.id}`);
   return (

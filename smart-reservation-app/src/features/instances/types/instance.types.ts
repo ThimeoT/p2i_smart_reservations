@@ -1,13 +1,13 @@
 import type { Equipement } from '../../equipments/types/equipement.types';
 
-export interface Exemplaire {
+export interface Instance {
   id: number;
   nomSerie: string;
   equipement: Equipement;
   statutDisponibilite: StatutDisponibilite;
 }
 
-export interface ExemplaireRequest {
+export interface InstanceRequest {
   id: number;
   equipementId: number;
   statutDisponibilite: StatutDisponibilite;

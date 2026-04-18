@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useUser } from '../hooks/useUser';
 import { useLocation } from 'react-router';
 import { useAuth } from '../../auth/hooks/useAuth';
-import Bouton from '../../../shared/components/Button';
+import Button from '../../../shared/components/Button';
 import PageTitle from '../../../shared/components/typography/PageTitle';
 import SectionTitle from '../../../shared/components/typography/SectionTitle';
 
@@ -48,17 +48,17 @@ export default function ProfilePage({ isAdminView = false }: ProfilePageProps) {
 
       {isAdminView && !isOwnProfile && (
         <>
-          <Bouton
+          <Button
             color="danger"
             onClick={() => deleteUser()}
             text="Supprimer le compte"
           />
-          <Bouton
+          <Button
             color="danger"
             onClick={() => resetPassword()}
             text="Réinitialiser le mot de passe"
           />
-          <Bouton
+          <Button
             color="danger"
             onClick={() => {}}
             text="Changer la date d'expiration du compte"

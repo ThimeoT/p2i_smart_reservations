@@ -2,10 +2,10 @@ import { useEquipement } from '../hooks/useEquipement';
 import photoEquipement from '../../../assets/image kit xsens awinda.png';
 import CarteRelationEquipement from '../components/CarteRelationEquipement';
 import { useParams } from 'react-router';
-import ErrorCard from '../../../shared/components/cards/CarteErreur';
+import ErrorCard from '../../../shared/components/cards/ErrorCard';
 import PageTitle from '../../../shared/components/typography/PageTitle';
 import SectionTitle from '../../../shared/components/typography/SectionTitle';
-import CarteExemplaire from '../../../shared/components/cards/CarteExemplaire';
+import InstanceCard from '../../../shared/components/cards/InstanceCard';
 
 export default function PageEquipement() {
   const { id } = useParams();
@@ -21,10 +21,10 @@ export default function PageEquipement() {
       <img src={equipement.urlImage ?? photoEquipement} height={200} />
       <SectionTitle title="Description" />
       <p>{equipement.description}</p>
-      <SectionTitle title="Exemplaires" />
+      <SectionTitle title="Instances" />
       <div className="flex flex-wrap gap-4">
-        {equipement.exemplaires.map((exemplaire) => (
-          <CarteExemplaire exemplaire={exemplaire} />
+        {equipement.instances.map((instance) => (
+          <InstanceCard instance={instance} />
         ))}
       </div>
       <SectionTitle title="Labels" />

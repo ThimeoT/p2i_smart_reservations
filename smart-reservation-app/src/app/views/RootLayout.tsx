@@ -9,9 +9,11 @@ export default function RootLayout() {
   return (
     <NavigationHistoryProvider>
       <Header />
-      <BackLink />
       <FondEcran>
-        <Outlet />
+        <BackLink />
+        <div className="mx-8 md:mx-auto md:max-w-2/4">
+          <Outlet />
+        </div>
       </FondEcran>
       <Footer />
     </NavigationHistoryProvider>
