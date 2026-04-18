@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { EquipementRequest } from '../types/equipement.types';
 import { createEquipementApi } from '../api/equipements.api';
 import FormulaireCreationEquipement from '../components/FormulaireEquipement';
-import TitreDePage from '../../../shared/components/typography/TitlePage';
+import PageTitle from '../../../shared/components/typography/PageTitle';
 
 export default function PagFormulaireEquipement() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function PagFormulaireEquipement() {
 
   return (
     <div>
-      <TitreDePage titre="Ajouter un équipement" />
+      <PageTitle title="Ajouter un équipement" />
       <FormulaireCreationEquipement
         onSubmit={handleSubmit}
         loading={submitLoading}

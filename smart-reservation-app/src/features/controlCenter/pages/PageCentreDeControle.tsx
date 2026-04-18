@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import FormulaireInvitationUtilisateur from '../../users/components/FormulaireInvitationUtilisateur';
+import UserInvitationForm from '../../users/components/InvitationForm';
 import ListeUtilisateurs from '../components/ListeUtilisateurs';
-import TitreDeSection from '../../../shared/components/typography/TitleSection';
+import SectionTitle from '../../../shared/components/typography/SectionTitle';
 import { useNavigate } from 'react-router';
-import Bouton from '../../../shared/components/Bouton';
+import Bouton from '../../../shared/components/Button';
 import ListeReservations from '../components/ListeReservations';
-import TitreDePage from '../../../shared/components/typography/TitlePage';
+import PageTitle from '../../../shared/components/typography/PageTitle';
 import ListeExemplaires from '../../equipments/components/ListeExemplaires';
 
 export default function PageCentreDeControle() {
@@ -14,27 +14,25 @@ export default function PageCentreDeControle() {
 
   return (
     <div className="flex flex-col gap-4">
-      <TitreDePage titre="Centre de Contrôle" />
+      <PageTitle titre="Centre de Contrôle" />
 
-      <TitreDeSection titre="Utilisateurs" />
+      <SectionTitle title="Utilisateurs" />
       <ListeUtilisateurs />
       <Bouton
         onClick={() => setShowAddUserForm(true)}
         text="Ajouter un utilisateur"
       />
       {showAddUserForm && (
-        <FormulaireInvitationUtilisateur
-          onClose={() => setShowAddUserForm(false)}
-        />
+        <UserInvitationForm onClose={() => setShowAddUserForm(false)} />
       )}
-      <TitreDeSection titre="Équipements" />
+      <SectionTitle title="Équipements" />
       <Bouton
         text="Voir la liste des équipements"
         onClick={() => navigate('/equipements')}
       />
-      <TitreDeSection titre="Exemplaires" />
+      <SectionTitle title="Exemplaires" />
       <ListeExemplaires />
-      <TitreDeSection titre="Réservations" />
+      <SectionTitle title="Réservations" />
       <ListeReservations />
     </div>
   );

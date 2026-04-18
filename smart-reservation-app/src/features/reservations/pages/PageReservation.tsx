@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import { useReservation } from '../hooks/useReservation';
 import { useAuth } from '../../auth/hooks/useAuth';
-import CarteErreur from '../../../shared/components/cards/CarteErreur';
-import TitreDePage from '../../../shared/components/typography/TitlePage';
-import TitreSection from '../../../shared/components/typography/TitleSection';
-import Bouton from '../../../shared/components/Bouton';
+import ErrorCard from '../../../shared/components/cards/CarteErreur';
+import PageTitle from '../../../shared/components/typography/PageTitle';
+import TitreSection from '../../../shared/components/typography/SectionTitle';
+import Bouton from '../../../shared/components/Button';
 import Textarea from '../../../shared/components/form/Textarea';
 
 const STATUT_LABELS: Record<string, string> = {
@@ -37,29 +37,29 @@ export default function PageReservation() {
     validerReservation,
     refuserReservation,
   } = useReservation(Number(id));
-  const [commentaire, setCommentaire] = useState('');
+  const [comment, setComment] = useState('');
 
   if (isLoading) return <p>Chargement…</p>;
-  if (error) return <CarteErreur error={error} />;
+  if (error) return <ErrorCard error={error} />;
   if (!reservation) return null;
 
   const isAdmin = user?.role === 'ADMIN';
   const peutAgir = isAdmin && reservation.statut === 'EN_ATTENTE';
 
   const handleValider = () => {
-    validerReservation({ utilisateurId: user!.id, message: commentaire });
-    setCommentaire('');
+    validerReservation({ utilisateurId: user!.id, message: comment });
+    setComment('');
   };
 
   const handleRefuser = () => {
-    refuserReservation({ utilisateurId: user!.id, message: commentaire });
-    setCommentaire('');
+    refuserReservation({ utilisateurId: user!.id, message: comment });
+    setComment('');
   };
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col items-start justify-between">
-        <TitreDePage titre={reservation.titre} />
+        <PageTitle title={reservation.titre} />
         <span
           className={`rounded-full px-3 py-1 text-sm font-medium ${STATUT_COLORS[reservation.statut] ?? 'bg-slate-100 text-slate-700'}`}
         >
@@ -67,7 +67,7 @@ export default function PageReservation() {
         </span>
       </div>
 
-      <TitreSection titre="Sessions" />
+      <TitreSection title="Sessions" />
       <div className="space-y-3">
         {reservation.sessions.map((session) => (
           <div
@@ -96,12 +96,12 @@ export default function PageReservation() {
 
       {peutAgir && (
         <>
-          <TitreSection titre="Traitement de la demande de réservation" />
+          <TitreSection title="Traitement de la demande de réservation" />
           <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
             <Textarea
               placeholder="Commentaire (optionnel)…"
-              value={commentaire}
-              onChange={(e) => setCommentaire(e.target.value)}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
             <div className="flex gap-3">
               <Bouton text="Valider" color="primary" onClick={handleValider} />
@@ -118,7 +118,7 @@ export default function PageReservation() {
 
       {reservation.historiques.length > 0 && (
         <>
-          <TitreSection titre="Historique" />
+          <TitreSection title="Historique" />
           <div className="space-y-2">
             {reservation.historiques.map((h) => (
               <div

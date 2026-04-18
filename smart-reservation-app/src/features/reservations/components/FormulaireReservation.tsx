@@ -5,7 +5,7 @@ import useAllEquipements from '../../equipments/hooks/useAllEquipements';
 import FormLayout from '../../../shared/components/form/FormLayout';
 import { Input } from '../../../shared/components/form/Input';
 import Textarea from '../../../shared/components/form/Textarea';
-import Bouton from '../../../shared/components/Bouton';
+import Bouton from '../../../shared/components/Button';
 import SectionSession, { type FormValues } from './SectionSession';
 import type { ReservationRequest } from '../types/reservation.types';
 
@@ -19,20 +19,36 @@ interface Props {
   error?: string;
 }
 
-export default function FormulaireReservation({ onSubmit, loading, error }: Props) {
+export default function FormulaireReservation({
+  onSubmit,
+  loading,
+  error,
+}: Props) {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { equipements } = useAllEquipements();
 
-  const { register, control, handleSubmit, getValues, formState: { errors } } = useForm<FormValues>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<FormValues>({
     defaultValues: {
       titre: '',
       description: '',
-      sessions: [{ debut: '', fin: '', equipements: [{ equipementId: 0, quantite: 1 }] }],
+      sessions: [
+        { debut: '', fin: '', equipements: [{ equipementId: 0, quantite: 1 }] },
+      ],
     },
   });
 
-  const { fields: sessionFields, append: appendSession, remove: removeSession } = useFieldArray({
+  const {
+    fields: sessionFields,
+    append: appendSession,
+    remove: removeSession,
+  } = useFieldArray({
     control,
     name: 'sessions',
   });
@@ -51,33 +67,62 @@ export default function FormulaireReservation({ onSubmit, loading, error }: Prop
 
   return (
     <FormLayout>
-      <p className="text-sm text-slate-500">Décrivez votre besoin et ajoutez vos sessions.</p>
+      <p className="text-sm text-slate-500">
+        Décrivez votre besoin et ajoutez vos sessions.
+      </p>
 
-      {error && <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+      {error && (
+        <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>
+      )}
 
-      <form onSubmit={handleSubmit((d) => onSubmit(transform(d)))} className="space-y-9">
+      <form
+        onSubmit={handleSubmit((d) => onSubmit(transform(d)))}
+        className="space-y-9"
+      >
         <div className="space-y-3">
-          <label className="block text-xl font-semibold text-slate-900">Titre</label>
-          <Input placeholder="Ex: Séance mocap lundi" {...register('titre', { required: 'Titre requis' })} />
-          {errors.titre && <p className="text-xs text-red-600">{errors.titre.message}</p>}
+          <label className="block text-xl font-semibold text-slate-900">
+            Titre
+          </label>
+          <Input
+            placeholder="Ex: Séance mocap lundi"
+            {...register('titre', { required: 'Titre requis' })}
+          />
+          {errors.titre && (
+            <p className="text-xs text-red-600">{errors.titre.message}</p>
+          )}
         </div>
 
         <div className="space-y-3">
-          <label className="block text-xl font-semibold text-slate-900">Description</label>
-          <Textarea placeholder="Contexte, objectifs…" {...register('description', { required: 'Description requise' })} />
-          {errors.description && <p className="text-xs text-red-600">{errors.description.message}</p>}
+          <label className="block text-xl font-semibold text-slate-900">
+            Description
+          </label>
+          <Textarea
+            placeholder="Contexte, objectifs…"
+            {...register('description', { required: 'Description requise' })}
+          />
+          {errors.description && (
+            <p className="text-xs text-red-600">{errors.description.message}</p>
+          )}
         </div>
 
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <span className="text-xl font-semibold text-slate-900">Sessions</span>
+            <span className="text-xl font-semibold text-slate-900">
+              Sessions
+            </span>
             <Bouton
               type="button"
               style="filled"
               color="primary"
               size="small"
               text="Ajouter une session"
-              onClick={() => appendSession({ debut: '', fin: '', equipements: [{ equipementId: 0, quantite: 1 }] })}
+              onClick={() =>
+                appendSession({
+                  debut: '',
+                  fin: '',
+                  equipements: [{ equipementId: 0, quantite: 1 }],
+                })
+              }
             />
           </div>
 
@@ -97,8 +142,18 @@ export default function FormulaireReservation({ onSubmit, loading, error }: Prop
         </div>
 
         <div className="flex gap-3">
-          <Bouton type="submit" text={loading ? 'Envoi…' : 'Soumettre la réservation'} disabled={loading} />
-          <Bouton type="button" style="outline" color="secondary" text="Annuler" onClick={() => navigate(-1)} />
+          <Bouton
+            type="submit"
+            text={loading ? 'Envoi…' : 'Soumettre la réservation'}
+            disabled={loading}
+          />
+          <Bouton
+            type="button"
+            style="outline"
+            color="secondary"
+            text="Annuler"
+            onClick={() => navigate(-1)}
+          />
         </div>
       </form>
     </FormLayout>

@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from 'react-router';
 
-interface CarteErreurProps {
-    error: Error
+interface ErrorCardProps {
+  error: Error;
 }
 
-export default function CarteErreur({error} : CarteErreurProps) {
+export default function ErrorCard({ error }: ErrorCardProps) {
   const navigate = useNavigate();
   return (
     <div>

@@ -2,9 +2,9 @@ import { useNavigate, useParams } from 'react-router';
 import { useUser } from '../hooks/useUser';
 import { useLocation } from 'react-router';
 import { useAuth } from '../../auth/hooks/useAuth';
-import Bouton from '../../../shared/components/Bouton';
-import TitreDePage from '../../../shared/components/typography/TitlePage';
-import TitreDeSection from '../../../shared/components/typography/TitleSection';
+import Bouton from '../../../shared/components/Button';
+import PageTitle from '../../../shared/components/typography/PageTitle';
+import SectionTitle from '../../../shared/components/typography/SectionTitle';
 
 interface ProfilePageProps {
   isAdminView?: boolean;
@@ -30,9 +30,9 @@ export default function ProfilePage({ isAdminView = false }: ProfilePageProps) {
   return (
     <>
       {saved && <p>Modifications Enregistrées !</p>}
-      <TitreDePage titre="Mon Profil" />
+      <PageTitle title="Mon Profil" />
 
-      <TitreDeSection titre="Nom" />
+      <SectionTitle title="Nom" />
       <p className="">
         Nom Prénom : {currentUser.nom} {currentUser.prenom}
       </p>

@@ -24,30 +24,32 @@ export default function PageMenu({ ouvert, onFermer }: PageMenuProps) {
 
   return (
     <div
-      className={`fixed  inset-0 z-50 bg-taupe-1 text-beige-1 flex flex-col p-8 justify-center items-center transition-opacity duration-300 ${
+      className={`fixed inset-x-0 bottom-0 top-23 z-50 flex flex-col  items-center bg-taupe-1 px-8 py-10 text-beige-1 transition-opacity duration-300 gap-7 ${
         ouvert ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >
-      <h1 className="font-display font-bold text-2xl mb-8">Menu</h1>
-
-      <nav className="flex flex-col gap-6 flex-1">
-        {liens.map(({ label, path }) => (
-          <button
-            key={path}
-            className="text-left font-display text-xl text-beige-1 hover:opacity-70 transition-opacity"
-            onClick={() => handleNavigation(path)}
-          >
-            {label}
-          </button>
-        ))}
-      </nav>
+      <div className="flex flex-1 flex-col  gap-2">
+        <h1 className="mb-4 font-display text-4xl md:text-6xl font-bold">Menu</h1>
+        <nav className="flex flex-col gap-5">
+          {liens.map(({ label, path }) => (
+            <button
+              key={path}
+              className="text-left font-display font-extralight text-2xl md:text-3xl text-beige-1 transition-opacity hover:opacity-70"
+              onClick={() => handleNavigation(path)}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      </div>
 
       <button
-        className="text-left font-display text-xl text-beige-1 hover:opacity-70 transition-opacity"
+        className="text-left font-display font-extralight text-2xl md:text-3xl text-beige-1 transition-opacity hover:opacity-70"
         onClick={onFermer}
       >
         Quitter le menu
       </button>
+
     </div>
   );
 }

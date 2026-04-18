@@ -1,16 +1,16 @@
 import { useNavigate } from 'react-router';
 import { useIsAdmin } from '../../auth/hooks/useIsAdmin';
 import ListeEquipements from '../components/ListeEquipements';
-import TitreDePage from '../../../shared/components/typography/TitlePage';
-import Bouton from '../../../shared/components/Bouton';
-import TitreDeSection from '../../../shared/components/typography/TitleSection';
+import PageTitle from '../../../shared/components/typography/PageTitle';
+import Bouton from '../../../shared/components/Button';
+import SectionTitle from '../../../shared/components/typography/SectionTitle';
 
 export default function PageCatalogue() {
   const navigate = useNavigate();
   const isAdmin = useIsAdmin();
   return (
     <div>
-      <TitreDePage titre="Catalogue" />
+      <PageTitle title="Catalogue" />
       {isAdmin && (
         <div>
           <div className="font-display text-xl py-4 ">
@@ -23,7 +23,7 @@ export default function PageCatalogue() {
         </div>
       )}
 
-      <TitreDeSection titre="Liste des Equipements" />
+      <SectionTitle title="Liste des Equipements" />
       <ListeEquipements />
     </div>
   );

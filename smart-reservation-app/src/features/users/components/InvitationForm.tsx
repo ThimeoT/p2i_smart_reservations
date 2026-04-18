@@ -5,10 +5,10 @@ import type {
   InvitationResponse,
 } from '../../auth/types/auth.types';
 import { inviteUserApi } from '../../auth/api/auth.api';
-import Bouton from '../../../shared/components/Bouton';
+import Button from '../../../shared/components/Button';
 import Input from '../../../shared/components/form/Input';
 
-export default function FormulaireInvitationUtilisateur({
+export default function UserInvitationForm({
   onClose,
 }: {
   onClose: () => void;
@@ -65,37 +65,38 @@ export default function FormulaireInvitationUtilisateur({
 
   return (
     <div className="flex flex-col p-4 rounded-lg border-2 border-taupe-1">
-      <h2 className="text-xl font-semibold text-slate-900">Ajouter un utilisateur</h2>
-    <form className="flex gap-4 p-4" onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="text-xl font-semibold text-slate-900">
+        Ajouter un utilisateur
+      </h2>
+      <form className="flex gap-4 p-4" onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          type="email"
+          placeholder="Adresse mail"
+          {...register('mail', { required: 'Mail requis' })}
+        />
+        {errors.mail && <p>{errors.mail.message}</p>}
 
-      <Input
-        type="email"
-        placeholder="Adresse mail"
-        {...register('mail', { required: 'Mail requis' })}
-      />
-      {errors.mail && <p>{errors.mail.message}</p>}
+        <select {...register('role')}>
+          <option value="USER">Utilisateur</option>
+          <option value="ADMIN">Administrateur</option>
+        </select>
 
-      <select {...register('role')}>
-        <option value="USER">Utilisateur</option>
-        <option value="ADMIN">Administrateur</option>
-      </select>
+        {errors.root && <p>{errors.root.message}</p>}
 
-      {errors.root && <p>{errors.root.message}</p>}
-
-      <Bouton
-        type="submit"
-        size="small"
-        disabled={isSubmitting}
-        text={isSubmitting ? 'Création...' : "Créer l'invitation"}
-      />
-      <Bouton
-        type="button"
-        color="danger"
-        size="small"
-        onClick={onClose}
-        text="annuler"
-      />
-    </form>
+        <Button
+          type="submit"
+          size="small"
+          disabled={isSubmitting}
+          text={isSubmitting ? 'Création...' : "Créer l'invitation"}
+        />
+        <Button
+          type="button"
+          color="danger"
+          size="small"
+          onClick={onClose}
+          text="annuler"
+        />
+      </form>
     </div>
   );
 }

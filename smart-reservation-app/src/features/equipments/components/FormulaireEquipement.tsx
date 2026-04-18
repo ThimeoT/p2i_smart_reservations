@@ -17,7 +17,7 @@ import { Combobox } from '../../../shared/components/form/Combobox';
 import FormLayout from '../../../shared/components/form/FormLayout';
 import { Input } from '../../../shared/components/form/Input';
 import Textarea from '../../../shared/components/form/Textarea';
-import Bouton from '../../../shared/components/Bouton';
+import Bouton from '../../../shared/components/Button';
 
 interface LienRessource {
   valeur: string;

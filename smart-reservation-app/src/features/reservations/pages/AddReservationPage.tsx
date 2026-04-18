@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { createReservationApi } from '../api/reservations.api';
 import FormulaireReservation from '../components/FormulaireReservation';
-import TitreDePage from '../../../shared/components/typography/TitlePage';
+import PageTitle from '../../../shared/components/typography/PageTitle';
 import type { ReservationRequest } from '../types/reservation.types';
 
-export default function PageCreerReservation() {
+export default function AddReservationPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
@@ -25,7 +25,7 @@ export default function PageCreerReservation() {
 
   return (
     <div>
-      <TitreDePage titre="Créer une réservation" />
+      <PageTitle title="Créer une réservation" />
       <FormulaireReservation
         onSubmit={handleSubmit}
         loading={loading}

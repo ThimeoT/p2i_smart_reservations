@@ -1,23 +1,23 @@
 import { useNavigate } from 'react-router';
 import { useIsAdmin } from '../../auth/hooks/useIsAdmin';
 import { useUser } from '../../users/hooks/useUser';
-import TitreDePage from '../../../shared/components/typography/TitlePage';
-import TitreDeSection from '../../../shared/components/typography/TitleSection';
-import Bouton from '../../../shared/components/Bouton';
+import PageTitle from '../../../shared/components/typography/PageTitle';
+import SectionTitle from '../../../shared/components/typography/SectionTitle';
+import Bouton from '../../../shared/components/Button';
 
-interface CarteSectionAccueilProps {
+interface HomeSectionCardProps {
   title: string;
   description: string;
   buttonText: string;
   onClick: () => void;
 }
 
-function CarteSectionAccueil({
+function HomeSectionCard({
   title,
   description,
   buttonText,
   onClick,
-}: CarteSectionAccueilProps) {
+}: HomeSectionCardProps) {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-center gap-4 border border-beige-1">
       <h3 className="font-display font-bold text-lg text-bleu-fonce-1">
@@ -30,13 +30,13 @@ function CarteSectionAccueil({
   );
 }
 
-export default function PageAccueil() {
+export default function HomePage() {
   const navigate = useNavigate();
   const isAdmin = useIsAdmin();
   const { currentUser } = useUser();
   return (
     <div className="flex flex-col gap-8 pb-12">
-      <TitreDePage titre="Accueil" />
+      <PageTitle title="Accueil" />
       <section className="px-8 flex flex-col gap-1">
         <p className="text-base font-semibold font-display">
           Bon retour parmi nous, {currentUser?.prenom} 👋
@@ -54,7 +54,7 @@ export default function PageAccueil() {
       <section className="max-w-2xl mx-auto w-full">
         <div className="flex flex-col gap-4">
           {isAdmin && (
-            <CarteSectionAccueil
+            <HomeSectionCard
               title="Centre de contrôle"
               description="Gérez les utilisateurs, les équipements et les réservations de la plateforme."
               buttonText="Accéder"
@@ -62,21 +62,21 @@ export default function PageAccueil() {
             />
           )}
 
-          <CarteSectionAccueil
+          <HomeSectionCard
             title="Catalogue"
             description="Parcourez les équipements disponibles à la réservation."
             buttonText="Voir le catalogue"
             onClick={() => navigate('/equipements')}
           />
 
-          <CarteSectionAccueil
+          <HomeSectionCard
             title="Mon Profil"
             description="Consultez et modifiez vos informations personnelles."
             buttonText="Gérer mon profil"
             onClick={() => navigate('/profile')}
           />
 
-          <CarteSectionAccueil
+          <HomeSectionCard
             title="Réservations"
             description="Aucune réservation en cours. Créez-en une dès maintenant."
             buttonText="Créer une réservation"

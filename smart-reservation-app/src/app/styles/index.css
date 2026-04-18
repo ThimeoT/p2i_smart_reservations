@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+html {
+  font-size: 16px; /* on force la police racine à être à 16 pour avoir le rem à 16 px */
+}
 
 @theme {
   /* ── Fonts ── */
@@ -27,7 +30,7 @@
   --text-lg: 18px;
   --text-xl: 22px;
   --text-2xl: 32px;
-  --text-3xl: 48px;
+  --text-3xl: 44px;
 
   /* ── Border radius ── */
   --radius-card: 12px;

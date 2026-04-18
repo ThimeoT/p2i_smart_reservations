@@ -1,4 +1,4 @@
-interface BoutonProps {
+interface ButtonProps {
   text: string;
   type?: 'button' | 'submit' | 'reset';
   style?: 'outline' | 'filled';
@@ -9,9 +9,9 @@ interface BoutonProps {
 }
 
 const getButtonClasses = (
-  style: BoutonProps['style'],
-  color: BoutonProps['color'],
-  size: BoutonProps['size'],
+  style: ButtonProps['style'],
+  color: ButtonProps['color'],
+  size: ButtonProps['size'],
 ) => {
   if (style === undefined) style = 'filled';
   if (color === undefined) color = 'primary';
@@ -56,7 +56,7 @@ export default function Bouton({
   size = 'medium',
   onClick,
   disabled = false,
-}: BoutonProps) {
+}: ButtonProps) {
   const buttonClasses = getButtonClasses(style, color, size);
   return (
     <button

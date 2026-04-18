@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import TitreDePage from '../../../shared/components/typography/TitlePage';
-import Bouton from '../../../shared/components/Bouton';
+import PageTitle from '../../../shared/components/typography/PageTitle';
+import Bouton from '../../../shared/components/Button';
 import CarteReservation from '../../../shared/components/cards/CarteReservation';
 import { useAllReservations } from '../hooks/useAllReservations';
 import type { StatutReservation } from '../types/reservation.types';
@@ -26,7 +26,7 @@ export default function PageMesReservations() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <TitreDePage titre="Réservations" />
+        <PageTitle title="Réservations" />
         <Bouton
           size="small"
           text="Nouvelle réservation"

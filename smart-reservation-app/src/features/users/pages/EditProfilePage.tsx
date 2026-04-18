@@ -3,6 +3,7 @@ import FormulaireProfil from '../components/FormulaireProfil';
 import { useUser } from '../hooks/useUser';
 import type { User } from '../types/user.types';
 import { useNavigate } from 'react-router';
+import PageTitle from '../../../shared/components/typography/PageTitle';
 
 export default function EditProfilePage() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function EditProfilePage() {
 
   return (
     <>
-      <h1>Modifier mon profil</h1>
+      <PageTitle title="Modifier mon profil"/>
       <FormulaireProfil
         onSubmit={handleSubmit}
         loading={submitLoading}

@@ -11,17 +11,17 @@ export default function Header() {
 
   return (
     <>
-      <header className="w-full flex flex-row items-center justify-between px-4 py-3 bg-beige-1 shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-40 flex h-23 w-full flex-row items-center justify-between border-b-2 border-taupe-1 bg-beige-1 px-8 py-4 shadow-sm">
         <img
-          className="h-14 cursor-pointer"
+          className="h-15 cursor-pointer"
           src={logoSmartReservations}
           onClick={() => navigate('/home')}
         />
-        <div className="flex items-center gap-4">
-          <BellIcon className="h-6 w-6 cursor-pointer" />
+        <div className="flex items-center gap-5">
+          <BellIcon className="h-11 w-11 p-2 cursor-pointer stroke-bleu-fonce-1" />
           <Bars3Icon
-            className="h-7 w-7 cursor-pointer"
-            onClick={() => setMenuOuvert(true)}
+            className="h-11 w-11 p-2 cursor-pointer stroke-bleu-fonce-1"
+            onClick={() => setMenuOuvert(!menuOuvert)}
           />
         </div>
       </header>
