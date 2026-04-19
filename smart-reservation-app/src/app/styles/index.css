@@ -4,6 +4,10 @@ html {
   font-size: 16px; /* on force la police racine à être à 16 pour avoir le rem à 16 px */
 }
 
+body {
+  overflow-y: auto;
+}
+
 @theme {
   /* ── Fonts ── */
   --font-sans: "Epilogue", system-ui, sans-serif;

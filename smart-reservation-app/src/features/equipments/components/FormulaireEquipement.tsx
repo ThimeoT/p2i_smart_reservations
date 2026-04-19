@@ -6,7 +6,7 @@ import {
   type FieldErrors,
   type UseFormRegister,
 } from 'react-hook-form';
-import type { Equipement, EquipementRequest } from '../types/equipement.types';
+import type { Equipement, EquipementRequest } from '../types/equipment.types';
 import type { StatutRelationEquipement } from '../types/relationEquipement.types';
 import { useUnsavedChangesBlocker } from '../../../shared/hooks/useUnsavedChangesBlocker';
 import { useNavigate } from 'react-router';
@@ -17,7 +17,7 @@ import { Combobox } from '../../../shared/components/form/Combobox';
 import FormLayout from '../../../shared/components/form/FormLayout';
 import { Input } from '../../../shared/components/form/Input';
 import Textarea from '../../../shared/components/form/Textarea';
-import Button from '../../../shared/components/Button';
+import Button from '../../../shared/components/Bouton';
 
 interface LienRessource {
   valeur: string;

@@ -16,8 +16,8 @@ function SectionHero() {
         className="w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black/40 " />
-      <div className="absolute inset-0 flex items-center justify-center px-8">
-        <h2 className="font-display text-center font-bold text-xl md:text-3xl text-white leading-snug max-w-4/5">
+      <div className="absolute inset-0 flex items-center px-8 md:px-30">
+        <h2 className="font-display font-bold text-2xl md:text-3xl text-white leading-snug">
           Nos équipements à votre portée en quelques clics
         </h2>
       </div>

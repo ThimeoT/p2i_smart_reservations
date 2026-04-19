@@ -1,9 +1,5 @@
 import type { Emprunt } from './emprunt.types';
 
-
-
-export type StatutEmprunt = 'PLANIFIE' | 'EN_COURS' | 'TERMINE' | 'ANNULE';
-
 export interface QuantiteEquipement {
   equipementId: number;
   quantite: number;
@@ -12,6 +8,12 @@ export interface QuantiteEquipement {
 export interface SessionRequest {
   id?: number;
   quantitesEquipements: QuantiteEquipement[];
+  debut: string;
+  fin: string;
+}
+
+export interface SessionResume {
+  id: number;
   debut: string;
   fin: string;
 }

@@ -1,23 +1,27 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import animatedLinkClass from '../../shared/stylesClass/animatedLinkClass';
+import { useAuth } from '../../features/auth/hooks/useAuth';
+import { useIsAdmin } from '../../features/auth/hooks/useIsAdmin';
 
 interface PageMenuProps {
   ouvert: boolean;
   onFermer: () => void;
 }
 
-const liens = [
+const liensNav = [
   { label: 'Accueil', path: '/home' },
   { label: 'Catalogue', path: '/equipements' },
-  { label: 'Mes Réservations', path: '/reservations/mes-reservations' },
-  { label: 'Ma Liste', path: '/liste' },
-  { label: 'Mon Profil', path: '/profile' },
+  { label: 'Réservations', path: '/reservations/mes-reservations' },
+  { label: 'Mes Listes', path: '/listes' },
+  { label: 'Profil', path: '/profile' },
   { label: 'Aide / Contact', path: '/aide' },
 ];
 
 export default function MenuPage({ ouvert, onFermer }: PageMenuProps) {
   const navigate = useNavigate();
+  const { logout } = useAuth();
+  const isAdmin = useIsAdmin();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -32,10 +36,16 @@ export default function MenuPage({ ouvert, onFermer }: PageMenuProps) {
     navigate(path);
   };
 
+  const handleLogout = async () => {
+    onFermer();
+    await logout();
+    navigate('/login');
+  };
+
   return (
     <div
-      className={`fixed inset-X-0 bottom-0 top-23 z-50 flex w-full flex-col items-end gap-7 bg-taupe-2 px-8 py-10 text-beige-1 transition-opacity duration-300 ${
-        ouvert ? 'opacity-80' : 'opacity-0 pointer-events-none'
+      className={`fixed inset-x-0 bottom-0 top-23 z-50 flex w-full flex-col items-end gap-7 bg-taupe-2 px-8 py-10 text-beige-1 transition-opacity duration-300 ${
+        ouvert ? 'opacity-95' : 'opacity-0 pointer-events-none'
       }`}
       onClick={onFermer}
     >
@@ -47,7 +57,7 @@ export default function MenuPage({ ouvert, onFermer }: PageMenuProps) {
           Menu
         </h1>
         <nav className="flex flex-col gap-5">
-          {liens.map(({ label, path }) => (
+          {liensNav.map(({ label, path }) => (
             <button
               key={path}
               className={`${animatedLinkClass} font-extralight text-2xl md:text-3xl`}
@@ -57,10 +67,30 @@ export default function MenuPage({ ouvert, onFermer }: PageMenuProps) {
             </button>
           ))}
         </nav>
+
+        {isAdmin && (
+          <div className="mt-4 border-t border-beige-1/20 pt-4 flex flex-col gap-5">
+            <button
+              className={`${animatedLinkClass} font-extralight text-2xl md:text-3xl text-blue-200`}
+              onClick={() => handleNavigation('/admin')}
+            >
+              Centre de contrôle
+            </button>
+          </div>
+        )}
+
+        <div className="mt-4 border-t border-beige-1/20 pt-4 flex flex-col gap-5">
+          <button
+            className={`${animatedLinkClass} font-extralight text-2xl md:text-3xl text-red-200`}
+            onClick={handleLogout}
+          >
+            Déconnexion
+          </button>
+        </div>
       </div>
 
       <button
-        className={`${animatedLinkClass} font-extralight text-2xl md:text-3xl`}
+        className={`${animatedLinkClass} mt-auto font-extralight text-2xl md:text-3xl md:px-16`}
       >
         Quitter le menu
       </button>

@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router';
 import type {
-  Instance,
+  Exemplaire,
   StatutDisponibilite,
-} from '../../../features/instances/types/instance.types';
+} from '../../../features/instances/types/exemplaire.types';
 
 const getStatusColorClass = (statut: StatutDisponibilite) => {
   switch (statut) {
@@ -17,11 +17,11 @@ const getStatusColorClass = (statut: StatutDisponibilite) => {
   }
 };
 
-interface InstanceCardProps {
-  instance: Instance;
+interface CarteExemplaireProps {
+  instance: Exemplaire;
 }
 
-export default function InstanceCard({ instance }: InstanceCardProps) {
+export default function InstanceCard({ instance }: CarteExemplaireProps) {
   const navigate = useNavigate();
   const gotoPageInstance = () => navigate(`/instances/${instance.id}`);
   return (

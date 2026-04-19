@@ -1,4 +1,4 @@
-import type { EquipementResume } from './equipement.types';
+import type { EquipementResume } from './equipment.types';
 
 export interface RelationEquipement {
   id: number;

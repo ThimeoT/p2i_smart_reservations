@@ -17,7 +17,7 @@ const getButtonClasses = (
   if (color === undefined) color = 'primary';
   if (size === undefined) size = 'medium';
   const baseClasses =
-    'font-display font-semibold text-center tracking-widest hover:shadow-lg disabled:bg-gray-50 transition-shadow hover:cursor-pointer';
+    'font-display font-semibold text-center tracking-widest hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none transition-shadow hover:cursor-pointer';
 
   const styleClasses = {
     outline: 'border-3 bg-transparent',
@@ -41,7 +41,7 @@ const getButtonClasses = (
       filled: 'bg-gris-2 text-white',
     },
     danger: {
-      outline: 'border-rouge-1 text-rouge-2 hover:bg-rouge-2 hover:text-white',
+      outline: 'border-rouge-1 text-rouge-1 hover:bg-rouge-1 hover:text-white',
       filled: 'bg-rouge-1 text-white',
     },
   };

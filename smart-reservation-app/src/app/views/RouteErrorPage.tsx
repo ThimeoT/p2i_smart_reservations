@@ -1,13 +1,12 @@
-import { useRouteError } from "react-router";
-import PageTitle from "../../shared/components/typography/PageTitle";
+import { useRouteError } from 'react-router';
+import TitrePage from '../../shared/components/typography/TitrePage';
 
-
-export default function RouteErrorPage(){
-  const error =  useRouteError() as Error;
+export default function RouteErrorPage() {
+  const error = useRouteError() as Error;
   return (
     <>
-      <PageTitle title="Une erreur est survenue"/>
+      <TitrePage titre="Une erreur est survenue" />
       <p>{error.message}</p>
     </>
-  )
+  );
 }

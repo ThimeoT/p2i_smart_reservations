@@ -3,9 +3,9 @@ import { useParams } from 'react-router';
 import { useReservation } from '../hooks/useReservation';
 import { useAuth } from '../../auth/hooks/useAuth';
 import ErrorCard from '../../../shared/components/cards/ErrorCard';
-import PageTitle from '../../../shared/components/typography/PageTitle';
+import TitrePage from '../../../shared/components/typography/TitrePage';
 import TitreSection from '../../../shared/components/typography/SectionTitle';
-import Button from '../../../shared/components/Button';
+import Button from '../../../shared/components/Bouton';
 import Textarea from '../../../shared/components/form/Textarea';
 
 const STATUT_LABELS: Record<string, string> = {
@@ -39,27 +39,28 @@ export default function ReservationDetailsPage() {
   } = useReservation(Number(id));
   const [comment, setComment] = useState('');
 
+  if (!user) return null;
   if (isLoading) return <p>Chargement…</p>;
   if (error) return <ErrorCard error={error} />;
   if (!reservation) return null;
 
-  const isAdmin = user?.role === 'ADMIN';
+  const isAdmin = user.role === 'ADMIN';
   const peutAgir = isAdmin && reservation.statut === 'EN_ATTENTE';
 
   const handleValider = () => {
-    validerReservation({ utilisateurId: user!.id, message: comment });
+    validerReservation({ utilisateurId: user.id, message: comment });
     setComment('');
   };
 
   const handleRefuser = () => {
-    refuserReservation({ utilisateurId: user!.id, message: comment });
+    refuserReservation({ utilisateurId: user.id, message: comment });
     setComment('');
   };
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col items-start justify-between">
-        <PageTitle title={reservation.titre} />
+        <TitrePage titre={reservation.titre} />
         <span
           className={`rounded-full px-3 py-1 text-sm font-medium ${STATUT_COLORS[reservation.statut] ?? 'bg-slate-100 text-slate-700'}`}
         >
@@ -85,7 +86,7 @@ export default function ReservationDetailsPage() {
                     key={emprunt.id}
                     className="rounded-full bg-bleu-1/10 px-3 py-1 text-xs text-bleu-2"
                   >
-                    {emprunt.instance.nomSerie}
+                    {emprunt.exemplaire.nomSerie}
                   </span>
                 ))}
               </div>

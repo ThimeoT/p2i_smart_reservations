@@ -5,7 +5,7 @@ import type {
   InvitationResponse,
 } from '../../auth/types/auth.types';
 import { inviteUserApi } from '../../auth/api/auth.api';
-import Button from '../../../shared/components/Button';
+import Button from '../../../shared/components/Bouton';
 import Input from '../../../shared/components/form/Input';
 
 export default function UserInvitationForm({

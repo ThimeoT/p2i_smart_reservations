@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import type { EquipementRequest } from '../types/equipement.types';
+import type { EquipementRequest } from '../types/equipment.types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   deleteEquipementApi,
@@ -18,6 +18,7 @@ export function useEquipement(id: number) {
   } = useQuery({
     queryKey: ['equipement', id],
     queryFn: () => getEquipementByIdApi(id),
+    enabled: Number.isFinite(id) && id > 0,
   });
 
   const { mutate: updateEquipement } = useMutation({

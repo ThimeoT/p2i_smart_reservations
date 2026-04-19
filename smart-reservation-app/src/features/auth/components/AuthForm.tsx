@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import type { LoginCredentials } from '../types/auth.types';
 import Input from '../../../shared/components/form/Input';
 import FormLayout from '../../../shared/components/form/FormLayout';
-import Button from '../../../shared/components/Button';
+import Button from '../../../shared/components/Bouton';
 
 interface AuthFormProps {
   onSubmit: (data: LoginCredentials) => Promise<void>;

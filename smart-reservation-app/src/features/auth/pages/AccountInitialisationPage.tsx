@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { initialisationApi } from '../api/auth.api';
 import type { InitialisationFormData } from '../types/auth.types';
 import Input from '../../../shared/components/form/Input';
-import Button from '../../../shared/components/Button';
+import Button from '../../../shared/components/Bouton';
 import FormLayout from '../../../shared/components/form/FormLayout';
 
 interface InitialisationFormFields extends InitialisationFormData {

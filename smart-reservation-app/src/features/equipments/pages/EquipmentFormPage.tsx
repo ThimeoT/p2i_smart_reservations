@@ -1,26 +1,44 @@
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useState } from 'react';
-import type { EquipementRequest } from '../types/equipement.types';
+import type { EquipementRequest } from '../types/equipment.types';
 import { createEquipementApi } from '../api/equipements.api';
+import { useEquipement } from '../hooks/useEquipement';
 import FormulaireCreationEquipement from '../components/FormulaireEquipement';
-import PageTitle from '../../../shared/components/typography/PageTitle';
+import TitrePage from '../../../shared/components/typography/TitrePage';
+import ErrorCard from '../../../shared/components/cards/ErrorCard';
 
 export default function EquipmentFormPage() {
   const navigate = useNavigate();
-  const [submitLoading, setSubmitLoading] = useState(false);
+  const { id } = useParams();
+  const isEdit = !!id;
+  const numericId = parseInt(id ?? '');
+
   const [submitError, setSubmitError] = useState<string | undefined>(undefined);
+  const [submitLoading, setSubmitLoading] = useState(false);
+
+  const { equipement, isLoading, error, updateEquipement } = useEquipement(numericId);
+
+  if (isEdit && isLoading) return <p>Chargement...</p>;
+  if (isEdit && error) return <ErrorCard error={error} />;
 
   const handleSubmit = async (data: EquipementRequest) => {
     setSubmitLoading(true);
     setSubmitError(undefined);
     try {
-      await createEquipementApi(data);
-      navigate('/equipements', { state: { saved: true } });
-    } catch (error) {
+      if (isEdit) {
+        updateEquipement(data);
+        navigate(`/equipements/${id}`);
+      } else {
+        await createEquipementApi(data);
+        navigate('/equipements', { state: { saved: true } });
+      }
+    } catch (err) {
       setSubmitError(
-        error instanceof Error
-          ? error.message
-          : "Erreur lors de la création de l'équipement",
+        err instanceof Error
+          ? err.message
+          : isEdit
+            ? "Erreur lors de la mise à jour de l'équipement"
+            : "Erreur lors de la création de l'équipement",
       );
     } finally {
       setSubmitLoading(false);
@@ -29,8 +47,9 @@ export default function EquipmentFormPage() {
 
   return (
     <div>
-      <PageTitle title="Ajouter un équipement" />
+      <TitrePage titre={isEdit ? `Modifier — ${equipement?.nom ?? ''}` : 'Ajouter un équipement'} />
       <FormulaireCreationEquipement
+        equipement={isEdit ? equipement : undefined}
         onSubmit={handleSubmit}
         loading={submitLoading}
         error={submitError}

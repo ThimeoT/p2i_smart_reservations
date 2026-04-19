@@ -36,10 +36,10 @@ export default function ReservationCard({ reservation }: Props) {
       {/* Infos sessions/équipements — colonne gauche */}
       <div className="min-w-0">
         <p className="text-xs text-slate-500">
-          {reservation.nombreSessions} session
-          {reservation.nombreSessions > 1 ? 's' : ''} ·{' '}
-          {reservation.nombreEquipements} équipement
-          {reservation.nombreEquipements > 1 ? 's' : ''}
+          {reservation.sessions.length} session
+          {reservation.sessions.length > 1 ? 's' : ''} ·{' '}
+          {reservation.equipements.length} équipement
+          {reservation.equipements.length > 1 ? 's' : ''}
         </p>
         <p className="mt-0.5 text-xs text-slate-400">
           {reservation.utilisateur.prenom} {reservation.utilisateur.nom}

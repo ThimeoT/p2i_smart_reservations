@@ -64,7 +64,7 @@ export function Combobox({
   return (
     <div className="relative">
       <div
-        className="flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm transition focus-within:border-bleu-2"
+        className="flex flex-wrap items-center gap-2 rounded-md border-3 border-solid border-taupe-1 bg-white px-3 py-2 text-sm transition focus-within:border-bleu-fonce-1"
         onClick={() => inputRef.current?.focus()}
       >
         {value.map((id) => {
@@ -110,7 +110,7 @@ export function Combobox({
       </div>
 
       {open && filtered.length > 0 && (
-        <ul className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+        <ul className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-taupe-1 bg-white shadow-lg">
           {filtered.map((opt, i) => (
             <li
               key={opt.id}

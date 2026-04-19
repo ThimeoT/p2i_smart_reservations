@@ -1,6 +1,9 @@
-import Button from '../../shared/components/Button';
+import { useEquipement } from '../../features/equipments/hooks/useEquipement';
+import Button from '../../shared/components/Bouton';
+import EquipementSquareCard from '../../shared/components/cards/EquipmentSquareCard';
 
 export default function PageTest() {
+  const { equipement } = useEquipement(4);
   return (
     <div>
       <h1>Page de test</h1>
@@ -10,6 +13,7 @@ export default function PageTest() {
         color="primary"
         onClick={() => {}}
       />
+      {equipement && <EquipementSquareCard equipement={equipement} />}
     </div>
   );
 }

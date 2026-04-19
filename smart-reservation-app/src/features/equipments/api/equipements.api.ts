@@ -3,7 +3,7 @@ import type {
   Equipement,
   EquipementRequest,
   EquipementResume,
-} from '../types/equipement.types';
+} from '../types/equipment.types';
 
 export const getEquipementByIdApi = async (id: number): Promise<Equipement> => {
   const user = await fetchClient.get(`/equipements/${id}`);

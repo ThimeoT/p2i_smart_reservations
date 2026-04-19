@@ -6,11 +6,11 @@ import {
 import { useIsAdmin } from '../../auth/hooks/useIsAdmin';
 import { useUser } from '../../users/hooks/useUser';
 import useAllEquipements from '../../equipments/hooks/useAllEquipements';
-import PageTitle from '../../../shared/components/typography/PageTitle';
+import TitrePage from '../../../shared/components/typography/TitrePage';
 import SectionTitle from '../../../shared/components/typography/SectionTitle';
 import TextBody from '../../../shared/components/typography/TextBody';
-import Button from '../../../shared/components/Button';
-import EquipmentCard from '../../../shared/components/cards/EquipmentCard';
+import Button from '../../../shared/components/Bouton';
+import EquipementSquareCard from '../../../shared/components/cards/EquipmentSquareCard';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col pb-12">
-      <PageTitle title={`Bienvenue ${currentUser?.prenom ?? ''} 👋`} />
+      <TitrePage titre={`Bienvenue ${currentUser?.prenom ?? ''} 👋`} />
 
       {/* Notifications & tutoriel */}
       <div className="flex flex-col gap-3 mb-2">
@@ -57,7 +57,7 @@ export default function HomePage() {
       <div className="flex gap-4 overflow-x-auto pb-2 -mx-8 px-8">
         {equipements.slice(0, 6).map((e) => (
           <div key={e.id} className="shrink-0">
-            <EquipmentCard equipement={e} />
+            <EquipementSquareCard equipement={e} />
           </div>
         ))}
       </div>

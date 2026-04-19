@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import PageTitle from '../../../shared/components/typography/PageTitle';
-import Button from '../../../shared/components/Button';
+import TitrePage from '../../../shared/components/typography/TitrePage';
+import Button from '../../../shared/components/Bouton';
 import ReservationCard from '../../../shared/components/cards/ReservationCard';
-import { useAllReservations } from '../hooks/useAllReservations';
+import { useMyReservations } from '../hooks/useMyReservations';
 import type { StatutReservation } from '../types/reservation.types';
 
 const FILTRES: { label: string; value: StatutReservation | 'TOUTES' }[] = [
@@ -15,7 +15,7 @@ const FILTRES: { label: string; value: StatutReservation | 'TOUTES' }[] = [
 
 export default function MyReservationsPage() {
   const navigate = useNavigate();
-  const { reservations, isLoading, error } = useAllReservations();
+  const { reservations, isLoading, error } = useMyReservations();
   const [filtre, setFiltre] = useState<StatutReservation | 'TOUTES'>('TOUTES');
 
   const reservationsFiltrees =
@@ -26,7 +26,7 @@ export default function MyReservationsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <PageTitle title="Mes Réservations" />
+        <TitrePage titre="Mes Réservations" />
         <Button
           size="small"
           text="Nouvelle réservation"

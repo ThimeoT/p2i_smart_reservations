@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router';
-import type { InstanceRequest } from '../types/instance.types';
+import type { ExemplaireRequest } from '../types/exemplaire.types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   deleteInstanceApi,
   getInstanceByIdApi,
-  updateInstanceApi,
-} from '../api/instances.api';
+  updateExemplaireApi,
+} from '../api/exemplaires';
 
 export function useInstance(id: number) {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export function useInstance(id: number) {
   });
 
   const { mutate: updateInstance } = useMutation({
-    mutationFn: (data: InstanceRequest) => updateInstanceApi(id, data),
+    mutationFn: (data: ExemplaireRequest) => updateExemplaireApi(id, data),
     onSuccess: (updated) => {
       queryClient.setQueryData(['instance', id], updated);
     },

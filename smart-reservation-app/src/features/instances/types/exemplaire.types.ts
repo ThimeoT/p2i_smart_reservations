@@ -1,13 +1,13 @@
-import type { Equipement } from '../../equipments/types/equipement.types';
+import type { Equipement } from '../../equipments/types/equipment.types';
 
-export interface Instance {
+export interface Exemplaire {
   id: number;
   nomSerie: string;
   equipement: Equipement;
   statutDisponibilite: StatutDisponibilite;
 }
 
-export interface InstanceRequest {
+export interface ExemplaireRequest {
   id: number;
   equipementId: number;
   statutDisponibilite: StatutDisponibilite;

@@ -2,22 +2,21 @@ import { useNavigate, useParams } from 'react-router';
 import { useUser } from '../hooks/useUser';
 import { useLocation } from 'react-router';
 import { useAuth } from '../../auth/hooks/useAuth';
-import Button from '../../../shared/components/Button';
-import PageTitle from '../../../shared/components/typography/PageTitle';
+import Button from '../../../shared/components/Bouton';
+import TitrePage from '../../../shared/components/typography/TitrePage';
 import SectionTitle from '../../../shared/components/typography/SectionTitle';
+import TextBody from '../../../shared/components/typography/TextBody';
+import { useIsAdmin } from '../../auth/hooks/useIsAdmin';
 
-interface ProfilePageProps {
-  isAdminView?: boolean;
-}
-
-export default function ProfilePage({ isAdminView = false }: ProfilePageProps) {
+export default function ProfilePage() {
   const location = useLocation();
   const { id } = useParams();
   const { user: connectedUser } = useAuth();
+  const isAdmin = useIsAdmin();
   const navigate = useNavigate();
   const saved: boolean = location.state?.saved === true;
 
-  const targetId = isAdminView && id ? Number(id) : connectedUser?.id;
+  const targetId = isAdmin && id ? Number(id) : connectedUser?.id;
   const { currentUser, loading, error, deleteUser, resetPassword } =
     useUser(targetId);
 
@@ -25,28 +24,26 @@ export default function ProfilePage({ isAdminView = false }: ProfilePageProps) {
   if (error) return <p>Erreur</p>;
   if (!currentUser) return null;
 
-  const isOwnProfile = currentUser.id === connectedUser?.id;
-
   return (
     <>
       {saved && <p>Modifications Enregistrées !</p>}
-      <PageTitle title="Mon Profil" />
+      <TitrePage titre="Mon Profil" />
 
       <SectionTitle title="Nom" />
-      <p className="">
-        Nom Prénom : {currentUser.nom} {currentUser.prenom}
-      </p>
-      <p>Mail : {currentUser.mail}</p>
-      <p>Formation : {currentUser.formation}</p>
-      <p>
-        Date d'expiration : {currentUser.dateExpiration.toLocaleDateString()}
-      </p>
+      <TextBody>Nom et prénom</TextBody>
+      <TextBody>
+        {currentUser.nom} {currentUser.prenom}
+      </TextBody>
+      <TextBody>Formation</TextBody>
+      <TextBody>{currentUser.formation}</TextBody>
+      <TextBody>Date d'expiration</TextBody>
+      <TextBody>{currentUser.dateExpiration.toISOString()}</TextBody>
+      <Button
+        onClick={() => navigate('/profile/edit')}
+        text="Editer le profil"
+      />
 
-      <button onClick={() => navigate('/profile/edit')}>
-        Editer le profil
-      </button>
-
-      {isAdminView && !isOwnProfile && (
+      {isAdmin && (
         <>
           <Button
             color="danger"

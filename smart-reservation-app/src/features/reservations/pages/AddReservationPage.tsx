@@ -1,12 +1,17 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { createReservationApi } from '../api/reservations.api';
-import FormulaireReservation from '../components/FormulaireReservation';
-import PageTitle from '../../../shared/components/typography/PageTitle';
+import { ApiError } from '../../../config/fetchClient';
+import ReservationForm from '../components/ReservationForm';
+import TitrePage from '../../../shared/components/typography/TitrePage';
 import type { ReservationRequest } from '../types/reservation.types';
 
 export default function AddReservationPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const initialEquipementIds: number[] =
+    location.state?.equipementIds ??
+    (location.state?.equipementId ? [location.state.equipementId] : []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
 
@@ -17,7 +22,11 @@ export default function AddReservationPage() {
       const created = await createReservationApi(data);
       navigate(`/reservations/${created.id}`);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Erreur lors de la création');
+      if (e instanceof ApiError && typeof e.body === 'string') {
+        setError(e.body);
+      } else {
+        setError(e instanceof Error ? e.message : 'Erreur lors de la création');
+      }
     } finally {
       setLoading(false);
     }
@@ -25,11 +34,12 @@ export default function AddReservationPage() {
 
   return (
     <div>
-      <PageTitle title="Créer une réservation" />
-      <FormulaireReservation
+      <TitrePage titre="Créer une réservation" />
+      <ReservationForm
         onSubmit={handleSubmit}
         loading={loading}
         error={error}
+        initialEquipementIds={initialEquipementIds}
       />
     </div>
   );

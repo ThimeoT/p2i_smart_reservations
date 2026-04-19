@@ -1,6 +1,9 @@
-import type { Instance } from '../../instances/types/instance.types';
+import type { Exemplaire } from '../../instances/types/exemplaire.types';
 import type { Label } from '../../label/types/label.types';
-import type { RelationEquipementRequest, RelationEquipement } from './relationEquipement.types';
+import type {
+  RelationEquipementRequest,
+  RelationEquipement,
+} from './relationEquipement.types';
 
 export interface EquipementRequest {
   nom: string;
@@ -17,7 +20,7 @@ export interface Equipement {
   description: string;
   urlImage: string;
   labels: Label[];
-  instances: Instance[];
+  exemplaires: Exemplaire[];
   liensRessources: string[];
   relationsEquipement: RelationEquipement[];
 }
@@ -28,4 +31,3 @@ export interface EquipementResume {
   urlImage: string;
   labels: Label[];
 }
-

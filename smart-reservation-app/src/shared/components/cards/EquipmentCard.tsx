@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router';
-import type { EquipementResume } from '../../../features/equipments/types/equipement.types';
+import type { Equipement, EquipementResume } from '../../../features/equipments/types/equipment.types';
 import imageEquipement from '../../../assets/1080 1.png';
+import LabelCard from './LabelCard';
 
 interface CarteEquipementProps {
-  equipement: EquipementResume;
+  equipement: EquipementResume | Equipement;
 }
 
 export default function EquipmentCard({ equipement }: CarteEquipementProps) {
@@ -22,7 +23,7 @@ export default function EquipmentCard({ equipement }: CarteEquipementProps) {
       <div className="flex flex-col gap-1">
         <div className="font-semibold">{equipement?.nom}</div>
         <div className="text-sm text-gray-500">
-          {equipement.labels.map((label) => `${label.nom} `)}
+          {equipement.labels.map((label) => <LabelCard label={label}/>)}
         </div>
       </div>
       <button
