@@ -65,11 +65,19 @@ public class SpringSecurityConfig {
                     auth.requestMatchers(HttpMethod.PUT, "/equipements/{id}").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.DELETE, "/equipements/{id}").hasRole("ADMIN");
 
+                    auth.requestMatchers(HttpMethod.GET, "/labels").authenticated();
+                    auth.requestMatchers(HttpMethod.GET, "/labels/{id}").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/labels").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.PUT, "/labels/{id}").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.DELETE, "/labels/{id}").hasRole("ADMIN");
+
+
                     auth.requestMatchers(HttpMethod.GET, "/exemplaires").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.POST, "/exemplaires").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.PUT, "/exemplaires/{id}").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.DELETE, "/exemplaires/{id}").hasRole("ADMIN");
 
+                    auth.requestMatchers(HttpMethod.GET, "/reservations/mes-reservations").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/reservations").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/reservations/{id}").authenticated();
                     auth.requestMatchers(HttpMethod.POST, "/reservations").authenticated();
@@ -81,6 +89,12 @@ public class SpringSecurityConfig {
                     auth.requestMatchers("/error").permitAll();
                     auth.anyRequest().authenticated();
                 })
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) ->
+                                response.sendError(
+                                        jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED,
+                                        authException.getMessage()))
+                )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

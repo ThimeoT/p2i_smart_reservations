@@ -29,25 +29,19 @@ public class EquipementService {
     private final EquipementRepository equipementRepository;
     private final RelationEquipementMapper relationEquipementMapper;
     private final RelationEquipementRepository relationEquipementRepository;
-    private final LabelService labelService;
-
     private final EquipementMapper equipementMapper;
 
     // EQUIPEMENTS
-
-    // TODO : Récupérer tous les équipements
 
     @Transactional
     public Iterable<EquipementResumeDto> getEquipements() {
         return equipementMapper.toResumeDtoIterable(equipementRepository.findAll());
     }
 
-    // TODO : Récupérer les équipements selon l'id
     @Transactional
     public Equipement getEquipementEntity(Long id) {
         return equipementRepository.findById(id).orElseThrow(
-                () -> new RessourceIntrouvableException("Equipement", id)
-        );
+                () -> new RessourceIntrouvableException("Equipement", id));
     }
 
     @Transactional
@@ -55,12 +49,10 @@ public class EquipementService {
         return equipementMapper.toDto(getEquipementEntity(id));
     }
 
-    // TODO : Récupérer les équipements selon un label
     @Transactional
     public Iterable<EquipementResumeDto> getEquipementsByLabelId(List<Long> labelIds) {
         return equipementMapper.toResumeDtoIterable(
-                equipementRepository.findByLabels_IdIn(labelIds)
-        );
+                equipementRepository.findByLabels_IdIn(labelIds));
     }
 
     @Transactional
@@ -72,15 +64,12 @@ public class EquipementService {
         return equipements;
     }
 
-    // TODO : Ajouter un équipement
     @Transactional
     public EquipementResponseDto createEquipement(EquipementRequestDto equipementDto) {
         Equipement equipement = equipementMapper.toEntity(equipementDto);
         updateRelationsEquipementsFromEquipement(equipementDto.relationsEquipement, equipement);
-        return equipementMapper.toDto(
-                equipementRepository.save(equipement));
+        return equipementMapper.toDto(equipementRepository.save(equipement));
     }
-    // TODO : Modifier un équipement
 
     @Transactional
     public EquipementResponseDto updateEquipement(EquipementRequestDto equipementDto, Long id) {
@@ -92,7 +81,6 @@ public class EquipementService {
         return equipementMapper.toDto(equipement);
     }
 
-    // TODO : Supprimer un équipement
     @Transactional
     public void deleteEquipement(Long id) throws RessourceIntrouvableException {
         if (!equipementRepository.existsById(id)) {
@@ -101,19 +89,16 @@ public class EquipementService {
         equipementRepository.deleteById(id);
     }
 
-    // Règles sur les équipements
-
-    // TODO : Ajouter une relation d'un équipement
     @Transactional
-    public RelationEquipementResponseDto createRelationEquipementFromEquipement(RelationEquipementRequestDto relationEquipementRequestDto, Long equipementId) {
-        Equipement source = equipementRepository.findById(equipementId).orElseThrow(() -> new RessourceIntrouvableException("Equipement", equipementId));
+    public RelationEquipementResponseDto createRelationEquipementFromEquipement(
+            RelationEquipementRequestDto relationEquipementRequestDto, Long equipementId) {
+        Equipement source = equipementRepository.findById(equipementId)
+                .orElseThrow(() -> new RessourceIntrouvableException("Equipement", equipementId));
         List<Equipement> cibles = new ArrayList<>();
         for (Long cibleId : relationEquipementRequestDto.equipementsCibleId) {
             cibles.add(
                     equipementRepository.findById(cibleId)
-                            .orElseThrow(() -> new RessourceIntrouvableException("Equipement", cibleId)
-                            )
-            );
+                            .orElseThrow(() -> new RessourceIntrouvableException("Equipement", cibleId)));
         }
         RelationEquipement relationEquipement = relationEquipementMapper.toEntity(relationEquipementRequestDto);
         relationEquipement.setEquipementsCible(cibles);
@@ -123,16 +108,15 @@ public class EquipementService {
     }
 
     @Transactional
-    public void updateRelationsEquipementsFromEquipement(List<RelationEquipementRequestDto> relationsDtos, Equipement equipement) {
+    public void updateRelationsEquipementsFromEquipement(List<RelationEquipementRequestDto> relationsDtos,
+            Equipement equipement) {
         List<RelationEquipement> relationsExistantes = equipement.getRelationsEquipement();
 
-        relationsExistantes.removeIf(relation ->
-                relationsDtos.stream().noneMatch(dto -> dto.id != null && dto.id.equals(relation.getId()))
-        );
+        relationsExistantes.removeIf(
+                relation -> relationsDtos.stream().noneMatch(dto -> dto.id != null && dto.id.equals(relation.getId())));
 
         for (RelationEquipementRequestDto dto : relationsDtos) {
             if (dto.id != null) {
-
                 RelationEquipement relation = relationsExistantes.stream()
                         .filter(r -> r.getId().equals(dto.id))
                         .findFirst()
@@ -140,7 +124,6 @@ public class EquipementService {
                 relationEquipementMapper.updateEntity(dto, relation);
                 relation.setEquipementsCible(getEquipementsEntities(dto.equipementsCibleId));
             } else {
-
                 RelationEquipement relation = relationEquipementMapper.toEntity(dto);
                 relation.setEquipementSource(equipement);
                 relation.setEquipementsCible(getEquipementsEntities(dto.equipementsCibleId));
@@ -149,35 +132,34 @@ public class EquipementService {
         }
     }
 
-    // TODO : Retirer une relation d'un équipement
     @Transactional
     public void deleteRelationEquipementFromEquipement(Long relationId, Long equipementId) throws Exception {
         RelationEquipement relationEquipement = relationEquipementRepository.findById(relationId)
                 .orElseThrow(() -> new RessourceIntrouvableException("Règle de relation d'équipements", relationId));
         Long idEquipementDeduit = relationEquipement.getEquipementSource().getId();
         if (!Objects.equals(idEquipementDeduit, equipementId)) {
-            throw new InvalidAttributeValueException("Attendait l'id d'équipement source " + equipementId + "mais la relation possède comme id source " + idEquipementDeduit);
+            throw new InvalidAttributeValueException("Attendait l'id d'équipement source " + equipementId
+                    + "mais la relation possède comme id source " + idEquipementDeduit);
         }
         relationEquipementRepository.delete(relationEquipement);
     }
 
-    // TODO : Modifier une relation
     @Transactional
     public RelationEquipementResponseDto updateRelationEquipement(RelationEquipementRequestDto relationDto) {
-        RelationEquipement relation = relationEquipementRepository.findById(relationDto.id).orElseThrow(() -> new RessourceIntrouvableException("Relation d'équipements", relationDto.id));
+        RelationEquipement relation = relationEquipementRepository.findById(relationDto.id)
+                .orElseThrow(() -> new RessourceIntrouvableException("Relation d'équipements", relationDto.id));
         relationEquipementMapper.updateEntity(relationDto, relation);
         relation.setEquipementsCible(getEquipementsEntities(relationDto.equipementsCibleId));
         relationEquipementRepository.save(relation);
         return relationEquipementMapper.toDto(relation);
     }
-    //
 
-    // TODO : Vérifier la conformité des relations d'un ensemble d'équipements réservés
     public Boolean verifierRelationsEquipement(List<Equipement> equipements) {
         Set<Equipement> setEquipements = new HashSet<>(equipements);
         for (Equipement equipement : equipements) {
-            for (RelationEquipement relationEquipement : relationEquipementRepository.findByEquipementSourceIdAndStatutRelationEquipement(equipement.getId(), StatutRelationEquipement.REQUIS)) {
-
+            for (RelationEquipement relationEquipement : relationEquipementRepository
+                    .findByEquipementSourceIdAndStatutRelationEquipement(equipement.getId(),
+                            StatutRelationEquipement.REQUIS)) {
                 if (!setEquipements.containsAll(relationEquipement.getEquipementsCible()))
                     throw new EquipementRequisManquantException(equipement.getId());
             }
@@ -186,21 +168,24 @@ public class EquipementService {
     }
 
     // LABELS
+
     @Transactional
-    public EquipementResponseDto addLabelFromEquipement(Long labelId, Long equipementId) {
-        Equipement equipement = equipementRepository.findById(equipementId).orElseThrow(() -> new RessourceIntrouvableException("Equipement", equipementId));
-        Label label = labelService.getLabelEntity(labelId);
+    public EquipementResponseDto addLabelToEquipement(Label label, Long equipementId) {
+        Equipement equipement = getEquipementEntity(equipementId);
         equipement.addLabel(label);
         return equipementMapper.toDto(equipementRepository.save(equipement));
     }
 
     @Transactional
-    public EquipementResponseDto removeLabelFromEquipement(Long labelId, Long equipementId) {
-        Equipement equipement = equipementRepository.findById(equipementId).orElseThrow(() -> new RessourceIntrouvableException("Equipement", equipementId));
-        Label label = labelService.getLabelEntity(labelId);
+    public EquipementResponseDto removeLabelFromEquipement(Label label, Long equipementId) {
+        Equipement equipement = getEquipementEntity(equipementId);
         equipement.removeLabel(label);
         return equipementMapper.toDto(equipementRepository.save(equipement));
     }
 
-
+    @Transactional
+    public void removeLabelFromAllEquipements(Label label) {
+        equipementRepository.findByLabels_IdIn(List.of(label.getId()))
+                .forEach(equipement -> equipement.getLabels().remove(label));
+    }
 }

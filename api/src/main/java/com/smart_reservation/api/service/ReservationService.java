@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -48,6 +49,13 @@ public class ReservationService {
     }
 
     @Transactional
+    public Iterable<ReservationResponseDto> getAllReservationsFull() {
+        List<ReservationResponseDto> result = new ArrayList<>();
+        reservationRepository.findAll().forEach(r -> result.add(reservationMapper.toDto(r)));
+        return result;
+    }
+
+    @Transactional
     public Iterable<ReservationResumeDto> getReservations(List<Long> ids) {
         return reservationMapper.toResumeDtoIterable(reservationRepository.findAllById(ids));
     }
@@ -65,10 +73,14 @@ public class ReservationService {
     public ReservationResponseDto getReservation(Long id) {
         return reservationMapper.toDto(getReservationEntity(id));
     }
-    // TODO : Récupérer les réservations d'un utilisateur
-
+    @Transactional
     public Iterable<ReservationResumeDto> getReservationsByUtilisateurId(Long id) {
         return reservationMapper.toResumeDtoIterable(reservationRepository.findByUtilisateur_Id(id));
+    }
+
+    @Transactional
+    public Iterable<ReservationResumeDto> getMesReservations(String email) {
+        return getReservationsByUtilisateurId(utilisateurService.getUtilisateurByMail(email).id);
     }
 
     // TODO : Ajouter une réservation

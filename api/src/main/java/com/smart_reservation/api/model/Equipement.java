@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Data
 @Entity
 @Table(name = "equipements")
@@ -33,6 +36,7 @@ public class Equipement {
             joinColumns = @JoinColumn(name = "equipement_id"),
             inverseJoinColumns = @JoinColumn(name = "label_id")
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Label> labels = new HashSet<>();
 
     @OneToMany(mappedBy = "equipement", cascade = CascadeType.ALL, orphanRemoval = true)

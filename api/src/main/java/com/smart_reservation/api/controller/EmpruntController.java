@@ -2,9 +2,12 @@ package com.smart_reservation.api.controller;
 
 import com.smart_reservation.api.dto.response.EmpruntResponseDto;
 import com.smart_reservation.api.service.EmpruntService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,6 +21,17 @@ public class EmpruntController {
     {
         return ResponseEntity.ok(empruntService.getEmprunt(id));
     }
+
+
+
+    @GetMapping("/equipement/{equipementId}")
+    public ResponseEntity<Iterable<EmpruntResponseDto>> getEmpruntsByEquipement(
+            @PathVariable Long equipementId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime debut,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fin) {
+        return ResponseEntity.ok(empruntService.getEmpruntsByEquipementAndDateDebutAndDateFin(equipementId, debut, fin));
+    }
+
 
     @PatchMapping("/{id}/terminer")
     public ResponseEntity<EmpruntResponseDto> terminerEmprunt(@PathVariable Long id){

@@ -9,6 +9,7 @@ import com.smart_reservation.api.dto.resume.EquipementResumeDto;
 import com.smart_reservation.api.service.EmpruntService;
 import com.smart_reservation.api.service.EquipementService;
 import com.smart_reservation.api.service.ExemplaireService;
+import com.smart_reservation.api.service.LabelService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class EquipementController {
     private final EquipementService equipementService;
     private final ExemplaireService exemplaireService;
     private final EmpruntService empruntService;
+    private final LabelService labelService;
 
 
     @GetMapping
@@ -54,13 +56,12 @@ public class EquipementController {
 
     @PatchMapping("/{equipementId}/labels/{labelId}/add")
     public ResponseEntity<EquipementResponseDto> addLabel(@PathVariable Long labelId, @PathVariable Long equipementId) {
-        return ResponseEntity.ok(equipementService.addLabelFromEquipement(labelId, equipementId));
+        return ResponseEntity.ok(labelService.addLabelToEquipement(labelId, equipementId));
     }
-
 
     @PatchMapping("/{equipementId}/labels/{labelId}/remove")
     public ResponseEntity<EquipementResponseDto> removeLabel(@PathVariable Long labelId, @PathVariable Long equipementId) {
-        return ResponseEntity.ok(equipementService.removeLabelFromEquipement(labelId, equipementId));
+        return ResponseEntity.ok(labelService.removeLabelFromEquipement(labelId, equipementId));
     }
 
     @GetMapping("/{id}/exemplaires")

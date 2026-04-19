@@ -3,6 +3,7 @@ package com.smart_reservation.api.serviceTests;
 import com.smart_reservation.api.dto.mapper.EquipementMapper;
 import com.smart_reservation.api.dto.mapper.RelationEquipementMapper;
 import com.smart_reservation.api.dto.request.EquipementRequestDto;
+import com.smart_reservation.api.dto.request.RelationEquipementRequestDto;
 import com.smart_reservation.api.dto.response.EquipementResponseDto;
 import com.smart_reservation.api.dto.response.LabelResponseDto;
 import com.smart_reservation.api.dto.response.RelationEquipementResponseDto;
@@ -69,7 +70,7 @@ class EquipementServiceTests {
 
         requestDto = new EquipementRequestDto();
         // Liste vide = aucun appel à getEquipementsEntities (non mockable car interne à this)
-        requestDto.relationsEquipement = new ArrayList<>();
+        requestDto.relationsEquipement = new ArrayList<RelationEquipementRequestDto>();
 
         responseDto = new EquipementResponseDto();
         resumeDto = new EquipementResumeDto();

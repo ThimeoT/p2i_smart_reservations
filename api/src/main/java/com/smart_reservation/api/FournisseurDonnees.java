@@ -2,6 +2,7 @@ package com.smart_reservation.api;
 
 import com.smart_reservation.api.model.*;
 import com.smart_reservation.api.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,7 @@ public class FournisseurDonnees implements CommandLineRunner {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         System.out.println("=== SMART RESERVATIONS | BACK-END ===");
 
