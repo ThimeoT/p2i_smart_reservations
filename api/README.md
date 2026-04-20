@@ -93,6 +93,7 @@ cd api
 
 # Windows (PowerShell)
 .\mvnw.cmd spring-boot:run
+// ou mvn spring-boot:run
 ```
 
 Le profil `dev` est actif par défaut. L'API écoute sur `http://localhost:8080`.
