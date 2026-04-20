@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import animatedLinkClass from '../../shared/stylesClass/animatedLinkClass';
 import { useAuth } from '../../features/auth/hooks/useAuth';
-import { useIsAdmin } from '../../features/auth/hooks/useIsAdmin';
 
 interface PageMenuProps {
   ouvert: boolean;
@@ -13,7 +12,6 @@ const liensNav = [
   { label: 'Accueil', path: '/home' },
   { label: 'Catalogue', path: '/equipements' },
   { label: 'Réservations', path: '/reservations/mes-reservations' },
-  { label: 'Mes Listes', path: '/listes' },
   { label: 'Profil', path: '/profile' },
   { label: 'Aide / Contact', path: '/aide' },
 ];
@@ -21,8 +19,6 @@ const liensNav = [
 export default function MenuPage({ ouvert, onFermer }: PageMenuProps) {
   const navigate = useNavigate();
   const { logout } = useAuth();
-  const isAdmin = useIsAdmin();
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onFermer();
@@ -68,16 +64,6 @@ export default function MenuPage({ ouvert, onFermer }: PageMenuProps) {
           ))}
         </nav>
 
-        {isAdmin && (
-          <div className="mt-4 border-t border-beige-1/20 pt-4 flex flex-col gap-5">
-            <button
-              className={`${animatedLinkClass} font-extralight text-2xl md:text-3xl text-blue-200`}
-              onClick={() => handleNavigation('/admin')}
-            >
-              Centre de contrôle
-            </button>
-          </div>
-        )}
 
         <div className="mt-4 border-t border-beige-1/20 pt-4 flex flex-col gap-5">
           <button

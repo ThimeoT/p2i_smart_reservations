@@ -1,12 +1,12 @@
 import type { Exemplaire } from '../../instances/types/exemplaire.types';
-import type { Session } from './session.types';
+import type { SessionResume } from './session.types';
 
 export type StatutEmprunt = 'PLANIFIE' | 'EN_COURS' | 'TERMINE' | 'ANNULE';
 
 export interface Emprunt {
   id: number;
   statut: StatutEmprunt;
-  session: Session;
+  session: SessionResume;
   exemplaire: Exemplaire;
   dateRetourPrevue: string;
   dateRetourReelle: string | undefined;

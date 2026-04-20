@@ -27,7 +27,7 @@ export default function UserCard({ utilisateur }: Props) {
   return (
     <div
       role="button"
-      onClick={() => navigate(`/utilisateurs/${utilisateur.id}`)}
+      onClick={() => navigate(`/admin/users/${utilisateur.id}`)}
       className="flex cursor-pointer  items-center gap-4 rounded-xl border-2 border-taupe-1 bg-transparent p-4 transition-shadow hover:shadow-md"
     >
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bleu-1/15 text-sm font-semibold text-bleu-2">

@@ -31,9 +31,12 @@ async function handleResponse(response: Response) {
 
   let payload: unknown = null;
   try {
-    payload = contentType.includes('application/json')
-      ? await response.json()
-      : await response.text();
+    const text = await response.text();
+    if (contentType.includes('application/json')) {
+      try { payload = JSON.parse(text); } catch { payload = text; }
+    } else {
+      payload = text;
+    }
   } catch {
     payload = null;
   }

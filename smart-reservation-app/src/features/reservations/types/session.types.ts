@@ -14,6 +14,7 @@ export interface SessionRequest {
 
 export interface SessionResume {
   id: number;
+  reservationId: number;
   debut: string;
   fin: string;
 }

@@ -10,7 +10,7 @@ const SECTIONS = [
   { label: 'Labels', path: '/admin/labels' },
 ];
 
-export default function ControlCenterPage() {
+export default function PageCentreDeControle() {
   const navigate = useNavigate();
 
   return (

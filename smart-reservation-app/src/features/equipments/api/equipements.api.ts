@@ -2,7 +2,6 @@ import fetchClient from '../../../config/fetchClient';
 import type {
   Equipement,
   EquipementRequest,
-  EquipementResume,
 } from '../types/equipment.types';
 
 export const getEquipementByIdApi = async (id: number): Promise<Equipement> => {
@@ -10,7 +9,7 @@ export const getEquipementByIdApi = async (id: number): Promise<Equipement> => {
   return user;
 };
 
-export const getAllEquipementsApi = async (): Promise<EquipementResume[]> => {
+export const getAllEquipementsApi = async (): Promise<Equipement[]> => {
   const equipements = await fetchClient.get('/equipements');
   return equipements;
 };

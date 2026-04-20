@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { getEmpruntsByEquipementApi } from '../api/disponibilites.api';
-import useAllExemplaires from '../../instances/hooks/useAllExemplaires';
+import type { Exemplaire } from '../../instances/types/exemplaire.types';
 import type { Emprunt } from '../../reservations/types/emprunt.types';
 import type { EtatJour } from '../types/disponibilite.types';
 
@@ -28,10 +28,9 @@ function toDateKey(date: Date): string {
   return `${date.getFullYear()}-${p(date.getMonth() + 1)}-${p(date.getDate())}`;
 }
 
-export default function useDisponibilites(equipementIds: number[], month: Date) {
+export default function useDisponibilites(equipementIds: number[], month: Date, allExemplaires: Exemplaire[]) {
   const [empruntsByEquipement, setEmpruntsByEquipement] = useState<Record<number, Emprunt[]>>({});
   const [loading, setLoading] = useState(false);
-  const { instances: allExemplaires } = useAllExemplaires();
 
   const monthYear = `${month.getFullYear()}-${month.getMonth()}`;
   const idsKey = equipementIds.join(',');

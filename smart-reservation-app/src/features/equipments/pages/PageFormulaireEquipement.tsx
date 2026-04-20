@@ -7,7 +7,7 @@ import FormulaireCreationEquipement from '../components/FormulaireEquipement';
 import TitrePage from '../../../shared/components/typography/TitrePage';
 import ErrorCard from '../../../shared/components/cards/ErrorCard';
 
-export default function EquipmentFormPage() {
+export default function PageFormulaireEquipement() {
   const navigate = useNavigate();
   const { id } = useParams();
   const isEdit = !!id;

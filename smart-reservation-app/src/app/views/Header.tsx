@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { BellIcon, Bars3Icon } from '@heroicons/react/24/outline';
+import { Bars3Icon } from '@heroicons/react/24/outline';
 import logoSmartReservations from '../../assets/logo_smart_reservations.svg';
 import MenuPage from './MenuPage';
 import { useState } from 'react';
@@ -16,13 +16,13 @@ export default function Header() {
           src={logoSmartReservations}
           onClick={() => navigate('/home')}
         />
-        <div className="flex items-center gap-5">
-          <BellIcon className="h-11 w-11 p-2 cursor-pointer stroke-bleu-fonce-1" />
-          <Bars3Icon
-            className="h-11 w-11 p-2 cursor-pointer stroke-bleu-fonce-1"
-            onClick={() => setMenuOuvert(!menuOuvert)}
-          />
-        </div>
+        <button
+          className="flex items-center gap-1.5 cursor-pointer text-bleu-fonce-1 hover:opacity-70 transition-opacity"
+          onClick={() => setMenuOuvert(!menuOuvert)}
+        >
+          <Bars3Icon className="h-11 w-11 p-2 stroke-bleu-fonce-1" />
+          <span className="text-sm font-medium">Menu</span>
+        </button>
       </header>
       <MenuPage ouvert={menuOuvert} onFermer={() => setMenuOuvert(false)} />
     </>

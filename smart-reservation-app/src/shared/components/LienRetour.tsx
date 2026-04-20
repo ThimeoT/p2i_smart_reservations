@@ -20,6 +20,7 @@ const ROUTE_NAMES: [RegExp, string][] = [
   [/^\/profile\/edit$/, 'Modifier le profil'],
   [/^\/users\/\d+$/, 'Profil utilisateur'],
   [/^\/disponibilites$/, 'Disponibilités'],
+  [/^\/aide$/, 'Aide'],
 ];
 
 function getPageName(path: string): string {
@@ -29,7 +30,7 @@ function getPageName(path: string): string {
   return path;
 }
 
-export default function FilAriane() {
+export default function LienRetour() {
   const navigate = useNavigate();
   const { history, popTo } = useNavigationHistory();
 
@@ -44,9 +45,12 @@ export default function FilAriane() {
   };
 
   return (
-    <nav className="fixed px-4 py-2 text-sm text-taupe-2 bg-beige-1 rounded-b-lg">
-      <button onClick={handleClick} className="transition-opacity hover:opacity-70">
-        ← Retour à la page {label}
+    <nav className="fixed z-20 px-4 py-2 text-sm text-taupe-3 bg-beige-2 rounded-b-lg">
+      <button
+        onClick={handleClick}
+        className="transition-opacity hover:opacity-70"
+      >
+        Retour à la page {label}
       </button>
     </nav>
   );

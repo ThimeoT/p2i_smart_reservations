@@ -23,14 +23,13 @@ export default function PageDisponibilites() {
   const [month, setMonth] = useState(new Date());
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined);
 
-  const { joursEtats, empruntsByEquipement, loading } = useDisponibilites(selectedEquipements, month);
+  const { joursEtats, empruntsByEquipement, loading } = useDisponibilites(selectedEquipements, month, allExemplaires);
 
   const equipementOptions = equipements.map((e) => ({ id: e.id, nom: e.nom }));
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <TitrePage titre="Disponibilités"/>
-
       <Combobox
         options={equipementOptions}
         value={selectedEquipements}
@@ -44,13 +43,15 @@ export default function PageDisponibilites() {
         <>
           {loading && <p className="text-sm text-slate-500">Chargement...</p>}
 
-          <CalendrierDisponibilites
+          <div className="flex justify-center">
+            <CalendrierDisponibilites
             month={month}
-            onMonthChange={setMonth}
+            onMonthChange={(m) => { setMonth(m); setSelectedDay(undefined); }}
             joursEtats={joursEtats}
             selectedDay={selectedDay}
             onDaySelect={setSelectedDay}
           />
+          </div>
 
           {selectedDay && (
             <TimelineJour
@@ -64,7 +65,7 @@ export default function PageDisponibilites() {
 
           <Button
             text="Réserver ces équipements"
-            onClick={() => navigate('/reservations/creer', { state: { equipementIds: selectedEquipements } })}
+            onClick={() => navigate('/reservations/creer', { state: { equipementIds: selectedEquipements, selectedDay: selectedDay?.toISOString() } })}
           />
         </>
       )}

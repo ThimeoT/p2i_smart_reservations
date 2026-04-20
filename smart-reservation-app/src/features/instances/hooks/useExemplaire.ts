@@ -3,6 +3,7 @@ import type { ExemplaireRequest } from '../types/exemplaire.types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   deleteInstanceApi,
+  getEmpruntsByExemplaireApi,
   getInstanceByIdApi,
   updateExemplaireApi,
 } from '../api/exemplaires';
@@ -32,5 +33,11 @@ export function useInstance(id: number) {
     onSuccess: () => navigate('/admin'),
   });
 
-  return { instance, isLoading, error, updateInstance, deleteInstance };
+  const { data: emprunts = [], isLoading: empruntsLoading } = useQuery({
+    queryKey: ['instance-emprunts', id],
+    queryFn: () => getEmpruntsByExemplaireApi(id),
+    enabled: !!id,
+  });
+
+  return { instance, isLoading, error, updateInstance, deleteInstance, emprunts, empruntsLoading };
 }

@@ -4,7 +4,7 @@ import { useEquipements } from '../hooks/useEquipements';
 import EquipementAdminItem from '../components/EquipementAdminItem';
 import TitrePage from '../../../shared/components/typography/TitrePage';
 import SectionTitle from '../../../shared/components/typography/SectionTitle';
-import Button from '../../../shared/components/Bouton';
+import Bouton from '../../../shared/components/Bouton';
 import Toast from '../../../shared/components/Toast';
 
 export default function EquipementsAdminPage() {
@@ -24,7 +24,7 @@ export default function EquipementsAdminPage() {
 
       <TitrePage titre="Gestion des équipements" />
 
-      <Button
+      <Bouton
         text="Ajouter un équipement"
         onClick={() => navigate('/equipements/ajouter-equipement')}
       />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../auth/hooks/useAuth';
-import { deleteUserApi, getUserByIdApi, resetPasswordApi, updateUserApi } from '../api/user.api';
+import { useIsAdmin } from '../../auth/hooks/useIsAdmin';
+import { deleteUserApi, getUserByIdApi, patchDateExpirationApi, resetPasswordApi, updateUserApi } from '../api/user.api';
 import type { User } from '../types/user.types';
 import { useNavigate } from 'react-router';
 
@@ -10,6 +11,7 @@ export function useUser( targetId?:number) {
   const navigate=  useNavigate();
 
   const { user, setUser } = useAuth();
+  const isAdmin = useIsAdmin();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -41,10 +43,17 @@ export function useUser( targetId?:number) {
   navigate('/admin');
 };
 
-const resetPassword = async () => {
-    if(!currentUser) return;
-  await resetPasswordApi(currentUser.id);
-};
+  const resetPassword = async (): Promise<string | undefined> => {
+    if (!currentUser) return;
+    return await resetPasswordApi(currentUser.id);
+  };
 
-  return { currentUser, loading, error, updateUser, deleteUser, resetPassword };
+  const updateDateExpiration = async (dateExpiration: string) => {
+    if (!currentUser || !isAdmin) return;
+    const updatedUser = await patchDateExpirationApi(currentUser.id, dateExpiration);
+    setCurrentUser(updatedUser);
+    return updatedUser;
+  };
+
+  return { currentUser, loading, error, updateUser, deleteUser, resetPassword, updateDateExpiration };
 }

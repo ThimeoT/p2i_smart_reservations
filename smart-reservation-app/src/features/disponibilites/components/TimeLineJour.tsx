@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import type { Emprunt } from '../../reservations/types/emprunt.types';
 import type { Exemplaire } from '../../instances/types/exemplaire.types';
 
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function TimelineJour({ day, equipementIds, equipements, empruntsByEquipement, allExemplaires }: Props) {
+  const navigate = useNavigate();
   const dayStart = new Date(day.getFullYear(), day.getMonth(), day.getDate(), 0, 0, 0);
   const dayEnd = new Date(day.getFullYear(), day.getMonth(), day.getDate(), 23, 59, 59);
   const hours = Array.from({ length: HOUR_END - HOUR_START + 1 }, (_, i) => HOUR_START + i);
@@ -27,7 +29,7 @@ export default function TimelineJour({ day, equipementIds, equipements, emprunts
   const dayLabel = day.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 
   return (
-    <div className="space-y-4 rounded-xl border border-taupe-1 bg-white p-4">
+    <div className="space-y-4 rounded-xl border border-taupe-1 bg-white py-4 px-6">
       <p className="font-semibold text-slate-800 capitalize">{dayLabel}</p>
 
       {equipementIds.map((equipementId) => {
@@ -49,7 +51,7 @@ export default function TimelineJour({ day, equipementIds, equipements, emprunts
             <div className="flex pl-20">
               {hours.map((h) => (
                 <span key={h} className="text-xs text-slate-400 shrink-0" style={{ width: `${hourWidth}%` }}>
-                  {h}h
+                  <span className={h % 2 !== 0 ? 'hidden sm:inline' : ''}>{h}h</span>
                 </span>
               ))}
             </div>
@@ -59,7 +61,13 @@ export default function TimelineJour({ day, equipementIds, equipements, emprunts
               const exEmprunts = emprunts.filter((e) => e.exemplaire.id === ex.id);
               return (
                 <div key={ex.id} className="flex items-center gap-2">
-                  <span className="text-xs text-slate-500 w-20 shrink-0 truncate">{ex.nomSerie}</span>
+                  <button
+                    className="text-xs text-bleu-fonce-1 hover:underline w-20 shrink-0 truncate text-left"
+                    title={ex.nomSerie}
+                    onClick={() => navigate(`/exemplaires/${ex.id}`)}
+                  >
+                    {ex.nomSerie}
+                  </button>
                   <div className="relative flex-1 h-6 bg-slate-100 rounded overflow-hidden">
                     {exEmprunts.length === 0 ? (
                       <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">libre</div>

@@ -20,12 +20,17 @@ export default function CatalogPage() {
             text="Ajouter un nouvel équipement"
             onClick={() => navigate('/equipements/ajouter-equipement')}
           />
-          <Button
-            text="Voir les disponibilités des équipements"
-            onClick={() => navigate('/disponibilites')}
-          />
         </div>
       )}
+
+      <div className="mt-4 mb-2">
+        <Button
+          text="Voir les disponibilités des équipements"
+          style="outline"
+          color="secondary"
+          onClick={() => navigate('/disponibilites')}
+        />
+      </div>
 
       <SectionTitle title="Liste des Equipements" />
       <ListeEquipements />

@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router';
 import PageEquipement from '../../features/equipments/pages/PageEquipement';
-import ControlCenterPage from '../../features/controlCenter/pages/ControlCenterPage';
 import AuthenticationPage from '../../features/auth/pages/AuthenticationPage';
 import RootLayout from '../views/RootLayout';
 import HomePage from '../../features/home/pages/HomePage';
@@ -14,7 +13,7 @@ import AdminRoute from './AdminRoute';
 import InviteRoute from './InviteRoute';
 import AccountInitialisationPage from '../../features/auth/pages/AccountInitialisationPage';
 import CatalogPage from '../../features/equipments/pages/PageCatalogue';
-import EquipmentFormPage from '../../features/equipments/pages/EquipmentFormPage';
+import PageFormulaireEquipement from '../../features/equipments/pages/PageFormulaireEquipement';
 import EquipementsAdminPage from '../../features/equipments/pages/EquipementsAdminPage';
 import PageTest from '../views/PageTest';
 import PageInstance from '../../features/instances/pages/PageExemplaire';
@@ -27,6 +26,7 @@ import LabelPage from '../../features/label/pages/LabelPage';
 import LabelsAdminPage from '../../features/label/pages/LabelsAdminPage';
 import UsersAdminPage from '../../features/users/pages/UsersAminPage';
 import PageDisponibilites from '../../features/disponibilites/pages/PageDisponibilites';
+import PageAide from '../../features/home/pages/PageAide';
 
 export const router = createBrowserRouter([
   {
@@ -78,12 +78,12 @@ export const router = createBrowserRouter([
             errorElement: <NotFoundPage />,
           },
           { path: '/home', element: <HomePage /> },
+          { path: '/aide', element: <PageAide /> },
           { path: '/profile', element: <ProfilePage /> },
           { path: '/profile/edit', element: <EditProfilePage /> },
           {
             element: <AdminRoute />,
             children: [
-              { path: '/admin', element: <ControlCenterPage /> },
               { path: '/admin/users', element: <UsersAdminPage /> },
               {
                 path: '/admin/users/:id',
@@ -99,11 +99,11 @@ export const router = createBrowserRouter([
               { path: '/admin/equipements', element: <EquipementsAdminPage /> },
               {
                 path: '/equipements/ajouter-equipement',
-                element: <EquipmentFormPage />,
+                element: <PageFormulaireEquipement />,
               },
               {
                 path: '/admin/equipements/:id/modifier',
-                element: <EquipmentFormPage />,
+                element: <PageFormulaireEquipement />,
               },
               { path: '/admin/labels', element: <LabelsAdminPage /> },
               { path: '/admin/exemplaires', element: <PageAdminExemplaires /> },

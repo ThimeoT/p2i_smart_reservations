@@ -41,3 +41,12 @@ export const createExemplaireApi = async (
 export const deleteInstanceApi = async (id: number): Promise<void> => {
   await fetchClient.delete(`/exemplaires/${id}`);
 };
+
+export const getEmpruntsByExemplaireApi = async (id: number) => {
+  return fetchClient.request(
+    'GET',
+    `/exemplaires/${id}/emprunts`,
+    JSON.stringify({ debut: '2020-01-01T00:00:00', fin: '2035-01-01T00:00:00' }),
+    { headers: { 'Content-Type': 'application/json' } },
+  );
+};

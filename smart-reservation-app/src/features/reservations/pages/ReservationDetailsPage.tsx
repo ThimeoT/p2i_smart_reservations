@@ -100,10 +100,10 @@ export default function ReservationDetailsPage() {
           <TitreSection title="Traitement de la demande de réservation" />
           <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
             <Textarea
-              placeholder="Commentaire (optionnel)…"
+              placeholder="Commentaire (obligatoire)"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-            />
+            />eff
             <div className="flex gap-3">
               <Button text="Valider" color="primary" onClick={handleValider} />
               <Button

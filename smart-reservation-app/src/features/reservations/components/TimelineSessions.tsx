@@ -48,7 +48,7 @@ export default function TimelineSessions({ day, reservations }: Props) {
           <div className="flex">
             {hours.map((h) => (
               <span key={h} className="text-xs text-slate-400 shrink-0" style={{ width: `${hourWidth}%` }}>
-                {h}h
+                <span className={h % 2 !== 0 ? 'hidden sm:inline' : ''}>{h}h</span>
               </span>
             ))}
           </div>

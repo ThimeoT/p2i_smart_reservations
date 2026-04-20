@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getAllEquipementsApi } from '../api/equipements.api';
-import type { EquipementResume } from '../types/equipment.types';
+import type { Equipement } from '../types/equipment.types';
 export default function useAllEquipements() {
-  const [equipements, setEquipements] = useState<EquipementResume[]>([]);
+  const [equipements, setEquipements] = useState<Equipement[]>([]);
   const [loading, setLoading] = useState<Boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 

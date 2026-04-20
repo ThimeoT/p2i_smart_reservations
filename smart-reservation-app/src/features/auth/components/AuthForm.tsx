@@ -15,12 +15,7 @@ export default function AuthForm({ onSubmit, error, loading }: AuthFormProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginCredentials>({
-    defaultValues: {
-      mail: 'admin@test.com',
-      password: 'admin',
-    },
-  });
+  } = useForm<LoginCredentials>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

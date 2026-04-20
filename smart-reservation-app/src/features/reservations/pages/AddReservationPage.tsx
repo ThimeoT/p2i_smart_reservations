@@ -12,6 +12,9 @@ export default function AddReservationPage() {
   const initialEquipementIds: number[] =
     location.state?.equipementIds ??
     (location.state?.equipementId ? [location.state.equipementId] : []);
+  const initialDate: Date | undefined = location.state?.selectedDay
+    ? new Date(location.state.selectedDay)
+    : undefined;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
 
@@ -40,6 +43,7 @@ export default function AddReservationPage() {
         loading={loading}
         error={error}
         initialEquipementIds={initialEquipementIds}
+        initialDate={initialDate}
       />
     </div>
   );

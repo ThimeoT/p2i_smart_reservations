@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import type { Equipement, EquipementResume } from '../../../features/equipments/types/equipment.types';
-import imageEquipement from '../../../assets/1080 1.png';
+import imageEquipement from '../../../assets/image kit xsens awinda.png';
 
 interface EquipementSquareCardProps {
   equipement: EquipementResume | Equipement;

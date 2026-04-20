@@ -6,6 +6,7 @@ import { ApiError } from '../../../config/fetchClient';
 import type { LoginCredentials } from '../types/auth.types';
 import AuthForm from '../components/AuthForm';
 import imageHero from '../../../assets/labo_etudiants.jpg';
+import logoSmartReservations from '../../../assets/logo_smart_reservations.svg';
 
 function SectionHero() {
   return (
@@ -54,6 +55,11 @@ export default function AuthenticationPage() {
       {deconnecte && <Toast message="Vous avez été déconnecté." />}
       <SectionHero />
       <div className="flex flex-col items-center gap-2 mt-10 mb-6 px-4 text-center">
+        <img
+          src={logoSmartReservations}
+          alt="Smart Réservations"
+          className="h-12 mb-2"
+        />
         <h1 className="font-display text-2xl md:text-3xl font-bold">
           Connexion
         </h1>

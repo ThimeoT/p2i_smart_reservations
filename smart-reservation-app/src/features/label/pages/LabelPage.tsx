@@ -6,7 +6,6 @@ import SectionTitle from '../../../shared/components/typography/SectionTitle';
 import ErrorCard from '../../../shared/components/cards/ErrorCard';
 import EquipmentCard from '../../../shared/components/cards/EquipmentCard';
 import TextBody from '../../../shared/components/typography/TextBody';
-import EquipementSquareCard from '../../../shared/components/cards/EquipmentSquareCard';
 
 export default function LabelPage() {
   const { id } = useParams();

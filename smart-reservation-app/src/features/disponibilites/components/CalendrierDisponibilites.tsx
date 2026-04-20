@@ -11,9 +11,9 @@ interface Props {
   onDaySelect: (day: Date | undefined) => void;
 }
 
-function dateKey(d: Date): string {
+function dateKey(date: Date): string {
   const p = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+  return `${date.getFullYear()}-${p(date.getMonth() + 1)}-${p(date.getDate())}`;
 }
 
 export default function CalendrierDisponibilites({ month, onMonthChange, joursEtats, selectedDay, onDaySelect }: Props) {
