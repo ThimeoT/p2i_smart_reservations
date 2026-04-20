@@ -13,7 +13,7 @@ import AdminRoute from './AdminRoute';
 import InviteRoute from './InviteRoute';
 import AccountInitialisationPage from '../../features/auth/pages/AccountInitialisationPage';
 import CatalogPage from '../../features/equipments/pages/PageCatalogue';
-import PageFormulaireEquipement from '../../features/equipments/pages/PageFormulaireEquipement';
+import PageFormulaireEquipement from '../../features/equipments/pages/PageformulaireEquipement';
 import EquipementsAdminPage from '../../features/equipments/pages/EquipementsAdminPage';
 import PageTest from '../views/PageTest';
 import PageInstance from '../../features/instances/pages/PageExemplaire';
