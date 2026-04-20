@@ -33,7 +33,7 @@ public class Utilisateur {
     @Column(name = "mot_de_passe_hash")
     private String motDePasseHash;
 
-    @Column(name = "statut_utilisateur")
+    @Column(name = "statut_utilisateur", columnDefinition = "VARCHAR(50)")
     private StatutUtilisateur statutUtilisateur=StatutUtilisateur.INVITE;
 
     @Column

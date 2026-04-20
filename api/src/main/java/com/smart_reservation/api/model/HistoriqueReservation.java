@@ -29,7 +29,7 @@ public class HistoriqueReservation {
     @Column
     private String commentaire;
 
-    @Column(name = "statut_action_reservation", nullable = false)
+    @Column(name = "statut_action_reservation", nullable = false, columnDefinition = "VARCHAR(50)")
     private StatutActionReservation action;
 
 }

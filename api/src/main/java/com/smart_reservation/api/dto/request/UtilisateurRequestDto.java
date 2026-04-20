@@ -1,10 +1,7 @@
 package com.smart_reservation.api.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-
-import java.time.LocalDate;
 
 @Data
 public class UtilisateurRequestDto {
@@ -15,7 +12,7 @@ public class UtilisateurRequestDto {
     @NotBlank(message = "Un utilisateur ne peut pas avoir de nom vide !")
     public String nom;
 
-    @NotBlank( message = "Un utilisateur ne peut pas avoir de prénom vide !")
+    @NotBlank(message = "Un utilisateur ne peut pas avoir de prénom vide !")
     public String prenom;
 
     @Email
@@ -23,8 +20,5 @@ public class UtilisateurRequestDto {
 
     @NotBlank
     public String formation;
-
-    @NotNull
-    public LocalDate dateExpiration;
 
 }

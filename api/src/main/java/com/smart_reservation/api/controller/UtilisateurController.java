@@ -1,5 +1,6 @@
 package com.smart_reservation.api.controller;
 
+import com.smart_reservation.api.dto.request.DateExpirationRequestDto;
 import com.smart_reservation.api.dto.request.InvitationRequestDto;
 import com.smart_reservation.api.dto.request.ListeEquipementsRequestDto;
 import com.smart_reservation.api.dto.request.UtilisateurRequestDto;
@@ -58,6 +59,19 @@ public class UtilisateurController {
     public ResponseEntity<Void> deleteUtilisateur(@PathVariable Long id) {
         utilisateurService.deleteUtilisateur(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/reinitialiser-mot-de-passe")
+    public ResponseEntity<?> reinitialiserMotDePasse(@PathVariable Long id) {
+        String motDePasseTemporaire = utilisateurService.reinitialiserMotDePasse(id);
+        return ResponseEntity.ok(java.util.Map.of("motDePasseTemporaire", motDePasseTemporaire));
+    }
+
+    @PatchMapping("/{id}/date-expiration")
+    public ResponseEntity<UtilisateurResponseDto> updateDateExpiration(
+            @PathVariable Long id,
+            @Valid @RequestBody DateExpirationRequestDto dto) {
+        return ResponseEntity.ok(utilisateurService.updateDateExpiration(id, dto.dateExpiration));
     }
 
 

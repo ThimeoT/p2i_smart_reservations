@@ -36,8 +36,10 @@ public class CustomUserDetailsService implements UserDetailsService {
             utilisateurRepository.save(user);
         }
 
-        return new User(user.getMail(), user.getMotDePasseHash()
-                ,user.getStatutUtilisateur() == StatutUtilisateur.ACTIF,
+        boolean enabled = user.getStatutUtilisateur() == StatutUtilisateur.ACTIF
+                || user.getStatutUtilisateur() == StatutUtilisateur.INVITE;
+        return new User(user.getMail(), user.getMotDePasseHash(),
+                enabled,
                 true,
                 true,
                 user.getStatutUtilisateur() != StatutUtilisateur.DESACTIVE,

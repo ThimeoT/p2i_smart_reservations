@@ -29,6 +29,6 @@ public class Emprunt {
     @Column
     private LocalDateTime dateRetourReelle;
 
-    @Column
+    @Column(columnDefinition = "VARCHAR(50)")
     private StatutEmprunt statut;
 }

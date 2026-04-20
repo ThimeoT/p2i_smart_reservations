@@ -151,6 +151,24 @@ public class UtilisateurService {
         return utilisateurMapper.toDto(utilisateur);
     }
 
+    @Transactional
+    public String reinitialiserMotDePasse(Long id) {
+        Utilisateur utilisateur = getUtilisateurEntity(id);
+        String motDePasseTemporaire = UUID.randomUUID().toString().replace("-", "").substring(0, 12);
+        utilisateur.setMotDePasseHash(passwordEncoder.encode(motDePasseTemporaire));
+        utilisateur.setStatutUtilisateur(StatutUtilisateur.INVITE);
+        utilisateurRepository.save(utilisateur);
+        return motDePasseTemporaire;
+    }
+
+    @Transactional
+    public UtilisateurResponseDto updateDateExpiration(Long id, LocalDate dateExpiration) {
+        Utilisateur utilisateur = getUtilisateurEntity(id);
+        utilisateur.setDateExpiration(dateExpiration);
+        utilisateurRepository.save(utilisateur);
+        return utilisateurMapper.toDto(utilisateur);
+    }
+
     //LISTES EQUIPEMENTS
 
     @Transactional(readOnly = true)

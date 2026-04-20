@@ -22,7 +22,7 @@ public class Exemplaire {
     @JoinColumn(name= "equipement_id", nullable = false)
     private Equipement equipement;
 
-    @Column(name = "statut_disponibilite")
+    @Column(name = "statut_disponibilite", columnDefinition = "VARCHAR(50)")
     private StatutDisponibilite statutDisponibilite;
 
     @OneToMany(mappedBy = "exemplaire",

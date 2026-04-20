@@ -16,7 +16,7 @@ public class RelationEquipement {
     @Column(name = "regle_relation_equipement_id")
     private Long id;
 
-    @Column(name="statut_relation_equipement", nullable = false)
+    @Column(name="statut_relation_equipement", nullable = false, columnDefinition = "VARCHAR(50)")
     private StatutRelationEquipement statutRelationEquipement;
 
     @ManyToOne

@@ -24,6 +24,7 @@ public interface SessionMapper {
     List<Session> toEntityList(List<SessionRequestDto> sessionDtos);
 
     @Named("toResumeDto")
+    @Mapping(target = "reservationId", source = "reservation.id")
     SessionResumeDto toResumeDto(Session session);
 
     @IterableMapping(qualifiedByName = "toDto")

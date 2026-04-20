@@ -6,6 +6,8 @@ public class SessionResumeDto {
 
     public Long id;
 
+    public Long reservationId;
+
     public LocalDateTime debut;
 
     public LocalDateTime fin;

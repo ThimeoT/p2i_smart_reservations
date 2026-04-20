@@ -13,10 +13,9 @@ public interface UtilisateurMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "motDePasseHash", ignore = true)
-    @Mapping(target = "equipementsFavoris",ignore = true)
+    @Mapping(target = "equipementsFavoris", ignore = true)
     @Mapping(target = "listeEquipements", ignore = true)
     @Mapping(target = "role", ignore = true)
-    @Mapping(target = "dateExpiration", dateFormat = "yyyy-MM-dd")
     @Mapping(target = "statutUtilisateur", ignore = true)
     Utilisateur toEntity(UtilisateurRequestDto utilisateurRequestDto);
 
@@ -27,9 +26,10 @@ public interface UtilisateurMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "motDePasseHash", ignore = true)
-    @Mapping(target = "equipementsFavoris",ignore = true)
+    @Mapping(target = "equipementsFavoris", ignore = true)
     @Mapping(target = "listeEquipements", ignore = true)
     @Mapping(target = "role", ignore = true)
+    @Mapping(target = "dateExpiration", ignore = true)
     @Mapping(target = "statutUtilisateur", ignore = true)
     Utilisateur updateEntity(UtilisateurRequestDto utilisateurDto, @MappingTarget Utilisateur utilisateur);
 

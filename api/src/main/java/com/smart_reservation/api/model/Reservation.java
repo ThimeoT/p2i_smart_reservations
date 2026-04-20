@@ -26,7 +26,7 @@ public class Reservation {
     @Column
     private String description;
 
-    @Column(name = "statut")
+    @Column(name = "statut", columnDefinition = "VARCHAR(50)")
     private StatutReservation statut;
 
     @OneToMany(mappedBy = "reservation",
