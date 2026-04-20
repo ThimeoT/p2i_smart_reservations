@@ -24,11 +24,12 @@ export const loginApi = async (
 
   return {
     
-    token : response.token,
-    user : {id: response.id,
-    mail: response.mail,
-    role: response.role,
-    statut: response.statut,}
+    token: response.token,
+    user: {
+      id: response.id,
+      mail: response.mail,
+      role: response.role,
+      statut: response.statut,}
   };
 };
 
