@@ -132,6 +132,7 @@ cd api
 
 # Windows (PowerShell)
 .\mvnw.cmd spring-boot:run
+// ou mvn spring-boot:run
 ```
 
 L'API démarre sur `http://localhost:8080`.  
